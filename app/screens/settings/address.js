@@ -77,32 +77,42 @@ export default class Address extends Component {
               title="Address Line 1"
               placeholder="e.g. Plot-02, Road-08"
               autoCapitalize="none"
+              returnKeyType="next"
               value={this.state.line_1}
               onChangeText={(line_1) => this.setState({ line_1 })}
+              onSubmitEditing={() => { this.refs.address_line2.focus(); }}
             />
 
             <TextInput
               title="Address Line 2"
               placeholder="e.g. Mohakhali C/A, Dhaka"
               autoCapitalize="none"
+              returnKeyType="next"
               value={this.state.line_2}
               onChangeText={(line_2) => this.setState({ line_2 })}
+              ref='address_line2'
+              onSubmitEditing={() => { this.refs.city.focus(); }}
             />
 
             <TextInput
               title="City"
               placeholder="e.g. Capetown"
               autoCapitalize="none"
+              returnKeyType="next"
               value={this.state.city}
               onChangeText={(city) => this.setState({ city })}
+              ref='city'
+              onSubmitEditing={() => { this.refs.state.focus(); }}
             />
 
             <TextInput
               title="State province"
               placeholder="e.g. Western Cape"
               autoCapitalize="none"
+              returnKeyType="next"
               value={this.state.state_province}
               onChangeText={(state_province) => this.setState({ state_province })}
+              ref='state'
             />
 
             <View style={styles.pickerContainer}>
@@ -126,6 +136,7 @@ export default class Address extends Component {
               placeholder="e.g. 1212"
               autoCapitalize="none"
               value={this.state.postal_code}
+              returnKeyType="done"
               onChangeText={(postal_code) => this.setState({ postal_code })}
             />
           </ScrollView>

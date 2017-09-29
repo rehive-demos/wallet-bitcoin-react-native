@@ -53,14 +53,19 @@ export default class ChangePassword extends Component {
               autoCapitalize="none"
               secureTextEntry
               value={this.state.old_password}
+              returnKeyType="next"
               onChangeText={(old_password) => this.setState({ old_password })}
+              onSubmitEditing={() => { this.refs.new_password.focus(); }}
             />
             <TextInput
               title="New password"
               autoCapitalize="none"
               secureTextEntry
               value={this.state.line_2}
+              returnKeyType="next"
               onChangeText={(new_password1) => this.setState({ new_password1 })}
+              ref='new_password'
+              onSubmitEditing={() => { this.refs.confirm_password.focus(); }}
             />
 
             <TextInput
@@ -68,6 +73,8 @@ export default class ChangePassword extends Component {
               autoCapitalize="none"
               secureTextEntry
               value={this.state.new_password2}
+              returnKeyType="done"
+              ref="confirm_password"
               onChangeText={(new_password2) => this.setState({ new_password2 })}
             />
           </ScrollView>
