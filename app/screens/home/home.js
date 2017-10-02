@@ -133,7 +133,6 @@ export default class Home extends Component {
         </View>
         <PopupDialog
           ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-          width="90%"
           height={250}>
           <View style={{flex:1}}>
             <View style={{flex:3, justifyContent: 'center', alignItems: 'center', padding: 20}}>

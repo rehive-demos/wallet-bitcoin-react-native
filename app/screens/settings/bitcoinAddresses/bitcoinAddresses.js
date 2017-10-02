@@ -58,6 +58,7 @@ export default class BitcoinAddresses extends Component {
         <ListView
           refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.getData.bind(this)} />}
           dataSource={this.state.dataSource}
+          enableEmptySections
           renderRow={(rowData) => <Account onPress={this.goToEdit} reference={rowData} name={rowData.address} />}
         />
         <TouchableHighlight

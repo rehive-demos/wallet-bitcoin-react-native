@@ -150,7 +150,7 @@ export default class Settings extends Component {
                                 }
                             </TouchableHighlight>
                         </View>
-                        <View style={styles.inputContainer}>
+                        <View style={[styles.inputContainer, {borderTopWidth: 1, borderTopColor: Colors.lightgray}]}>
                             <Text style={styles.text}>
                                 First name
                             </Text>
@@ -158,6 +158,7 @@ export default class Settings extends Component {
                                 style={styles.input}
                                 placeholder=""
                                 autoCapitalize="none"
+                                underlineColorAndroid="white"
                                 value={this.state.first_name}
                                 returnKeyType="next"
                                 onChangeText={(text) => this.setState({first_name: text})}
@@ -173,6 +174,7 @@ export default class Settings extends Component {
                                 style={styles.input}
                                 placeholder=""
                                 autoCapitalize="none"
+                                underlineColorAndroid="white"
                                 value={this.state.last_name}
                                 returnKeyType="next"
                                 onChangeText={(text) => this.setState({last_name: text})}
@@ -181,39 +183,42 @@ export default class Settings extends Component {
                         </View>
                         <View style={styles.inputContainer}>
                             <Text style={styles.text}>
-                                Identity number
+                                ID No
                             </Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder=""
                                 autoCapitalize="none"
+                                underlineColorAndroid="white"
                                 value={this.state.id_number}
                                 ref={(input) => this.id = input}
                                 returnKeyType="next"
                                 onChangeText={(text) => this.setState({id_number: text})}
                             />
                         </View>
-                        <View style={styles.pickerContainer}>
-                            <Text style={[styles.text, {flex: 1}]}>
+                        <View style={[styles.pickerContainer, {paddingVertical: 2}]}>
+                            <Text style={[styles.text, {flex: 2}]}>
                                 Country
                             </Text>
-                            <CountryPicker
-                                onChange={(value) => {
-                                    this.setState({nationality: value.cca2});
-                                }}
-                                closeable
-                                filterable
-                                cca2={this.state.nationality}
-                                translation="eng"
-                                styles={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-                            />
+                            <View style={{flex:5,alignItems: 'flex-end'}}>
+                                <CountryPicker
+                                    onChange={(value) => {
+                                        this.setState({nationality: value.cca2});
+                                    }}
+                                    closeable
+                                    filterable
+                                    cca2={this.state.nationality}
+                                    translation="eng"
+                                    styles={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+                                />
+                            </View>
                         </View>
-                        <View style={[styles.pickerContainer, {height: 60}]}>
+                        <View style={[styles.pickerContainer]}>
                             <Text style={[styles.text, {flex: 2}]}>
                                 Language
                             </Text>
                             <TouchableHighlight
-                                style={{flex: 1, alignItems: 'flex-end', paddingRight: 10}}
+                                style={{flex: 5, alignItems: 'flex-end', paddingRight: 10}}
                                 onPress={() => {
                                     this.openLanguageModal()
                                 }}>
@@ -237,7 +242,7 @@ export default class Settings extends Component {
                     backdropTransitionOutTiming={500}
                     backdropTransitionInTiming={500}
                     backdropColor="black"
-                    onBackdropPress={()=>this.setState({modalVisible:false})}
+                    onBackdropPress={() => this.setState({modalVisible: false})}
                     isVisible={this.state.modalVisible}>
                     <View style={styles.modal}>
                         <View style={styles.bottomModal}>
@@ -276,7 +281,7 @@ export default class Settings extends Component {
                     animationInTiming={500}
                     animationOutTiming={500}
                     backdropColor="black"
-                    onBackdropPress={() => this.setState({ languageModalVisible: false })}
+                    onBackdropPress={() => this.setState({languageModalVisible: false})}
                     isVisible={this.state.languageModalVisible}>
                     <View style={[styles.modal, {justifyContent: 'flex-end'}]}>
                         <View style={[styles.languageModal]}>
@@ -318,24 +323,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     input: {
-        height: 50,
-        width: "100%",
-        padding: 15,
-        paddingLeft: 0,
+        flex: 5,
         fontSize: 16,
-        fontWeight: 'normal',
-        borderColor: 'white',
-        borderWidth: 1,
-        alignItems: 'center',
+        paddingLeft:8
     },
     text: {
+        flex: 2,
         fontSize: 18,
+        borderRightWidth: 1,
+        borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
     inputContainer: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         width: '100%',
-        padding: 15,
+        padding: 12,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },
@@ -352,9 +354,9 @@ const styles = StyleSheet.create({
     pickerContainer: {
         flexDirection: 'row',
         width: '100%',
-        padding: 15,
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 12,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },
