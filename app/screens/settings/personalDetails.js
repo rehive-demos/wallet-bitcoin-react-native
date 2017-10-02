@@ -232,7 +232,13 @@ export default class Settings extends Component {
                     </TouchableHighlight>
                 </KeyboardAvoidingView>
                 <Modal
-                    visible={this.state.modalVisible}>
+                    animationInTiming={500}
+                    animationOutTiming={500}
+                    backdropTransitionOutTiming={500}
+                    backdropTransitionInTiming={500}
+                    backdropColor="black"
+                    onBackdropPress={()=>this.setState({modalVisible:false})}
+                    isVisible={this.state.modalVisible}>
                     <View style={styles.modal}>
                         <View style={styles.bottomModal}>
                             <View style={[styles.button, {borderBottomWidth: 1, borderBottomColor: Colors.black}]}>
@@ -267,8 +273,12 @@ export default class Settings extends Component {
                     </View>
                 </Modal>
                 <Modal
-                    visible={this.state.languageModalVisible}>
-                    <View style={[styles.modal, {justifyContent: 'flex-end', paddingBottom: 30}]}>
+                    animationInTiming={500}
+                    animationOutTiming={500}
+                    backdropColor="black"
+                    onBackdropPress={() => this.setState({ languageModalVisible: false })}
+                    isVisible={this.state.languageModalVisible}>
+                    <View style={[styles.modal, {justifyContent: 'flex-end'}]}>
                         <View style={[styles.languageModal]}>
                             <TouchableHighlight
                                 style={[styles.button, {marginTop: 5, borderRadius: 5, backgroundColor: 'white'}]}
@@ -377,16 +387,14 @@ const styles = StyleSheet.create({
     },
     languageModal: {
         width: '100%',
-        height: 275,
         paddingBottom: 20,
-        paddingTop: 15,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'rgba(0, 0, 0, .10)',
     },
     button: {
         height: 60,
-        width: "90%",
+        width: "100%",
         alignItems: 'center',
         justifyContent: 'center',
     },
