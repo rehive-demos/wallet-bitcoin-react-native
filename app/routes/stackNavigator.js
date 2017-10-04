@@ -34,6 +34,7 @@ import SettingsSecurity from './../screens/settings/security/security'
 import ChangePassword from './../screens/settings/security/changePassword'
 import TwoFactor from '../screens/settings/security/twoFactor/twoFactor'
 import TwoFactorSmsAuth from '../screens/settings/security/twoFactor/twoFactorSmsAuth'
+import TwoFactorToken from '../screens/settings/security/twoFactor/twoFactorToken'
 import AuthVerifySms from '../screens/settings/security/twoFactor/authoVerifySms'
 import Pin from './../screens/settings/security/pin'
 import SettingsNotifications from './../screens/settings/notifications/notifications'
@@ -142,6 +143,9 @@ const Stack = {
     },
     TwoFactorSmsAuth:{
         screen:TwoFactorSmsAuth,
+    },
+    TwoFactorToken:{
+        screen:TwoFactorToken,
     },
     AuthVerifySms:{
         screen:AuthVerifySms
