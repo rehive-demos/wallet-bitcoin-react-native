@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import React, {Component} from 'react'
+import {View, Text, StyleSheet, TextInput} from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal'
 import Colors from './../config/colors'
 
@@ -14,30 +14,33 @@ export default class Account extends Component {
 
     render() {
         return (
-            <View style={styles.inputContainer}>
-                <View style={[styles.pickerContainer, {paddingVertical: 2}]}>
-                    <Text style={[styles.text, {flex: 4,borderRightWidth: 1,borderRightColor: Colors.lightgray,}]}>
-                        {this.props.title}
-                    </Text>
-                    <View style={{flex:5,alignItems: 'flex-start'}}>
-                        <View style={styles.countryPicker}>
-                            <CountryPicker
-                                onChange={(value) => {
-                                    this.setState({cca2: value.cca2})
-                                    this.props.changeCountryCode(value.callingCode)
-                                }}
-                                closeable
-                                filterable
-                                cca2={this.state.cca2}
-                                translation="eng"
-                                styles={{ flex: 1, justifyContent: 'center' }}
-                            />
-                            <TextInput
-                                {...this.props}
-                                style={styles.input}
-                            />
-                        </View>
+            <View style={[styles.inputContainer, {paddingVertical: 2}]}>
+                <Text style={styles.text}>
+                    {this.props.title}
+                </Text>
+                <View style={styles.countryPicker}>
+                    <View style={{marginLeft:-12}}>
+                        <CountryPicker
+                            onChange={(value) => {
+                                this.setState({cca2: value.cca2})
+                                this.props.changeCountryCode(value.callingCode)
+                            }}
+                            closeable
+                            filterable
+                            cca2={this.state.cca2}
+                            translation="eng"
+                            styles={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                borderRightWidth: 1,
+                                borderRightColor: Colors.lightgray
+                            }}
+                        />
                     </View>
+                    <TextInput
+                        {...this.props}
+                        style={styles.input}
+                    />
                 </View>
             </View>
         )
@@ -46,9 +49,7 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        flex: 3,
-        width: "100%",
-        paddingLeft: 0,
+        flex: 4,
         fontSize: 16,
         color: Colors.black,
         fontWeight: 'normal',
@@ -56,31 +57,26 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         alignItems: 'center',
     },
-    country: {
-        flex: 1,
-    },
     text: {
+        flex: 4,
         fontSize: 18,
-        paddingLeft:8,
+        borderRightWidth: 1,
+        paddingLeft: 8,
+        borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
     inputContainer: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         width: '100%',
+        paddingVertical: 2,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
+        alignItems: 'center',
     },
     countryPicker: {
+        flex: 5,
         flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    pickerContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+        paddingLeft: 8,
+    }
 })
 

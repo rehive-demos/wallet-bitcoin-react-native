@@ -58,7 +58,6 @@ export default class Signup extends Component {
                                 placeholder="e.g. John"
                                 autoCapitalize="none"
                                 onChangeText={(first_name) => this.setState({first_name})}
-                                topBorder="true"
                             />
                             <TextInput
                                 title="Last name"

@@ -32,7 +32,9 @@ import EditBitcoinAddress from './../screens/settings/bitcoinAddresses/editBitco
 import SettingsCards from './../screens/settings/cards'
 import SettingsSecurity from './../screens/settings/security/security'
 import ChangePassword from './../screens/settings/security/changePassword'
-import TwoFactor from './../screens/settings/security/twoFactor'
+import TwoFactor from '../screens/settings/security/twoFactor/twoFactor'
+import TwoFactorSmsAuth from '../screens/settings/security/twoFactor/twoFactorSmsAuth'
+import AuthVerifySms from '../screens/settings/security/twoFactor/authoVerifySms'
 import Pin from './../screens/settings/security/pin'
 import SettingsNotifications from './../screens/settings/notifications/notifications'
 import EmailNotifications from './../screens/settings/notifications/emailNotifications'
@@ -137,6 +139,12 @@ const Stack = {
     },
     TwoFactor: {
         screen: TwoFactor,
+    },
+    TwoFactorSmsAuth:{
+        screen:TwoFactorSmsAuth,
+    },
+    AuthVerifySms:{
+        screen:AuthVerifySms
     },
     Pin: {
         screen:Pin,
