@@ -56,7 +56,7 @@ export default class Login extends Component {
             console.log(twoFactorResponse.status)
             if (twoFactorResponse.status === "success") {
                 const authInfo = twoFactorResponse.data
-                if (authInfo.sms === true) {
+                if (authInfo.sms === true || authInfo.token===true) {
                     this.props.navigation.navigate("AuthVerifySms", {loginInfo:loginInfo,isTwoFactor:true})
                 }
                 else {

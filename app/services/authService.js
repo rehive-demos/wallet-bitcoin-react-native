@@ -23,9 +23,6 @@ var authService = {
     twoFactorAuth:()=>{
         return BaseService.get('auth/mfa/')
     },
-    twoFactorAuthPost:(data)=>{
-        return BaseService.post('auth/mfa/',data)
-    },
     smsAuthGet:()=>{
         return BaseService.get('auth/mfa/sms/')
     },
@@ -34,6 +31,15 @@ var authService = {
     },
     authOptionDelete:()=>{
         return BaseService.delete('auth/mfa/sms/')
+    },
+    authTokenDelete:()=>{
+        return BaseService.delete('auth/mfa/token/')
+    },
+    tokenAuthGet:()=>{
+        return BaseService.get('auth/mfa/token/')
+    },
+    tokenAuthPost:(data)=>{
+        return BaseService.post('auth/mfa/token/',{})
     },
     authVerify:(data)=>{
         return BaseService.post('auth/mfa/verify/',data)
