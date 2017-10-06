@@ -12,7 +12,7 @@ import {
 import AuthService from './../../services/authService'
 import Auth from './../../util/auth'
 import ResetNavigation from './../../util/resetNavigation'
-import TextInput from './../../components/textInput'
+import TextInput from './../../components/textInputRow'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -79,11 +79,10 @@ export default class Login extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
-                <Header
-                    navigation={this.props.navigation}
-                    title="Login"
-                />
                 <View style={styles.mainContainer}>
+                    <Text style={{color:Colors.lightblue, fontSize:36,textAlign:'center',marginBottom:40}}>
+                        Login
+                    </Text>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
                         <ScrollView style={{width: '100%'}} keyboardDismissMode={'interactive'}>
                             <TextInput
@@ -92,12 +91,14 @@ export default class Login extends Component {
                                 placeholder="e.g john@gmail.com"
                                 keyboardType="email-address"
                                 value={this.state.email}
+                                underlineColorAndroid="white"
                                 onChangeText={(email) => this.setState({email})}
                             />
                             <TextInput
                                 title="Company"
                                 autoCapitalize="none"
                                 placeholder="e.g rehive"
+                                underlineColorAndroid="white"
                                 value={this.state.company}
                                 onChangeText={(company) => this.setState({company})}
                             />
@@ -105,6 +106,7 @@ export default class Login extends Component {
                                 title="Password"
                                 autoCapitalize="none"
                                 placeholder="Password"
+                                underlineColorAndroid="white"
                                 secureTextEntry
                                 value={this.state.password}
                                 onChangeText={(password) => this.setState({password})}
@@ -143,11 +145,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         padding: 15,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     container: {
-        height: 380,
         width: "100%",
         flexDirection: 'column',
         justifyContent: 'center',

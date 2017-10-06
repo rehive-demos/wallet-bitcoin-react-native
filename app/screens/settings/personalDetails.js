@@ -157,21 +157,16 @@ export default class Settings extends Component {
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
                                 value={this.state.first_name}
-                                returnKeyType="next"
                                 onChangeText={(text) => this.setState({first_name: text})}
-                                onSubmitEditing={() => this.lastName.focus()}
                             />
 
                             <TextInput
                                 title="Last name"
-                                ref={(input) => this.lastName = input}
                                 placeholder=""
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
                                 value={this.state.last_name}
-                                returnKeyType="next"
                                 onChangeText={(text) => this.setState({last_name: text})}
-                                onSubmitEditing={() => this.id.focus()}
                             />
 
                             <TextInput
@@ -180,8 +175,6 @@ export default class Settings extends Component {
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
                                 value={this.state.id_number}
-                                ref={(input) => this.id = input}
-                                returnKeyType="next"
                                 onChangeText={(text) => this.setState({id_number: text})}
                             />
                         <View style={[styles.pickerContainer, {paddingVertical: 2}]}>
@@ -316,7 +309,7 @@ const styles = StyleSheet.create({
         paddingLeft:15
     },
     text: {
-        flex: 2,
+        flex: 4,
         fontSize: 18,
         borderRightWidth: 1,
         paddingLeft:8,

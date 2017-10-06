@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, StyleSheet, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
-import TextInput from './../../../components/textInput'
+import TextInput from './../../../components/textInputRow'
 import Colors from './../../../config/colors'
 
 export default class BankAccountComponent extends Component {
@@ -14,48 +14,39 @@ export default class BankAccountComponent extends Component {
                         placeholder="e.g. John Snow"
                         autoCapitalize="none"
                         value={this.props.values.name}
-                        returnKeyType="next"
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateName(text)}
-                        onSubmitEditing={() => { this.refs.account_no.focus(); }}
                     />
                     <TextInput
                         title="Account number"
                         placeholder="e.g. 4083764677"
                         autoCapitalize="none"
                         value={this.props.values.number}
-                        returnKeyType="next"
-                        ref='account_no'
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateNumber(text)}
-                        onSubmitEditing={() => { this.refs.account_type.focus(); }}
                     />
                     <TextInput
                         title="Account type"
                         placeholder="e.g. Cheque account"
                         autoCapitalize="none"
                         value={this.props.values.type}
-                        ref="account_type"
-                        returnKeyType="next"
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateType(text)}
-                        onSubmitEditing={() => this.refs.bank_name.focus()}
                     />
                     <TextInput
                         title="Bank name"
                         placeholder="e.g. Bank of World"
                         autoCapitalize="none"
                         value={this.props.values.bank_name}
-                        ref="bank_name"
-                        returnKeyType="next"
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateBank(text)}
-                        onSubmitEditing={() => this.refs.branch_code.focus()}
                     />
                     <TextInput
                         title="Branch code"
                         placeholder="e.g. 46589"
                         autoCapitalize="none"
                         value={this.props.values.branch_code}
-                        ref="branch_code"
-                        returnKeyType="next"
-                        onSubmitEditing={() => this.refs.swift_code.focus()}
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateBranch(text)}
                     />
                     <TextInput
@@ -63,9 +54,7 @@ export default class BankAccountComponent extends Component {
                         placeholder="Usually 8 or 11 characters"
                         autoCapitalize="none"
                         value={this.props.values.swift}
-                        ref="swift_code"
-                        returnKeyType="next"
-                        onSubmitEditing={() => this.refs.IBAN_no.focus()}
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateSwift(text)}
                     />
                     <TextInput
@@ -73,9 +62,7 @@ export default class BankAccountComponent extends Component {
                         placeholder="34 alphanumeric characters"
                         autoCapitalize="none"
                         value={this.props.values.iban}
-                        ref="IBAN_no"
-                        returnKeyType="next"
-                        onSubmitEditing={() => this.refs.BIC_no.focus()}
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateIBAN(text)}
                     />
                     <TextInput
@@ -83,8 +70,7 @@ export default class BankAccountComponent extends Component {
                         placeholder="Usually 8 or 11 characters"
                         autoCapitalize="none"
                         value={this.props.values.bic}
-                        ref="BIC_no"
-                        returnKeyType="next"
+                        underlineColorAndroid="white"
                         onChangeText={(text) => this.props.updateBIC(text)}
                     />
                 </ScrollView>
