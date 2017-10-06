@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         backgroundColor: Colors.lightgray,
-        paddingHorizontal: 8,
+        paddingHorizontal: 15,
         paddingVertical: 16,
     },
     titleText: {
@@ -146,13 +146,11 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
     },
     textInput: {
-        padding: 8,
+        paddingHorizontal: 15,
+        paddingVertical:8,
     },
     mobileNoContainer: {
         backgroundColor: 'white',
-        borderRadius: 2,
-        paddingTop: 4,
-        paddingBottom: 8,
     },
     buttonsContainer: {
         paddingTop: 8,
@@ -160,13 +158,13 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     saveButton: {
-        backgroundColor: Colors.darkblue,
+        backgroundColor: Colors.lightblue,
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 4,
         paddingHorizontal: 6,
         borderRadius: 2,
-        marginHorizontal: 12
+        marginLeft: 12
     },
     deleteButton: {
         backgroundColor: 'red',

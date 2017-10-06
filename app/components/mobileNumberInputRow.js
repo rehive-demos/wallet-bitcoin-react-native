@@ -72,11 +72,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
         alignItems: 'center',
+        padding: 15,
     },
     countryPicker: {
         flex: 5,
         flexDirection: 'row',
-        paddingLeft: 8,
+        paddingLeft: 15,
     }
 })
 

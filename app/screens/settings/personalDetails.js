@@ -8,7 +8,6 @@ import {
     StyleSheet,
     KeyboardAvoidingView,
     ScrollView,
-    TextInput,
     AsyncStorage,
     TouchableHighlight
 } from 'react-native'
@@ -18,6 +17,7 @@ import UserInfoService from './../../services/userInfoService'
 import ResetNavigation from './../../util/resetNavigation'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import TextInput from './../../components/textInputRow'
 
 const languages = {
     "en": "English",
@@ -150,12 +150,9 @@ export default class Settings extends Component {
                                 }
                             </TouchableHighlight>
                         </View>
-                        <View style={[styles.inputContainer, {borderTopWidth: 1, borderTopColor: Colors.lightgray}]}>
-                            <Text style={styles.text}>
-                                First name
-                            </Text>
+
                             <TextInput
-                                style={styles.input}
+                                title="First name"
                                 placeholder=""
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
@@ -164,14 +161,10 @@ export default class Settings extends Component {
                                 onChangeText={(text) => this.setState({first_name: text})}
                                 onSubmitEditing={() => this.lastName.focus()}
                             />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.text}>
-                                Last name
-                            </Text>
+
                             <TextInput
+                                title="Last name"
                                 ref={(input) => this.lastName = input}
-                                style={styles.input}
                                 placeholder=""
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
@@ -180,13 +173,9 @@ export default class Settings extends Component {
                                 onChangeText={(text) => this.setState({last_name: text})}
                                 onSubmitEditing={() => this.id.focus()}
                             />
-                        </View>
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.text}>
-                                ID No
-                            </Text>
+
                             <TextInput
-                                style={styles.input}
+                                title="ID No"
                                 placeholder=""
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
@@ -195,12 +184,11 @@ export default class Settings extends Component {
                                 returnKeyType="next"
                                 onChangeText={(text) => this.setState({id_number: text})}
                             />
-                        </View>
                         <View style={[styles.pickerContainer, {paddingVertical: 2}]}>
-                            <Text style={[styles.text, {flex: 2}]}>
+                            <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
-                            <View style={{flex:5,alignItems: 'flex-end'}}>
+                            <View style={{paddingLeft:15,flex:5,alignItems: 'flex-end'}}>
                                 <CountryPicker
                                     onChange={(value) => {
                                         this.setState({nationality: value.cca2});
@@ -214,11 +202,11 @@ export default class Settings extends Component {
                             </View>
                         </View>
                         <View style={[styles.pickerContainer]}>
-                            <Text style={[styles.text, {flex: 2}]}>
+                            <Text style={[styles.text, {flex: 4}]}>
                                 Language
                             </Text>
                             <TouchableHighlight
-                                style={{flex: 5, alignItems: 'flex-end', paddingRight: 10}}
+                                style={{paddingLeft:8,flex: 5, alignItems: 'flex-end', paddingRight: 10}}
                                 onPress={() => {
                                     this.openLanguageModal()
                                 }}>
@@ -325,19 +313,20 @@ const styles = StyleSheet.create({
     input: {
         flex: 5,
         fontSize: 16,
-        paddingLeft:8
+        paddingLeft:15
     },
     text: {
         flex: 2,
         fontSize: 18,
         borderRightWidth: 1,
+        paddingLeft:8,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
     inputContainer: {
         flexDirection: 'row',
         width: '100%',
-        padding: 12,
+        padding: 15,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },
@@ -356,7 +345,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 12,
+        padding: 15,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },

@@ -179,10 +179,10 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     infoContainer: {
-        marginHorizontal: 8,
+        marginHorizontal: 15,
         paddingVertical: 16,
         borderRadius: 4,
-        paddingHorizontal: 8,
+        paddingHorizontal: 15,
         flexDirection: 'row',
         backgroundColor: Colors.lightgray,
     },
@@ -201,14 +201,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 12,
         borderRadius: 4,
-        marginHorizontal: 8,
+        marginHorizontal: 15,
         marginVertical: 8
     },
     buttonTextColor: {
         color: 'white'
     },
     textInput: {
-        padding: 8,
+        paddingHorizontal: 15,
+        paddingVertical:8,
         borderWidth: 1,
         borderColor: Colors.lightgray
     },
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         paddingTop: 8,
         paddingBottom: 8,
-        paddingHorizontal: 8
+        paddingHorizontal: 15
     },
 })
 
