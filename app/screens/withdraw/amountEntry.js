@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, KeyboardAvoidingView, StyleSheet, TouchableHighlight, AsyncStorage, Text, Alert} from 'react-native'
 import TransectionService from './../../services/transactionService'
 import ResetNavigation from './../../util/resetNavigation'
-import TextInput from './../../components/textInputRow'
+import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 

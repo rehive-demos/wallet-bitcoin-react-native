@@ -2,15 +2,16 @@ import React, {Component} from 'react'
 import {
     View,
     Text,
-    TextInput,
     Button,
     StyleSheet,
+    KeyboardAvoidingView,
     Alert,
     TouchableHighlight
 } from 'react-native'
-import Header from '../../../../components/header'
-import Colors from '../../../../config/colors'
-import AuthService from '../../../../services/authService'
+import Header from './../../../../components/header'
+import Colors from './../../../../config/colors'
+import AuthService from './../../../../services/authService'
+import TextInput from './../../../../components/textInput'
 export default class twoFactorSmsAuth extends Component {
     static navigationOptions = {
         title: 'SMS',
@@ -39,12 +40,12 @@ export default class twoFactorSmsAuth extends Component {
         }
     }
 
-    deleteTwoFactorAuth= async () => {
+    deleteTwoFactorAuth = async () => {
         let responseJson = await AuthService.authOptionDelete()
         if (responseJson.status === "success") {
             this.setState({
-                mobile_number:'',
-                delete:!this.state.delete
+                mobile_number: '',
+                delete: !this.state.delete
             })
         }
         else {
@@ -79,45 +80,37 @@ export default class twoFactorSmsAuth extends Component {
                 <Header
                     navigation={this.props.navigation}
                     back
-                    title="SMS"
+                    title="SMS authentication"
                 />
-                <View style={styles.mainContainer}>
-                    <Text style={styles.titleText}>
-                        Enable sms authentication
-                    </Text>
-                    <Text style={styles.textInputText}>
-                        Enter valid mobile no
-                    </Text>
-                    <View style={styles.mobileNoContainer}>
+                <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
+                    <View style={{flex: 1}}>
                         <TextInput
+                            title="Enter valid mobile number"
                             placeholder="e.g. +8801714632656"
-                            value={this.state.mobile_number}
-                            style={styles.textInput}
-                            underlineColorAndroid="white"
-                            autoFocus={true}
+                            autoCapitalize="none"
                             keyboardType="numeric"
-                            returnKeyType='next'
+                            value={this.state.mobile_number}
+                            underlineColorAndroid="white"
                             onChangeText={(mobile) => this.setState({mobile_number: mobile})}
                         />
                     </View>
-                    <View style={styles.buttonsContainer}>
-                        {
-                            this.state.delete &&
-                            <TouchableHighlight
-                                style={styles.deleteButton}
-                                onPress={() => this.deleteTwoFactorAuth()}
-                            >
-                                <Text style={styles.buttonColor}> Delete</Text>
-                            </TouchableHighlight>
-                        }
+                    <TouchableHighlight
+                        style={styles.submit}
+                        onPress={() => this.sendSms()}>
+                        <Text style={{color: 'white', fontSize: 18}}>
+                            Save
+                        </Text>
+                    </TouchableHighlight>
+                    {
+                        this.state.delete &&
                         <TouchableHighlight
-                            style={styles.saveButton}
-                            onPress={() => this.sendSms()}
+                            style={[styles.submit,{backgroundColor:Colors.red}]}
+                            onPress={() => this.deleteTwoFactorAuth()}
                         >
-                            <Text style={styles.buttonColor}> Save</Text>
+                            <Text style={{color: 'white', fontSize: 18}}> Delete</Text>
                         </TouchableHighlight>
-                    </View>
-                </View>
+                    }
+                </KeyboardAvoidingView>
             </View>
         )
     }
@@ -127,12 +120,10 @@ export default class twoFactorSmsAuth extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
     },
     mainContainer: {
-        backgroundColor: Colors.lightgray,
-        paddingHorizontal: 15,
-        paddingVertical: 16,
+        flex: 1,
+        backgroundColor: 'white',
     },
     titleText: {
         fontSize: 20,
@@ -147,7 +138,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         paddingHorizontal: 15,
-        paddingVertical:8,
+        paddingVertical: 8,
     },
     mobileNoContainer: {
         backgroundColor: 'white',
@@ -157,23 +148,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
     },
-    saveButton: {
+    submit: {
+        padding: 10,
+        height: 65,
         backgroundColor: Colors.lightblue,
+        width: "100%",
+        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 4,
-        paddingHorizontal: 6,
-        borderRadius: 2,
-        marginLeft: 12
-    },
-    deleteButton: {
-        backgroundColor: 'red',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 4,
-        paddingHorizontal: 6,
-        borderRadius: 2,
-        marginHorizontal: 12
     },
     buttonColor: {
         color: 'white'

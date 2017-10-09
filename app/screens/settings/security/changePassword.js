@@ -50,6 +50,7 @@ export default class ChangePassword extends Component {
 
                         <TextInput
                             title="Old password"
+                            placeholder="e.g. 12345678"
                             autoCapitalize="none"
                             secureTextEntry
                             value={this.state.old_password}
@@ -59,6 +60,7 @@ export default class ChangePassword extends Component {
                         <TextInput
                             title="New password"
                             autoCapitalize="none"
+                            placeholder="e.g. 123dr321"
                             secureTextEntry
                             value={this.state.line_2}
                             onChangeText={(new_password1) => this.setState({new_password1})}
@@ -68,6 +70,7 @@ export default class ChangePassword extends Component {
                         <TextInput
                             title="Confirm new password"
                             autoCapitalize="none"
+                            placeholder="e.g. 123dr321"
                             secureTextEntry
                             value={this.state.new_password2}
                             underlineColorAndroid="white"

@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     flex: 3,
     height: 50,
     width: "100%",
-    padding: 15,
     paddingLeft: 0,
     fontSize: 16,
     color: Colors.black,
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'column',
     width: '100%',
-    padding: 15,
+    paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: Colors.lightgray,
   },

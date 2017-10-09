@@ -38,7 +38,5 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '100%',
         paddingHorizontal: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.lightgray,
     },
 })

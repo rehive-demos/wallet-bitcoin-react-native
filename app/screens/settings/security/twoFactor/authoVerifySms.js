@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {
     View,
     KeyboardAvoidingView,
-    TextInput,
     StyleSheet,
     AsyncStorage,
     TouchableHighlight,
@@ -15,6 +14,7 @@ import Header from '../../../../components/header'
 import Colors from '../../../../config/colors'
 import Auth from './../../../../util/auth'
 import resetNavigation from './../../../../util/resetNavigation'
+import TextInput from './../../../../components/textInput'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -33,10 +33,10 @@ export default class AmountEntry extends Component {
         let responseJson = await AuthService.authVerify(this.state)
         if (responseJson.status === "success") {
             const authInfo = responseJson.data
-            if(this.props.navigation.state.params.isTwoFactor){
+            if (this.props.navigation.state.params.isTwoFactor) {
                 await AsyncStorage.removeItem("token")
                 Auth.login(this.props.navigation, this.props.navigation.state.params.loginInfo)
-            }else {
+            } else {
                 await resetNavigation.dispatchUnderTwoFactor(this.props.navigation)
             }
         }
@@ -55,26 +55,24 @@ export default class AmountEntry extends Component {
                     back
                     title="Verify mobile number"
                 />
-                <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
-                    <View style={styles.mainContainer}>
-                        <View style={styles.textInputContainer}>
-                            <TextInput
-                                placeholder="OTP"
-                                autoCapitalize="none"
-                                style={styles.textInput}
-                                underlineColorAndroid="white"
-                                autoFocus={true}
-                                keyboardType="numeric"
-                                onChangeText={(token) => this.setState({token})}
-                            />
-                        </View>
-                        <TouchableHighlight
-                            style={styles.VerifyButton}
-                            onPress={() => this.verify()}
-                        >
-                            <Text style={styles.buttonColor}> Verify</Text>
-                        </TouchableHighlight>
+                <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
+                    <View style={{flex: 1}}>
+                        <TextInput
+                            title="Enter the OTP"
+                            placeholder="OTP"
+                            autoCapitalize="none"
+                            keyboardType="numeric"
+                            underlineColorAndroid="white"
+                            onChangeText={(token) => this.setState({token})}
+                        />
                     </View>
+                    <TouchableHighlight
+                        style={styles.submit}
+                        onPress={() => this.verify()}>
+                        <Text style={{color: 'white', fontSize: 18}}>
+                            Verify
+                        </Text>
+                    </TouchableHighlight>
                 </KeyboardAvoidingView>
             </View>
         )
@@ -85,15 +83,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'white',
     },
     mainContainer: {
-        backgroundColor: Colors.lightgray,
-        paddingVertical: 24,
-        paddingHorizontal: 8
+        flex: 1,
+        backgroundColor: 'white',
     },
-    textInputContainer:{
-        paddingVertical:16
+    textInputContainer: {
+        paddingVertical: 16
     },
     textInput: {
         padding: 8,
@@ -105,11 +101,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 4,
         borderRadius: 4,
-        height:50
+        height: 50
     },
     buttonColor: {
         fontSize: 18,
         color: 'white'
-    }
+    },
+    submit: {
+        padding: 10,
+        height: 65,
+        backgroundColor: Colors.lightblue,
+        width: "100%",
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })
 

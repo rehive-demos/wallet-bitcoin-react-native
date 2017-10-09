@@ -8,14 +8,14 @@ import {
     AsyncStorage,
     Button,
     TouchableHighlight,
-    TextInput,
     KeyboardAvoidingView,
     Alert
 } from 'react-native'
-import Header from '../../../../components/header'
-import Colors from '../../../../config/colors'
-import AuthService from '../../../../services/authService'
+import Header from './../../../../components/header'
+import Colors from './../../../../config/colors'
+import AuthService from './../../../../services/authService'
 import resetNavigation from './../../../../util/resetNavigation'
+import TextInput from './../../../../components/textInput'
 
 export default class Receive extends Component {
     static navigationOptions = {
@@ -27,7 +27,7 @@ export default class Receive extends Component {
         const params = this.props.navigation.state.params
         this.state = {
             imageURI: 'https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=undefined&choe=UTF-8',
-            otpauth_url:'',
+            otpauth_url: '',
             token: '',
             issuer: '',
             account: '',
@@ -41,26 +41,26 @@ export default class Receive extends Component {
         if (responseJson.status === "success") {
             const tokenResponse = responseJson.data
             this.setState({
-                otpauth_url:tokenResponse.otpauth_url,
-                issuer:tokenResponse.issuer,
-                account:tokenResponse.account,
-                key:tokenResponse.key,
-                imageURI:"https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|0&chl="+tokenResponse.otpauth_url
+                otpauth_url: tokenResponse.otpauth_url,
+                issuer: tokenResponse.issuer,
+                account: tokenResponse.account,
+                key: tokenResponse.key,
+                imageURI: "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|0&chl=" + tokenResponse.otpauth_url
             })
 
         }
         else {
             let responseJson = await AuthService.tokenAuthPost({})
-            if(responseJson.status==="success"){
-                const tokenResponse=responseJson.data
+            if (responseJson.status === "success") {
+                const tokenResponse = responseJson.data
                 this.setState({
-                    otpauth_url:tokenResponse.otpauth_url,
-                    issuer:tokenResponse.issuer,
-                    account:tokenResponse.account,
-                    key:tokenResponse.key,
-                    imageURI:"https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|0&chl="+tokenResponse.otpauth_url
+                    otpauth_url: tokenResponse.otpauth_url,
+                    issuer: tokenResponse.issuer,
+                    account: tokenResponse.account,
+                    key: tokenResponse.key,
+                    imageURI: "https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=L|0&chl=" + tokenResponse.otpauth_url
                 })
-            }else{
+            } else {
                 Alert.alert('Error',
                     responseJson.message,
                     [{text: 'OK'}])
@@ -68,7 +68,7 @@ export default class Receive extends Component {
         }
     }
 
-    saveToken=async () => {
+    saveToken = async () => {
         let responseJson = await AuthService.authVerify({token: this.state.token})
         if (responseJson.status === "success") {
             const authInfo = responseJson.data
@@ -81,11 +81,11 @@ export default class Receive extends Component {
         }
     }
 
-    deleteTwoFactorAuth= async () => {
+    deleteTwoFactorAuth = async () => {
         let responseJson = await AuthService.authTokenDelete()
         if (responseJson.status === "success") {
             this.setState({
-                delete:!this.state.delete
+                delete: !this.state.delete
             })
             await resetNavigation.dispatchUnderTwoFactor(this.props.navigation)
         }
@@ -104,8 +104,8 @@ export default class Receive extends Component {
                     back
                     title="Token authentication"
                 />
-                <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
-                    <ScrollView>
+                <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'} keyboardVerticalOffset={85}>
+                    <ScrollView style={{flex: 1}}>
                         <Image
                             style={{width: 250, height: 250, alignSelf: 'center'}}
                             source={{uri: this.state.imageURI}}
@@ -134,33 +134,32 @@ export default class Receive extends Component {
                                 {this.state.key}
                             </Text>
                         </View>
-                        <View style={styles.textInputContainer}>
-                            <TextInput
-                                placeholder="e.g. 123456"
-                                value={this.state.token}
-                                style={styles.textInput}
-                                underlineColorAndroid="white"
-                                keyboardType="numeric"
-                                returnKeyType='next'
-                                onChangeText={(token) => this.setState({token: token})}
-                            />
-                        </View>
-                        <TouchableHighlight
-                            style={styles.buttonStyle}
-                            onPress={() => this.saveToken()}
-                        >
-                            <Text style={styles.buttonTextColor}> Save</Text>
-                        </TouchableHighlight>
-                        {
-                            this.state.delete &&
-                            <TouchableHighlight
-                                style={[styles.buttonStyle, {backgroundColor: 'red'}]}
-                                onPress={() => this.deleteTwoFactorAuth()}
-                            >
-                                <Text style={styles.buttonTextColor}> Delete</Text>
-                            </TouchableHighlight>
-                        }
+                        <TextInput
+                            title="Enter your token"
+                            placeholder="e.g. 123456"
+                            value={this.state.token}
+                            underlineColorAndroid="white"
+                            keyboardType="numeric"
+                            returnKeyType='next'
+                            onChangeText={(token) => this.setState({token: token})}
+                        />
                     </ScrollView>
+                    <TouchableHighlight
+                        style={styles.submit}
+                        onPress={() => this.saveToken()}>
+                        <Text style={{color: 'white', fontSize: 18}}>
+                            Save
+                        </Text>
+                    </TouchableHighlight>
+                    {
+                        this.state.delete &&
+                        <TouchableHighlight
+                            style={[styles.submit, {backgroundColor: Colors.red}]}
+                            onPress={() => this.deleteTwoFactorAuth()}
+                        >
+                            <Text style={{color: 'white', fontSize: 18}}> Delete</Text>
+                        </TouchableHighlight>
+                    }
                 </KeyboardAvoidingView>
             </View>
         )
@@ -171,6 +170,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+    },
+    mainContainer: {
+        flex: 1,
         backgroundColor: 'white',
     },
     text: {
@@ -179,12 +181,9 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     infoContainer: {
-        marginHorizontal: 15,
         paddingVertical: 16,
-        borderRadius: 4,
         paddingHorizontal: 15,
         flexDirection: 'row',
-        backgroundColor: Colors.lightgray,
     },
     infoTitleText: {
         flex: 2,
@@ -207,18 +206,14 @@ const styles = StyleSheet.create({
     buttonTextColor: {
         color: 'white'
     },
-    textInput: {
-        paddingHorizontal: 15,
-        paddingVertical:8,
-        borderWidth: 1,
-        borderColor: Colors.lightgray
-    },
-    textInputContainer: {
-        backgroundColor: 'white',
-        borderRadius: 2,
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingHorizontal: 15
+    submit: {
+        padding: 10,
+        height: 65,
+        backgroundColor: Colors.lightblue,
+        width: "100%",
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
 

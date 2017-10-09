@@ -14,7 +14,7 @@ export default class Account extends Component {
 
     render() {
         return (
-            <View style={[styles.inputContainer, {paddingVertical: 2}]}>
+            <View style={[styles.inputContainer, {paddingVertical: 4}]}>
                 <Text style={styles.text}>
                     {this.props.title}
                 </Text>

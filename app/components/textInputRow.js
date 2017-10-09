@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 5,
         fontSize: 16,
-        paddingLeft:15
+        paddingLeft:15,
     },
     text: {
         flex: 4,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingVertical: 12,
+        paddingVertical: 15,
         padding: 15,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
