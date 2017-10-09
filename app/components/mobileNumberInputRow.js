@@ -14,7 +14,7 @@ export default class Account extends Component {
 
     render() {
         return (
-            <View style={[styles.inputContainer, {paddingVertical: 4}]}>
+            <View style={[styles.inputContainer, {paddingVertical: 5}]}>
                 <Text style={styles.text}>
                     {this.props.title}
                 </Text>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingVertical: 2,
+        paddingVertical: 5,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
         alignItems: 'center',

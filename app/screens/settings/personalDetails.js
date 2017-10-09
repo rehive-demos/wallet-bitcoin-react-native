@@ -177,7 +177,7 @@ export default class Settings extends Component {
                                 value={this.state.id_number}
                                 onChangeText={(text) => this.setState({id_number: text})}
                             />
-                        <View style={[styles.pickerContainer, {paddingVertical: 2}]}>
+                        <View style={[styles.pickerContainer, {paddingVertical: 5}]}>
                             <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
