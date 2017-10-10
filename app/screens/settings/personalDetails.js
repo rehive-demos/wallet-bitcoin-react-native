@@ -181,7 +181,7 @@ export default class Settings extends Component {
                             <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
-                            <View style={{paddingLeft:15,flex:5,alignItems: 'flex-end'}}>
+                            <View style={{paddingLeft:22,flex:5,alignItems: 'flex-end'}}>
                                 <CountryPicker
                                     onChange={(value) => {
                                         this.setState({nationality: value.cca2});
@@ -194,12 +194,12 @@ export default class Settings extends Component {
                                 />
                             </View>
                         </View>
-                        <View style={[styles.pickerContainer]}>
-                            <Text style={[styles.text, {flex: 4}]}>
+                        <View style={[styles.pickerContainer,{paddingVertical: 15}]}>
+                            <Text style={[styles.text, {flex: 4,paddingRight:0}]}>
                                 Language
                             </Text>
                             <TouchableHighlight
-                                style={{paddingLeft:8,flex: 5, alignItems: 'flex-end', paddingRight: 10}}
+                                style={{flex: 5, alignItems: 'flex-end',paddingLeft:15}}
                                 onPress={() => {
                                     this.openLanguageModal()
                                 }}>
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
         flex: 4,
         fontSize: 18,
         borderRightWidth: 1,
-        paddingLeft:8,
+        paddingRight:4,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15,
+        padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },

@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'column',
         width: '100%',
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
     },
 })

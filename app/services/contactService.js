@@ -17,7 +17,7 @@ var contactService = {
         Expo.Contacts.EMAILS,
         Expo.Contacts.THUMBNAIL,
       ],
-      pageSize: 1,
+      pageSize: 20,
       pageOffset: 0,
     })
 

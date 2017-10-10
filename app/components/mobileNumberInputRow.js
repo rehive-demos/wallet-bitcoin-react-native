@@ -19,7 +19,7 @@ export default class Account extends Component {
                     {this.props.title}
                 </Text>
                 <View style={styles.countryPicker}>
-                    <View style={{marginLeft:-12}}>
+                    <View style={{marginLeft:-22}}>
                         <CountryPicker
                             onChange={(value) => {
                                 this.setState({cca2: value.cca2})
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         flex: 4,
         fontSize: 18,
         borderRightWidth: 1,
-        paddingLeft: 8,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
@@ -69,15 +68,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         paddingVertical: 5,
+        paddingHorizontal:10,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
         alignItems: 'center',
-        padding: 15,
     },
     countryPicker: {
         flex: 5,
         flexDirection: 'row',
-        paddingLeft: 15,
+        paddingLeft: 20,
     }
 })
 

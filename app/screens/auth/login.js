@@ -79,10 +79,10 @@ export default class Login extends Component {
     render() {
         return (
             <View style={{flex: 1}}>
+                <Header
+                    title="Login"
+                />
                 <View style={styles.mainContainer}>
-                    <Text style={{color:Colors.lightblue, fontSize:36,textAlign:'center',marginBottom:40}}>
-                        Login
-                    </Text>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
                         <ScrollView style={{width: '100%'}} keyboardDismissMode={'interactive'}>
                             <TextInput
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        padding: 15,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -164,11 +163,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     login: {
-        padding: 10,
         marginTop: 10,
         height: 50,
         backgroundColor: Colors.lightblue,
-        width: "100%",
+        marginHorizontal:10,
+        alignSelf: 'stretch',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',

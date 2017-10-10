@@ -116,7 +116,7 @@ export default class Address extends Component {
                             <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
-                            <View style={{paddingLeft: 15, flex: 5, alignItems: 'flex-end'}}>
+                            <View style={{paddingLeft: 22, flex: 5, alignItems: 'flex-end'}}>
                                 <CountryPicker
                                     onChange={(value) => {
                                         this.setState({country: value.cca2});
@@ -171,14 +171,13 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 18,
         borderRightWidth: 1,
-        paddingLeft: 8,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
     pickerContainer: {
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical:2,
+        paddingHorizontal: 10,
+        paddingVertical:5,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',

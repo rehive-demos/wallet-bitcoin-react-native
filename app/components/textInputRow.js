@@ -27,13 +27,12 @@ const styles = StyleSheet.create({
     input: {
         flex: 5,
         fontSize: 16,
-        paddingLeft:15,
+        paddingHorizontal:10,
     },
     text: {
         flex: 4,
         fontSize: 18,
         borderRightWidth: 1,
-        paddingLeft:8,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         paddingVertical: 15,
-        padding: 15,
+        paddingHorizontal: 10,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },

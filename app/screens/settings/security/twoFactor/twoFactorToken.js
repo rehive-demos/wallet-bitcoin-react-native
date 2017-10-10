@@ -9,9 +9,11 @@ import {
     Button,
     TouchableHighlight,
     KeyboardAvoidingView,
-    Alert
+    Alert,
+    Clipboard
 } from 'react-native'
 import Header from './../../../../components/header'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Colors from './../../../../config/colors'
 import AuthService from './../../../../services/authService'
 import resetNavigation from './../../../../util/resetNavigation'
@@ -117,6 +119,21 @@ export default class Receive extends Component {
                             <Text style={styles.infoDetailsText}>
                                 {this.state.issuer}
                             </Text>
+                            <TouchableHighlight
+                                underlayColor={'white'}
+                                onPress={() => {
+                                    Clipboard.setString(this.state.issuer)
+                                    Alert.alert(
+                                        null,
+                                        'Copied',
+                                    )
+                                }}>
+                                <Icon
+                                    name="content-copy"
+                                    size={30}
+                                    color={Colors.black}
+                                />
+                            </TouchableHighlight>
                         </View>
                         <View style={[styles.infoContainer, {backgroundColor: 'white'}]}>
                             <Text style={styles.infoTitleText}>
@@ -125,6 +142,21 @@ export default class Receive extends Component {
                             <Text style={styles.infoDetailsText}>
                                 {this.state.account}
                             </Text>
+                            <TouchableHighlight
+                                underlayColor={'white'}
+                                onPress={() => {
+                                    Clipboard.setString(this.state.account)
+                                    Alert.alert(
+                                        null,
+                                        'Copied',
+                                    )
+                                }}>
+                                <Icon
+                                    name="content-copy"
+                                    size={30}
+                                    color={Colors.black}
+                                />
+                            </TouchableHighlight>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoTitleText}>
@@ -133,6 +165,21 @@ export default class Receive extends Component {
                             <Text style={styles.infoDetailsText}>
                                 {this.state.key}
                             </Text>
+                            <TouchableHighlight
+                                underlayColor={'white'}
+                                onPress={() => {
+                                    Clipboard.setString(this.state.key)
+                                    Alert.alert(
+                                        null,
+                                        'Copied',
+                                    )
+                                }}>
+                                <Icon
+                                    name="content-copy"
+                                    size={30}
+                                    color={Colors.black}
+                                />
+                            </TouchableHighlight>
                         </View>
                         <TextInput
                             title="Enter your token"

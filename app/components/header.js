@@ -21,7 +21,6 @@ export default class Account extends Component {
                 name="ios-arrow-back"
                 size={35}
                 color="white"
-                style={{ paddingLeft: 10 }}
                 onPress={() => this.props.navigation.goBack()}
               />
             </TouchableOpacity> :
