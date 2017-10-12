@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, Alert, StyleSheet, KeyboardAvoidingView, TouchableHighlight, Text} from 'react-native'
 import AuthService from './../../services/authService'
-import TextInput from './../../components/textInputRow'
+import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -54,14 +54,12 @@ export default class ForgetPassword extends Component {
                             title="Email"
                             placeholder="e.g john@gmail.com"
                             autoCapitalize="none"
-                            underlineColorAndroid="white"
                             keyboardType="email-address"
                             onChangeText={(email) => this.setState({email})}
                         />
                         <TextInput
                             title="Company"
                             placeholder="e.g rehive"
-                            underlineColorAndroid="white"
                             autoCapitalize="none"
                             onChangeText={(company) => this.setState({company})}
                         />
@@ -83,7 +81,6 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        padding: 15,
     },
     container: {
         flexDirection: 'column',

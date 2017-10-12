@@ -11,15 +11,15 @@ var contactService = {
       )
       return
     }
-    /*const getTotal = await Expo.Contacts.getContactsAsync({
+    const getTotal = await Expo.Contacts.getContactsAsync({
       fields: [
         Expo.Contacts.PHONE_NUMBERS,
         Expo.Contacts.EMAILS,
         Expo.Contacts.THUMBNAIL,
       ],
-      pageSize: 20,
+      pageSize: 60,
       pageOffset: 0,
-    })*/
+    })
 
     const contacts = await Expo.Contacts.getContactsAsync({
       fields: [
@@ -27,7 +27,7 @@ var contactService = {
         Expo.Contacts.EMAILS,
         Expo.Contacts.THUMBNAIL,
       ],
-      pageSize: 1,
+      pageSize: getTotal.total,
       pageOffset: 0,
     })
 

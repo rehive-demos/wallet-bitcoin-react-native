@@ -90,7 +90,6 @@ export default class twoFactorSmsAuth extends Component {
                             autoCapitalize="none"
                             keyboardType="numeric"
                             value={this.state.mobile_number}
-                            underlineColorAndroid="white"
                             onChangeText={(mobile) => this.setState({mobile_number: mobile})}
                         />
                     </View>

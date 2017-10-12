@@ -92,7 +92,6 @@ export default class AmountEntry extends Component {
                             placeholder="Enter amount here"
                             autoCapitalize="none"
                             keyboardType="numeric"
-                            underlineColorAndroid="white"
                             onChangeText={this.changeAmount}
                         />
                     </View>

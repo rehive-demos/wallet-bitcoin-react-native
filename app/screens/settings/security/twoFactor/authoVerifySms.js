@@ -62,7 +62,6 @@ export default class AmountEntry extends Component {
                             placeholder="OTP"
                             autoCapitalize="none"
                             keyboardType="numeric"
-                            underlineColorAndroid="white"
                             onChangeText={(token) => this.setState({token})}
                         />
                     </View>
