@@ -53,7 +53,6 @@ export default class Login extends Component {
             const loginInfo = responseJson.data
             await AsyncStorage.setItem("token", loginInfo.token)
             let twoFactorResponse = await AuthService.twoFactorAuth()
-            console.log(twoFactorResponse.status)
             if (twoFactorResponse.status === "success") {
                 const authInfo = twoFactorResponse.data
                 if (authInfo.sms === true || authInfo.token===true) {

@@ -11,7 +11,7 @@ import {
 import Header from './../../../../components/header'
 import Colors from './../../../../config/colors'
 import AuthService from './../../../../services/authService'
-import TextInput from './../../../../components/textInput'
+import TextInput from './../../../../components/mobileNumberInput'
 export default class twoFactorSmsAuth extends Component {
     static navigationOptions = {
         title: 'SMS',
@@ -21,7 +21,7 @@ export default class twoFactorSmsAuth extends Component {
         super(props)
         const params = this.props.navigation.state.params
         this.state = {
-            mobile_number: '',
+            mobile_number: '+1',
             delete: params.authInfo.sms,
             authInfo: params.authInfo
         }
@@ -38,6 +38,10 @@ export default class twoFactorSmsAuth extends Component {
                 responseJson.message,
                 [{text: 'OK'}])
         }
+    }
+
+    changeCountryCode = (code) => {
+        this.setState({ mobile_number: '+' + code })
     }
 
     deleteTwoFactorAuth = async () => {
@@ -88,9 +92,9 @@ export default class twoFactorSmsAuth extends Component {
                             title="Enter valid mobile number"
                             placeholder="e.g. +8801714632656"
                             autoCapitalize="none"
-                            keyboardType="numeric"
                             value={this.state.mobile_number}
                             onChangeText={(mobile) => this.setState({mobile_number: mobile})}
+                            changeCountryCode={this.changeCountryCode}
                         />
                     </View>
                     <TouchableHighlight

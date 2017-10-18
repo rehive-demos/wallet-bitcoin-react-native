@@ -30,7 +30,6 @@ export default class Address extends Component {
 
     getAddress = async () => {
         let responseJson = await UserInfoService.getAddress()
-        console.log(responseJson)
         if (responseJson.status === "success") {
             const address = responseJson.data
             this.setState({

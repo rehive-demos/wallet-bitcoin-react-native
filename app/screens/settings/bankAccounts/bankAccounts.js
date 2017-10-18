@@ -23,7 +23,6 @@ export default class BankAccounts extends Component {
     this.getData()
   }
   goToEdit = (reference) => {
-    console.log(reference)
     this.props.navigation.navigate("EditBankAccount", { reference })
   }
 

@@ -24,7 +24,6 @@ export default class AmountEntry extends Component {
     constructor(props) {
         super(props)
         const params = this.props.navigation.state.params
-        console.log(params)
         this.state = {
             reference: params.reference,
             amount: 0,

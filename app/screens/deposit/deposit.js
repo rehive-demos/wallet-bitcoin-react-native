@@ -26,7 +26,6 @@ export default class Deposit extends Component {
 
   getBankInfo = async () => {
     let responseJson = await UserInfoService.getDepositInfo()
-    console.log(responseJson)
     if (responseJson.status === "success") {
       if (responseJson.data[0]) {
         this.setState({
