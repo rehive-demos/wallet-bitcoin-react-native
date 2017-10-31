@@ -145,6 +145,7 @@ export default class SendTo extends Component {
                 title="Recipient"
                 placeholder="Enter email, stellar address or mobile"
                 autoCapitalize="none"
+                underlineColorAndroid="white"
                 value={this.state.searchText}
                 onChange={this.searchTextChanged.bind(this)}
               />

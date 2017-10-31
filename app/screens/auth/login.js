@@ -12,7 +12,7 @@ import {
 import AuthService from './../../services/authService'
 import Auth from './../../util/auth'
 import ResetNavigation from './../../util/resetNavigation'
-import TextInput from './../../components/textInputRow'
+import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -79,6 +79,8 @@ export default class Login extends Component {
         return (
             <View style={{flex: 1}}>
                 <Header
+                    navigation={this.props.navigation}
+                    back
                     title="Login"
                 />
                 <View style={styles.mainContainer}>
@@ -126,13 +128,6 @@ export default class Login extends Component {
                             Forgot Password?
                         </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.register}
-                        onPress={() => this.props.navigation.navigate("Signup")}>
-                        <Text style={{color: Colors.lightblue}}>
-                            Create New Account
-                        </Text>
-                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -165,9 +160,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         height: 50,
         backgroundColor: Colors.lightblue,
-        marginHorizontal:10,
+        marginHorizontal:20,
         alignSelf: 'stretch',
-        borderRadius: 8,
+        borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
     },

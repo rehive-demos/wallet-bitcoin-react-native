@@ -5,6 +5,7 @@ import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
 import Transactions from './transactions'
 import Auth from './../../util/auth'
+import resetNavigation from './../../util/resetNavigation'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -77,8 +78,10 @@ export default class Home extends Component {
     }
   }
 
-  logout = () => {
-    Auth.logout(this.props.navigation)
+  logout = async () => {
+      await AsyncStorage.removeItem("token")
+      await AsyncStorage.removeItem("user")
+      resetNavigation.dispatchToSingleRoute(this.props.navigation, "InitialScreen")
   }
 
   showDialog = (item) => {

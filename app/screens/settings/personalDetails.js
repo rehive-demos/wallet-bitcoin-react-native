@@ -17,7 +17,7 @@ import UserInfoService from './../../services/userInfoService'
 import ResetNavigation from './../../util/resetNavigation'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
-import TextInput from './../../components/textInputRow'
+import TextInput from './../../components/textInput'
 
 const languages = {
     "en": "English",
@@ -42,6 +42,9 @@ export default class Settings extends Component {
             language: '',
             modalVisible: false,
             languageModalVisible: false,
+            first_name_color:false,
+            last_name_color:false,
+            id_no_color:false
         }
     }
 
@@ -177,11 +180,11 @@ export default class Settings extends Component {
                                 value={this.state.id_number}
                                 onChangeText={(text) => this.setState({id_number: text})}
                             />
-                        <View style={[styles.pickerContainer, {paddingVertical: 5}]}>
+                        <View style={[styles.pickerContainer,{paddingVertical: 20}]}>
                             <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
-                            <View style={{paddingLeft:22,flex:5,alignItems: 'flex-end'}}>
+                            <View style={{flex:5,alignItems: 'flex-end'}}>
                                 <CountryPicker
                                     onChange={(value) => {
                                         this.setState({nationality: value.cca2});
@@ -194,12 +197,12 @@ export default class Settings extends Component {
                                 />
                             </View>
                         </View>
-                        <View style={[styles.pickerContainer,{paddingVertical: 15}]}>
+                        <View style={[styles.pickerContainer]}>
                             <Text style={[styles.text, {flex: 4,paddingRight:0}]}>
                                 Language
                             </Text>
                             <TouchableHighlight
-                                style={{flex: 5, alignItems: 'flex-end',paddingLeft:15}}
+                                style={{flex: 5, alignItems: 'flex-end'}}
                                 onPress={() => {
                                     this.openLanguageModal()
                                 }}>
@@ -310,18 +313,9 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 4,
-        fontSize: 18,
-        borderRightWidth: 1,
-        paddingRight:4,
+        fontSize: 16,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.lightgray,
     },
     submit: {
         padding: 10,
@@ -335,18 +329,18 @@ const styles = StyleSheet.create({
     },
     pickerContainer: {
         flexDirection: 'row',
-        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10,
+        paddingVertical: 30,
+        marginHorizontal:20,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },
     profile: {
-        height: 130,
+        height: 140,
         flexDirection: 'column',
-        backgroundColor: 'white',
-        alignItems: 'center',
+        backgroundColor: Colors.lightgray,
+        paddingHorizontal:20,
         justifyContent: 'center',
     },
     photo: {

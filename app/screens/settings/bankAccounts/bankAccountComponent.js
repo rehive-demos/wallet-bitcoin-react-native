@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {ScrollView, StyleSheet, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
-import TextInput from './../../../components/textInputRow'
+import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
 
 export default class BankAccountComponent extends Component {

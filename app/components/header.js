@@ -16,7 +16,7 @@ export default class Account extends Component {
             null
           }
           {this.props.back ?
-            <TouchableOpacity style={{ padding: 10 }}>
+            <TouchableOpacity style={{ padding: 20 }}>
               <Icon
                 name="ios-arrow-back"
                 size={35}

@@ -13,6 +13,7 @@ export default class BitcoinAddressComponent extends Component {
             title="Bitcoin Address"
             placeholder="e.g akjsfndj2432askfn"
             autoCapitalize="none"
+            underlineColorAndroid="white"
             value={this.props.values.address}
             onChangeText={this.props.updateAddress}
           />

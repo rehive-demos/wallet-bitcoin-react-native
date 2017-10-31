@@ -45,11 +45,12 @@ export default class AmountEntry extends Component {
           title="Add email address"
         />
         <KeyboardAvoidingView style={styles.container} behavior={'padding'} >
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1,paddingTop:10 }}>
             <TextInput
               title="Enter email address"
               placeholder="e.g. john@gmail.com"
               autoCapitalize="none"
+              underlineColorAndroid="white"
               onChangeText={(email) => this.setState({ email })}
             />
           </View>

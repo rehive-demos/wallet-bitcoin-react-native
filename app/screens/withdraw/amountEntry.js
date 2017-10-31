@@ -92,6 +92,7 @@ export default class AmountEntry extends Component {
                             placeholder="Enter amount here"
                             autoCapitalize="none"
                             keyboardType="numeric"
+                            underlineColorAndroid="white"
                             onChangeText={this.changeAmount}
                         />
                     </View>
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+        paddingTop:10
     },
     submit: {
         padding: 10,

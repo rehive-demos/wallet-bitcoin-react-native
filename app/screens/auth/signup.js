@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {View, Alert, StyleSheet, ScrollView, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
 import AuthService from './../../services/authService'
-import TextInput from './../../components/textInputRow'
-import MobileInput from './../../components/mobileNumberInputRow'
+import TextInput from './../../components/textInput'
+import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        paddingVertical: 15,
+        paddingVertical: 10,
     },
     container: {
         flex: 1,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         height: 50,
-        borderRadius: 8,
+        borderRadius: 25,
         backgroundColor: Colors.lightblue,
         marginHorizontal:10,
         alignSelf: 'stretch',

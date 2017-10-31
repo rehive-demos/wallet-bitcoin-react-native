@@ -2,6 +2,7 @@ import {StackNavigator} from 'react-navigation'
 
 import Home from './drawerNavigator'
 import Login from './../screens/auth/login'
+import InitialScreen from './../screens/home/initialScreen'
 import Signup from './../screens/auth/signup'
 import AuthVerifyMobile from './../screens/auth/verifyMobile'
 import ForgetPassword from './../screens/auth/forgetPassword'
@@ -44,6 +45,9 @@ import MobileNotifications from './../screens/settings/notifications/mobileNotif
 const Stack = {
     Home: {
         screen: Home,
+    },
+    InitialScreen:{
+        screen:InitialScreen
     },
     Login: {
         screen: Login,

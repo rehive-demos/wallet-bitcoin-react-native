@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, Alert, Text, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableHighlight} from 'react-native'
 import AuthService from './../../../services/authService'
-import TextInput from './../../../components/textInputRow'
+import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
 

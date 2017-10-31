@@ -20,10 +20,9 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 46,
-        width: "100%",
+        height: 26,
         paddingLeft: 0,
-        fontSize: 16,
+        fontSize: 22,
         color: Colors.black,
         fontWeight: 'normal',
         borderColor: 'white',
@@ -31,13 +30,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
+        paddingBottom:15,
         color: Colors.black,
     },
     inputContainer: {
         flexDirection: 'column',
-        width: '100%',
-        paddingHorizontal: 10,
+        marginLeft: 20,
+        marginRight:20,
+        paddingVertical:10,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
     },

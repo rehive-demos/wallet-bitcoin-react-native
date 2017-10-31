@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+        paddingTop:10
     },
     submit: {
         padding: 10,

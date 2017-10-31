@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, Alert, Text, StyleSheet, KeyboardAvoidingView, ScrollView, TouchableHighlight} from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal'
 import UserInfoService from './../../services/userInfoService'
-import TextInput from './../../components/textInputRow'
+import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -115,7 +115,7 @@ export default class Address extends Component {
                             <Text style={[styles.text, {flex: 4}]}>
                                 Country
                             </Text>
-                            <View style={{paddingLeft: 22, flex: 5, alignItems: 'flex-end'}}>
+                            <View style={{flex: 5, alignItems: 'flex-end'}}>
                                 <CountryPicker
                                     onChange={(value) => {
                                         this.setState({country: value.cca2});
@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+        paddingTop:10
     },
     submit: {
         padding: 10,
@@ -168,16 +169,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontSize: 18,
-        borderRightWidth: 1,
+        fontSize: 16,
         borderRightColor: Colors.lightgray,
         color: Colors.black,
     },
     pickerContainer: {
         flexDirection: 'row',
-        paddingHorizontal: 10,
-        paddingVertical:5,
-        width: '100%',
+        marginHorizontal: 20,
+        paddingVertical:20,
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomWidth: 1,

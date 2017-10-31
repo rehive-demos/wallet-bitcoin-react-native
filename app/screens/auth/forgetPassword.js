@@ -55,12 +55,14 @@ export default class ForgetPassword extends Component {
                             placeholder="e.g john@gmail.com"
                             autoCapitalize="none"
                             keyboardType="email-address"
+                            underlineColorAndroid="white"
                             onChangeText={(email) => this.setState({email})}
                         />
                         <TextInput
                             title="Company"
                             placeholder="e.g rehive"
                             autoCapitalize="none"
+                            underlineColorAndroid="white"
                             onChangeText={(company) => this.setState({company})}
                         />
                         <TouchableHighlight
@@ -84,8 +86,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'center'
     },
     input: {
         height: 60,
@@ -100,9 +101,9 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         height: 50,
-        borderRadius: 8,
+        marginHorizontal:20,
+        borderRadius: 25,
         backgroundColor: Colors.lightblue,
-        width: "100%",
         alignItems: 'center',
         justifyContent: 'center',
     },
