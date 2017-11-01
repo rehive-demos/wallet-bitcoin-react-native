@@ -78,7 +78,7 @@ export default class BankAccountComponent extends Component {
                     style={styles.submit}
                     ref="save"
                     onPress={this.props.save}>
-                    <Text style={{color: 'white', fontSize: 18}}>
+                    <Text style={{color: 'white', fontSize: 20}}>
                         Save
                     </Text>
                 </TouchableHighlight>
@@ -94,10 +94,11 @@ const styles = StyleSheet.create({
     },
     submit: {
         marginTop: 10,
-        height: 65,
+        marginBottom:10,
+        marginHorizontal:20,
+        borderRadius:25,
+        height: 50,
         backgroundColor: Colors.lightblue,
-        width: "100%",
-        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },

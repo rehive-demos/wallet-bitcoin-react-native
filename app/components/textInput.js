@@ -3,13 +3,29 @@ import {View, Text, StyleSheet, TextInput} from 'react-native'
 import Colors from './../config/colors'
 
 export default class Account extends Component {
+    constructor() {
+        super();
+        this.state = {
+            textColor: Colors.black,
+            borderColor: Colors.lightgray
+        }
+    }
+
     render() {
         return (
-            <View style={styles.inputContainer}>
-                <Text style={styles.text}>
+            <View style={[styles.inputContainer,{borderBottomColor: this.state.borderColor}]}>
+                <Text style={[styles.text,{color:this.state.textColor}]}>
                     {this.props.title}
                 </Text>
                 <TextInput
+                    onFocus={() => this.setState({
+                        textColor: Colors.lightblue,
+                        borderColor: Colors.lightblue
+                    })}
+                    onBlur={() => this.setState({
+                        textColor: Colors.black,
+                        borderColor: Colors.lightgray
+                    })}
                     {...this.props}
                     style={styles.input}
                 />
@@ -31,15 +47,13 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        paddingBottom:15,
-        color: Colors.black,
+        paddingBottom: 15,
     },
     inputContainer: {
         flexDirection: 'column',
         marginLeft: 20,
-        marginRight:20,
-        paddingVertical:10,
+        marginRight: 20,
+        paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.lightgray,
     },
 })

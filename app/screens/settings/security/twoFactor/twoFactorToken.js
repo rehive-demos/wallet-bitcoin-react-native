@@ -194,7 +194,7 @@ export default class Receive extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.saveToken()}>
-                        <Text style={{color: 'white', fontSize: 18}}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Save
                         </Text>
                     </TouchableHighlight>
@@ -204,7 +204,7 @@ export default class Receive extends Component {
                             style={[styles.submit, {backgroundColor: Colors.red}]}
                             onPress={() => this.deleteTwoFactorAuth()}
                         >
-                            <Text style={{color: 'white', fontSize: 18}}> Delete</Text>
+                            <Text style={{color: 'white', fontSize: 20}}> Delete</Text>
                         </TouchableHighlight>
                     }
                 </KeyboardAvoidingView>
@@ -254,11 +254,11 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     submit: {
-        padding: 10,
-        height: 65,
+        marginBottom: 10,
+        marginHorizontal: 20,
+        height: 50,
+        borderRadius: 25,
         backgroundColor: Colors.lightblue,
-        width: "100%",
-        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },

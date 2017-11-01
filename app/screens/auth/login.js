@@ -116,7 +116,7 @@ export default class Login extends Component {
                         <TouchableHighlight
                             style={styles.login}
                             onPress={this.login}>
-                            <Text style={{color: 'white'}}>
+                            <Text style={{color: 'white',fontSize:20}}>
                                 Login
                             </Text>
                         </TouchableHighlight>
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom:10
     },
     register: {
         padding: 10,

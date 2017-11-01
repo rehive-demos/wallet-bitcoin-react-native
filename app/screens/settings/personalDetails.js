@@ -215,7 +215,7 @@ export default class Settings extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.save()}>
-                        <Text style={{color: 'white', fontSize: 18}}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Save
                         </Text>
                     </TouchableHighlight>
@@ -318,12 +318,12 @@ const styles = StyleSheet.create({
         color: Colors.black,
     },
     submit: {
-        padding: 10,
         marginTop: 10,
-        height: 65,
+        marginBottom: 10,
+        marginHorizontal: 20,
+        height: 50,
+        borderRadius: 25,
         backgroundColor: Colors.lightblue,
-        width: "100%",
-        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },

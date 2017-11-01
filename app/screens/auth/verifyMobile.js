@@ -52,6 +52,7 @@ export default class AmountEntry extends Component {
               placeholder="OTP"
               autoCapitalize="none"
               keyboardType="numeric"
+              underlineColorAndroid="white"
               onChangeText={(otp) => this.setState({ otp })}
             />
           </View>
@@ -64,7 +65,7 @@ export default class AmountEntry extends Component {
             </Text>
             </TouchableHighlight>
             <TouchableHighlight
-              style={styles.submit}
+              style={[styles.submit,{marginLeft:25}]}
               onPress={this.verify}>
               <Text style={{ color: 'white', fontSize: 20 }}>
                 Verify
@@ -78,22 +79,25 @@ export default class AmountEntry extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-  },
-  submit: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: Colors.lightblue,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttons: {
-    height: 65,
-    flexDirection: 'row',
-    alignSelf: 'stretch',
-  },
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'white',
+        paddingTop:10,
+    },
+    submit: {
+        flex: 1,
+        marginBottom:10,
+        backgroundColor: Colors.lightblue,
+        borderRadius: 25,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttons: {
+        height: 65,
+        flexDirection: 'row',
+        alignSelf: 'stretch',
+        paddingHorizontal:25,
+    },
 })

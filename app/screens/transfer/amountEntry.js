@@ -116,7 +116,7 @@ export default class AmountEntry extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={this.send}>
-                        <Text style={{color: 'white', fontSize: 18}}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Send
                         </Text>
                     </TouchableHighlight>
@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
         paddingTop:10
     },
     submit: {
-        padding: 10,
-        height: 65,
+        marginHorizontal:20,
+        marginBottom:10,
+        borderRadius:25,
+        height: 50,
         backgroundColor: Colors.lightblue,
-        width: "100%",
-        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },

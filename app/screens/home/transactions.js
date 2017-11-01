@@ -114,7 +114,7 @@ export default class Transactions extends Component {
   render() {
     if (this.state.noTransaction) {
       return (
-        <View style={{ flex: 1, backgroundColor: Colors.lightgray, padding: 10 }}>
+        <View style={{ flex: 1, backgroundColor: Colors.lightgray, paddingVertical: 10 }}>
           <ScrollView
             refreshControl={
               <RefreshControl
@@ -122,7 +122,7 @@ export default class Transactions extends Component {
                 onRefresh={this.handleRefresh.bind(this)}
               />
             }>
-            <View style={{ marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20 }}>
+            <View style={{ marginTop: 10, flexDirection: 'column', backgroundColor: 'white', paddingVertical: 20 }}>
               <Text style={{ fontSize: 24, fontWeight: 'normal', color: Colors.black }}>
                 Welcome to {this.state.company.name}
               </Text>

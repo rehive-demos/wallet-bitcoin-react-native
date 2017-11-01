@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        paddingTop:10,
     },
     submit: {
-        padding: 10,
         marginTop: 10,
         height: 50,
         borderRadius: 25,
