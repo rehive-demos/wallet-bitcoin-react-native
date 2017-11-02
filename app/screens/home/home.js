@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, AsyncStorage, TouchableHighlight, Text, Image} from 'react-native'
+import Swipeout from 'react-native-swipeout';
 import moment from 'moment'
 import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
@@ -17,10 +18,12 @@ export default class Home extends Component {
         super(props)
         this.state = {
             balance: 0,
+            showTransaction: false,
             symbol: '',
             dataToShow: {
                 currency: {},
             },
+            reference: '',
         }
     }
 
@@ -69,7 +72,10 @@ export default class Home extends Component {
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0]
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
-            this.setState({symbol: account.currency.symbol})
+            this.setState({
+                symbol: account.currency.symbol,
+                reference: responseJson.data.results[0].reference
+            })
             this.setState({balance: this.setBalance(account.balance, account.currency.divisibility)})
         }
         else {
@@ -95,25 +101,68 @@ export default class Home extends Component {
     }
 
     render() {
+        let swipeBtns = [{
+            text: 'Show',
+            backgroundColor: Colors.lightgray,
+            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+            onPress: () => this.props.navigation.navigate(
+                'AccountCurrencies',
+                {reference: this.state.reference}
+            )
+        }];
         return (
             <View style={styles.container}>
                 <Header
                     navigation={this.props.navigation}
                     drawer
+                    homeRight
                 />
-                <View style={styles.balance}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontSize: 25, color: 'white'}}>
-                            {this.state.symbol}
+                <TouchableHighlight
+                    style={{flex: 1}}
+                    onPress={() => this.setState({showTransaction: true})}
+                >
+                    <View style={styles.balance}>
+                        <Text style={{fontSize: 20, color: 'white'}}>
+                            Cheque Account
                         </Text>
-                        <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
-                            {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
-                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={{fontSize: 25, color: 'white'}}>
+                                {this.state.symbol}
+                            </Text>
+                            <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
+                                {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
+                            </Text>
+                        </View>
                     </View>
-                </View>
+                </TouchableHighlight>
+                {/*<View style={{
+                    position: 'absolute',
+                    backgroundColor:'white',
+                    height:30,
+                    width:30,
+                    borderRadius:30,
+                    top:130,
+                    right:40,
+                    alignItems:'center',
+                    justifyContent:'center',
+                    shadowColor: Colors.lightblue,
+                    shadowOffset: {
+                        width: 0,
+                        height: 3
+                    },
+                    shadowRadius: 5,
+                    shadowOpacity: 1.0,
+                    elevation:3
+                }}>
+                    <Text style={{fontSize: 24, color: Colors.lightblue}}>
+                        +
+                    </Text>
+                </View>*/}
                 <View style={styles.transaction}>
+                    {   this.state.showTransaction &&
                     <Transactions updateBalance={this.getBalanceInfo} showDialog={this.showDialog}
                                   logout={this.logout}/>
+                    }
                 </View>
                 <View style={styles.buttonbar}>
                     <TouchableHighlight
@@ -124,7 +173,7 @@ export default class Home extends Component {
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={styles.submit}
+                        style={[styles.submit, {marginLeft: 25}]}
                         onPress={() => this.props.navigation.navigate("SendTo", {reference: ""})}>
                         <Text style={{color: 'white', fontSize: 20}}>
                             Send
@@ -183,7 +232,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.lightblue,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingTop: 20,
     },
     transaction: {
         flex: 5,
@@ -192,14 +240,15 @@ const styles = StyleSheet.create({
     },
     buttonbar: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: 65,
-        backgroundColor: Colors.lightblue,
+        paddingHorizontal: 25,
+        justifyContent: 'center',
+        paddingVertical: 10
     },
     submit: {
-        height: "100%",
-        width: "50%",
-        alignSelf: 'stretch',
+        backgroundColor: Colors.lightblue,
+        height: 50,
+        borderRadius: 25,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
