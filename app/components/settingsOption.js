@@ -31,7 +31,7 @@ export default class Options extends Component {
 const styles = StyleSheet.create({
     options: {
         paddingVertical: 10,
-        marginHorizontal: 20,
+        paddingHorizontal: 20,
         height: 60,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,

@@ -29,7 +29,7 @@ export default class Account extends Component {
                 </View>
                 <View style={styles.title}>
                     {this.props.title ?
-                        <Text style={styles.titleText}>
+                        <Text style={[styles.titleText,{fontSize:this.props.smallTitle?16:20}]}>
                             {this.props.title}
                         </Text> :
                         null
@@ -48,9 +48,6 @@ export default class Account extends Component {
                         </TouchableOpacity> :
                         null
                     }
-                </View>
-
-                <View style={styles.rightIcon}>
                     {this.props.homeRight ?
                         <TouchableOpacity style={{padding: 10}}>
                             <Icon
@@ -58,10 +55,10 @@ export default class Account extends Component {
                                 size={30}
                                 color="white"
                                 style={{paddingRight: 10}}
-                                onPress={() => this.props.navigation.navigate(
-                                    'AccountCurrencies',
-                                    {reference:this.props.homeRight}
-                                    )}
+                                /*onPress={() => this.props.navigation.navigate(
+                                 'AccountCurrencies',
+                                 {reference:this.props.homeRight}
+                                 )}*/
                             />
                         </TouchableOpacity> :
                         null

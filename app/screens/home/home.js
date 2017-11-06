@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, AsyncStorage, TouchableHighlight, Text, Image} from 'react-native'
+import {View, StyleSheet, AsyncStorage, TouchableHighlight, Text, Image, TouchableWithoutFeedback } from 'react-native'
 import Swipeout from 'react-native-swipeout';
 import moment from 'moment'
 import PopupDialog from 'react-native-popup-dialog'
@@ -117,7 +117,7 @@ export default class Home extends Component {
                     drawer
                     homeRight
                 />
-                <TouchableHighlight
+                <TouchableWithoutFeedback
                     style={{flex: 1}}
                     onPress={() => this.setState({showTransaction: true})}
                 >
@@ -134,7 +134,7 @@ export default class Home extends Component {
                             </Text>
                         </View>
                     </View>
-                </TouchableHighlight>
+                </TouchableWithoutFeedback >
                 {/*<View style={{
                     position: 'absolute',
                     backgroundColor:'white',
@@ -236,13 +236,14 @@ const styles = StyleSheet.create({
     transaction: {
         flex: 5,
         paddingHorizontal: 20,
-        backgroundColor: Colors.transactionBackground,
+        backgroundColor: Colors.lightgray,
     },
     buttonbar: {
         flexDirection: 'row',
         paddingHorizontal: 25,
         justifyContent: 'center',
-        paddingVertical: 10
+        paddingVertical: 10,
+        backgroundColor: Colors.lightgray,
     },
     submit: {
         backgroundColor: Colors.lightblue,

@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+        paddingTop:10
     },
     input: {
         height: 60,

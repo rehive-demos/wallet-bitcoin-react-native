@@ -122,7 +122,7 @@ export default class Transactions extends Component {
                 onRefresh={this.handleRefresh.bind(this)}
               />
             }>
-            <View style={{ marginTop: 10, flexDirection: 'column', backgroundColor: 'white', paddingVertical: 20 }}>
+            <View style={{ marginTop: 10, flexDirection: 'column', backgroundColor: Colors.lightgray, paddingVertical: 20 }}>
               <Text style={{ fontSize: 24, fontWeight: 'normal', color: Colors.black }}>
                 Welcome to {this.state.company.name}
               </Text>

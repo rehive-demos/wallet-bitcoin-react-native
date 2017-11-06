@@ -103,7 +103,7 @@ export default class AmountEntry extends Component {
                             underlineColorAndroid="white"
                             onChangeText={this.amountChanged}
                         />
-                        <TextInputMultiLine
+                        <TextInput
                             title="Note"
                             placeholder="Enter note here"
                             placeholderTextColor={Colors.gray}
