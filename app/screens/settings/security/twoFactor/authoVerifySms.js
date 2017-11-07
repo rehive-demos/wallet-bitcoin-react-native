@@ -62,6 +62,7 @@ export default class AmountEntry extends Component {
                             placeholder="OTP"
                             autoCapitalize="none"
                             keyboardType="numeric"
+                            underlineColorAndroid="white"
                             onChangeText={(token) => this.setState({token})}
                         />
                     </View>
@@ -86,6 +87,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
+        paddingTop:10,
     },
     textInputContainer: {
         paddingVertical: 16

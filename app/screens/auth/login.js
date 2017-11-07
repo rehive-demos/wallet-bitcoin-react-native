@@ -85,7 +85,7 @@ export default class Login extends Component {
                 />
                 <View style={styles.mainContainer}>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
-                        <ScrollView style={{width: '100%'}} keyboardDismissMode={'interactive'}>
+                        <ScrollView keyboardDismissMode={'interactive'}>
                             <TextInput
                                 title="Email"
                                 autoCapitalize="none"
@@ -128,6 +128,7 @@ export default class Login extends Component {
                             Forgot Password?
                         </Text>
                     </TouchableHighlight>
+                    <View style={{height:130,backgroundColor:'white'}}/>
                 </View>
             </View>
         )
@@ -138,46 +139,22 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingVertical: 10,
+        justifyContent:'flex-start'
     },
     container: {
-        width: "100%",
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    input: {
-        height: 60,
-        width: "100%",
-        alignSelf: 'stretch',
-        padding: 10,
-        marginTop: 20,
-        borderColor: 'white',
-        borderWidth: 1,
+        flex:1,
+        paddingTop:10,
     },
     login: {
         marginTop: 10,
         height: 50,
-        backgroundColor: Colors.lightblue,
-        marginHorizontal:20,
-        alignSelf: 'stretch',
         borderRadius: 25,
+        backgroundColor: Colors.lightblue,
+        marginHorizontal:10,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom:10
-    },
-    register: {
-        padding: 10,
-        marginTop: 20,
-        height: 40,
-        backgroundColor: 'white',
-        width: "60%",
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: Colors.lightblue,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     forgetPassword: {
         padding: 10,

@@ -68,7 +68,7 @@ export default class ForgetPassword extends Component {
                         <TouchableHighlight
                             style={styles.submit}
                             onPress={() => this.sendEmail()}>
-                            <Text style={{color: 'white'}}>
+                            <Text style={{color: 'white',fontSize:20}}>
                                 Send reset email
                             </Text>
                         </TouchableHighlight>

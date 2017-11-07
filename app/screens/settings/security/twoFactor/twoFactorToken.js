@@ -107,7 +107,7 @@ export default class Receive extends Component {
                     title="Token authentication"
                 />
                 <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'} keyboardVerticalOffset={85}>
-                    <ScrollView style={{flex: 1}}>
+                    <ScrollView style={{flex: 1,paddingBottom:10}}>
                         <Image
                             style={{width: 250, height: 250, alignSelf: 'center'}}
                             source={{uri: this.state.imageURI}}

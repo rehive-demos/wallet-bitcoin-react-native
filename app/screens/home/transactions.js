@@ -152,7 +152,7 @@ export default class Transactions extends Component {
                                 subtitle={moment(item.created).fromNow()}
                                 rightTitle={`${item.currency.symbol}${this.getAmount(item.amount, item.currency.divisibility)}`}
                                 rightTitleStyle={{'color': '#bdc6cf'}}
-                                containerStyle={{paddingLeft:10,paddingRight: 20}}
+                                containerStyle={{paddingLeft: 10, paddingRight: 20}}
                                 hideChevron
                                 roundAvatar
                                 onPress={() => {
