@@ -125,7 +125,7 @@ export default class Home extends Component {
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.submit}
-                        onPress={() => this.props.navigation.navigate("SendTo", {reference: ""})}>
+                        onPress={() => this.props.navigation.navigate("SendTo", {reference: "",balance:this.state.balance})}>
                         <Text style={{color: 'white', fontSize: 20}}>
                             Send
                         </Text>
@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     },
     transaction: {
         flex: 5,
-        paddingHorizontal: 20,
         backgroundColor: Colors.transactionBackground,
     },
     buttonbar: {

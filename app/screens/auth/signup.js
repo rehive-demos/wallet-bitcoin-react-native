@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Alert, StyleSheet, ScrollView, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
 import AuthService from './../../services/authService'
+import Auth from './../../util/auth'
 import TextInput from './../../components/textInput'
 import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
@@ -32,7 +33,11 @@ export default class Signup extends Component {
         let responseJson = await AuthService.signup(this.state)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
-            this.props.navigation.navigate("AuthVerifyMobile", {loginInfo})
+            if (this.state.mobile.length > 2) {
+                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo,signupInfo:this.state})
+            } else {
+                Auth.login(this.props.navigation, {loginInfo})
+            }
         }
         else {
             Alert.alert('Error',
@@ -130,14 +135,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop:10,
+        paddingTop: 10,
     },
     submit: {
         marginTop: 10,
         height: 50,
         borderRadius: 25,
         backgroundColor: Colors.lightblue,
-        marginHorizontal:10,
+        marginHorizontal: 10,
         alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
