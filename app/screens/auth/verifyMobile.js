@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {View, KeyboardAvoidingView, StyleSheet, AsyncStorage, TouchableHighlight, Text, Alert} from 'react-native'
 import SettingsService from './../../services/settingsService'
 import Auth from './../../util/auth'
-import UserInfoService from './../../services/userInfoService'
 import AuthService from './../../services/authService'
 import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
@@ -17,11 +16,11 @@ export default class AmountEntry extends Component {
         super(props)
         const params = this.props.navigation.state.params
         this.state = {
-            otp_msg: "Enter OTP sent in " + params.signupInfo.mobile,
+            otp_msg: "Enter OTP",
             isEdit: false,
             otp: '',
             loginInfo: params.loginInfo,
-            signupInfo:params.signupInfo
+            signupInfo: params.signupInfo
         }
     }
 
@@ -29,9 +28,16 @@ export default class AmountEntry extends Component {
         Auth.login(this.props.navigation, this.state.loginInfo)
     }
     resend = async () => {
-        let responseJson = await AuthService.signup(this.state.signupInfo)
+        let responseJson = await SettingsService.resendEmailVerification({
+            email: this.state.signupInfo.email,
+            company: this.state.signupInfo.company
+        })
         if (responseJson.status === "success") {
-            console.log(responseJson.status)
+            Alert.alert(
+                "Email Resend",
+                "A verification email has been resent, please check your email box.",
+                [{text: 'OK', onPress: () => this.setState({loading: false})}],
+            )
         }
         else {
             Alert.alert('Error',
