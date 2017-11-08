@@ -16,6 +16,7 @@ import TextInput from './../../components/textInput'
 import TextInputMultiLine from './../../components/textInputMultiline'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Big from 'big.js'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -45,9 +46,9 @@ export default class AmountEntry extends Component {
         else {
             const data = await AsyncStorage.getItem('currency')
             const currency = JSON.parse(data)
-            let amount = this.state.amount
+            let amount = new Big(this.state.amount)
             for (let i = 0; i < currency.divisibility; i++) {
-                amount = amount * 10
+              amount = amount.times(10)
             }
             Alert.alert(
                 'Are you sure?',

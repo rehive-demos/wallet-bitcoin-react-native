@@ -12,6 +12,7 @@ import TransactionService from './../../services/transactionService'
 import UserInfoService from './../../services/userInfoService'
 import SettingsService from './../../services/settingsService'
 import Colors from './../../config/colors'
+import Big from 'big.js'
 
 export default class Transactions extends Component {
     constructor(props) {
@@ -104,9 +105,10 @@ export default class Transactions extends Component {
     }
 
     getAmount = (amount, divisibility) => {
-        for (let i = 0; i < divisibility; i++) {
-            amount = amount / 10
-        }
+      amount = new Big(amount)
+      for (let i = 0; i < divisibility; i++) {
+        amount = amount.div(10)
+      }
 
         return amount.toFixed(8).replace(/\.?0+$/, "")
     }
