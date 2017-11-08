@@ -116,7 +116,7 @@ export default class Transactions extends Component {
     render() {
         if (this.state.noTransaction) {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingVertical: 10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 15}}>
                     <ScrollView
                         refreshControl={
                             <RefreshControl
@@ -128,7 +128,7 @@ export default class Transactions extends Component {
                             marginTop: 10,
                             flexDirection: 'column',
                             backgroundColor: 'white',
-                            paddingVertical: 20
+                            padding: 10
                         }}>
                             <Text style={{fontSize: 24, fontWeight: 'normal', color: Colors.black}}>
                                 Welcome to {this.state.company.name}
@@ -144,7 +144,7 @@ export default class Transactions extends Component {
         }
         else {
             return (
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingVertical: 10}}>
                     <FlatList
                         data={this.state.data}
                         renderItem={({item}) => (

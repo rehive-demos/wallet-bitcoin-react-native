@@ -20,7 +20,7 @@ export default class AmountEntry extends Component {
             isEdit: false,
             otp: '',
             loginInfo: params.loginInfo,
-            signupInfo: params.signupInfo
+            signupInfo: params.signupInfo,
         }
     }
 
@@ -28,8 +28,8 @@ export default class AmountEntry extends Component {
         Auth.login(this.props.navigation, this.state.loginInfo)
     }
     resend = async () => {
-        let responseJson = await SettingsService.resendEmailVerification({
-            email: this.state.signupInfo.email,
+        let responseJson = await SettingsService.resendMobileVerification({
+            mobile: this.state.signupInfo.mobile_number,
             company: this.state.signupInfo.company
         })
         if (responseJson.status === "success") {
@@ -95,9 +95,9 @@ export default class AmountEntry extends Component {
 
                     <TouchableHighlight
                         style={[styles.resend]}
-                        onPress={() => this.resend()}>
+                        onPress={this.verify}>
                         <Text style={{color: 'white', fontSize: 20}}>
-                            Resend
+                            Verify
                         </Text>
                     </TouchableHighlight>
 
@@ -109,11 +109,11 @@ export default class AmountEntry extends Component {
                                 Skip
                             </Text>
                         </TouchableHighlight>
-                        < TouchableHighlight
+                        <TouchableHighlight
                             style={[styles.submit, {marginLeft: 25}]}
-                            onPress={this.verify}>
+                            onPress={() => this.resend()}>
                             <Text style={{color: 'white', fontSize: 20}}>
-                                Verify
+                                Resend
                             </Text>
                         </TouchableHighlight>
 

@@ -18,7 +18,7 @@ export default class Signup extends Component {
             first_name: '',
             last_name: '',
             email: '',
-            mobile: '+1',
+            mobile_number: '+1',
             company: '',
             password1: '',
             password2: '',
@@ -33,10 +33,10 @@ export default class Signup extends Component {
         let responseJson = await AuthService.signup(this.state)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
-            if (this.state.mobile.length > 2) {
-                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo,signupInfo:this.state})
+            if (this.state.mobile.length > 8) {
+                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo:this.state})
             } else {
-                Auth.login(this.props.navigation, {loginInfo})
+                Auth.login(this.props.navigation, loginInfo)
             }
         }
         else {
@@ -85,7 +85,7 @@ export default class Signup extends Component {
                                 keyboardType="numeric"
                                 value={this.state.mobile}
                                 underlineColorAndroid="white"
-                                onChangeText={(mobile) => this.setState({mobile})}
+                                onChangeText={(mobile_number) => this.setState({mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
                             />
                             <TextInput
@@ -115,7 +115,7 @@ export default class Signup extends Component {
                         <TouchableHighlight
                             style={styles.submit}
                             onPress={() => this.signup()}>
-                            <Text style={{color: 'white'}}>
+                            <Text style={{color: 'white', fontSize:20}}>
                                 Sign up
                             </Text>
                         </TouchableHighlight>

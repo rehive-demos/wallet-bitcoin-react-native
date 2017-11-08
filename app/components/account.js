@@ -34,7 +34,7 @@ export default class Account extends Component {
 const styles = StyleSheet.create({
     options: {
         height: 80,
-        marginHorizontal: 20,
+        paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,
         alignItems: 'flex-start',
