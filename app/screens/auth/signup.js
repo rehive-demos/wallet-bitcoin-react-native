@@ -17,7 +17,7 @@ export default class Signup extends Component {
       first_name: '',
       last_name: '',
       email: '',
-      mobile: '+1',
+      mobile_number: '+1',
       company: '',
       password1: '',
       password2: '',
@@ -25,7 +25,7 @@ export default class Signup extends Component {
   }
 
   changeCountryCode = (code) => {
-    this.setState({ mobile: '+' + code })
+    this.setState({ mobile_number: '+' + code })
   }
 
   signup = async () => {
@@ -77,8 +77,8 @@ export default class Signup extends Component {
                 title="Mobile number"
                 autoCapitalize="none"
                 keyboardType="numeric"
-                value={this.state.mobile}
-                onChangeText={(mobile) => this.setState({ mobile })}
+                value={this.state.mobile_number}
+                onChangeText={(mobile_number) => this.setState({ mobile_number })}
                 changeCountryCode={this.changeCountryCode}
               />
               <TextInput
