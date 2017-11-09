@@ -40,7 +40,7 @@ export default class Account extends Component {
                         borderColor: Colors.lightgray
                     })}
                     {...this.props}
-                    style={styles.input}
+                    style={styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}}
                 />
             </View>
         )
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     input: {
         height: 26,
         paddingLeft: 0,
-        fontSize: 22,
         color: Colors.black,
         fontWeight: 'normal',
         borderColor: 'white',

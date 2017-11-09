@@ -191,6 +191,7 @@ export default class SendTo extends Component {
                             <TextInput
                                 title="Recipient"
                                 placeholder="Enter email, stellar address or mobile"
+                                fontSize={this.state.searchText.length == 0 ? 18 : 22}
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
                                 value={this.state.searchText}

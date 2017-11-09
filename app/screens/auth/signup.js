@@ -26,7 +26,7 @@ export default class Signup extends Component {
     }
 
     changeCountryCode = (code) => {
-        this.setState({mobile: '+' + code})
+        this.setState({mobile_number: '+' + code})
     }
 
     signup = async () => {
@@ -83,7 +83,7 @@ export default class Signup extends Component {
                                 title="Mobile"
                                 autoCapitalize="none"
                                 keyboardType="numeric"
-                                value={this.state.mobile}
+                                value={this.state.mobile_number}
                                 underlineColorAndroid="white"
                                 onChangeText={(mobile_number) => this.setState({mobile_number})}
                                 changeCountryCode={this.changeCountryCode}

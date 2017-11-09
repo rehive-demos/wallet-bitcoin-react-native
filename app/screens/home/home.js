@@ -207,11 +207,21 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.lightgray,
     },
     buttonbar: {
+        position: 'absolute',
+        bottom:0,
         flexDirection: 'row',
         paddingHorizontal: 25,
         justifyContent: 'center',
         paddingVertical: 10,
-        backgroundColor: Colors.lightgray,
+        backgroundColor: 'transparent',
+    },
+    floatView: {
+        position: 'absolute',
+        width: 100,
+        height: 100,
+        top: 200,
+        left: 40,
+        backgroundColor: 'green',
     },
     submit: {
         backgroundColor: Colors.lightblue,

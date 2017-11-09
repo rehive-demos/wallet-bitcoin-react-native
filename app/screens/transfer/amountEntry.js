@@ -119,7 +119,6 @@ export default class AmountEntry extends Component {
                         <TextInput
                             title="Note"
                             placeholder="Enter note here"
-                            placeholderTextColor={Colors.gray}
                             autoCapitalize="none"
                             multiline={true}
                             underlineColorAndroid="white"
