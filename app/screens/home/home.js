@@ -184,15 +184,16 @@ export default class Home extends Component {
                 <View style={styles.balance}>
                     <TouchableHighlight style={{flex:1}}><View></View></TouchableHighlight>
                     <TouchableHighlight
+                        underlayColor={Colors.lightblue}
                         onPress={() => this.tap1()}
                         onLongPress={() => this.longTap1()}
                         style={{flex:1}}>
                         <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center',}}>
-                            <Text style={{fontSize: 20, color: 'white'}}>
+                            <Text style={{fontSize: 18, color: 'white'}}>
                                 {this.state.account}
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: 25, color: 'white'}}>
+                                <Text style={{fontSize: 23, color: 'white'}}>
                                     {this.state.symbol}
                                 </Text>
                                 <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
@@ -202,6 +203,7 @@ export default class Home extends Component {
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight 
+                        underlayColor={Colors.lightblue}
                         style={{flex:1}}
                         onPress={() => this.tap2()}>
                         <View></View>
@@ -212,7 +214,7 @@ export default class Home extends Component {
                         <View style={{
                             marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
                         }}>
-                            <Text style={{fontSize: 24, fontWeight: 'normal', color: Colors.black}}>
+                            <Text style={{fontSize: 23, fontWeight: 'normal', color: Colors.black}}>
                                 Welcome to {this.state.company.name}
                             </Text>
                         </View>

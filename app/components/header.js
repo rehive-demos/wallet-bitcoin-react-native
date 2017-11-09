@@ -49,7 +49,7 @@ export default class Account extends Component {
                         null
                     }
                     {this.props.homeRight ?
-                        <TouchableOpacity style={{padding: 10}}>
+                        <TouchableOpacity style={{flex:1, padding: 10, alignItems: 'flex-end', justifyContent: 'flex-start'}}>
                             <Icon
                                 name="ios-arrow-up-outline"
                                 size={30}
