@@ -7,7 +7,8 @@ import {
     StyleSheet,
     TouchableHighlight,
     Text,
-    Alert
+    Alert,
+    TouchableWithoutFeedback
 } from 'react-native'
 import TransactionService from './../../services/transactionService'
 import ResetNavigation from './../../util/resetNavigation'
@@ -15,6 +16,7 @@ import TextInput from './../../components/textInput'
 import TextInputMultiLine from './../../components/textInputMultiline'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Big from 'big.js'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -26,8 +28,10 @@ export default class AmountEntry extends Component {
         const params = this.props.navigation.state.params
         this.state = {
             reference: params.reference,
+            balance: params.balance,
             amount: 0,
             note: '',
+            disabled: false
         }
     }
 
@@ -42,9 +46,9 @@ export default class AmountEntry extends Component {
         else {
             const data = await AsyncStorage.getItem('currency')
             const currency = JSON.parse(data)
-            let amount = this.state.amount
+            let amount = new Big(this.state.amount)
             for (let i = 0; i < currency.divisibility; i++) {
-                amount = amount * 10
+              amount = amount.times(10)
             }
             Alert.alert(
                 'Are you sure?',
@@ -82,6 +86,15 @@ export default class AmountEntry extends Component {
         }
         else {
             this.setState({amount})
+            if (amount > this.state.balance) {
+                this.setState({
+                    disabled: true
+                })
+            } else {
+                this.setState({
+                    disabled: false
+                })
+            }
         }
     }
 
@@ -106,20 +119,30 @@ export default class AmountEntry extends Component {
                         <TextInput
                             title="Note"
                             placeholder="Enter note here"
-                            placeholderTextColor={Colors.gray}
                             autoCapitalize="none"
                             multiline={true}
                             underlineColorAndroid="white"
                             onChangeText={(note) => this.setState({note})}
                         />
                     </ScrollView>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={this.send}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Send
-                        </Text>
-                    </TouchableHighlight>
+                    {   this.state.disabled ?
+                        <TouchableWithoutFeedback>
+                            <View style={[styles.submit, {backgroundColor: Colors.lightgray}]}>
+                                <Text style={{color: 'white', fontSize: 20}}>
+                                    Amount exceeds balance
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback > :
+                        <TouchableHighlight
+                            style={styles.submit}
+                            onPress={this.send}>
+
+                            <Text style={{color: 'white', fontSize: 20}}>
+                                Send
+                            </Text>
+                        </TouchableHighlight>
+
+                    }
                 </KeyboardAvoidingView>
             </View>
         )
@@ -131,12 +154,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
-        paddingTop:10
+        paddingTop: 10
     },
     submit: {
-        marginHorizontal:20,
-        marginBottom:10,
-        borderRadius:25,
+        marginHorizontal: 20,
+        marginBottom: 10,
+        borderRadius: 25,
         height: 50,
         backgroundColor: Colors.lightblue,
         alignItems: 'center',

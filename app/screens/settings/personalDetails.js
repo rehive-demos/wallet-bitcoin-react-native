@@ -139,7 +139,7 @@ export default class Settings extends Component {
                 <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
                     <ScrollView keyboardDismissMode={'interactive'}>
                         <View style={styles.profile}>
-                            <TouchableHighlight onPress={() => this.openModal()}>
+                            <TouchableHighlight style={{width: 100}} onPress={() => this.openModal()}>
                                 {this.state.profile ?
                                     <Image
                                         style={styles.photo}

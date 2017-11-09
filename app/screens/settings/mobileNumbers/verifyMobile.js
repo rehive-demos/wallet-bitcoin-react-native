@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     height: 65,
+    marginHorizontal: 20,
     flexDirection: 'row',
     alignSelf: 'stretch',
   },

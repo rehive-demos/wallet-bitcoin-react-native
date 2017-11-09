@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Alert, StyleSheet, ScrollView, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
 import AuthService from './../../services/authService'
+import Auth from './../../util/auth'
 import TextInput from './../../components/textInput'
 import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
@@ -17,7 +18,7 @@ export default class Signup extends Component {
             first_name: '',
             last_name: '',
             email: '',
-            mobile: '+1',
+            mobile_number: '+1',
             company: '',
             password1: '',
             password2: '',
@@ -25,14 +26,18 @@ export default class Signup extends Component {
     }
 
     changeCountryCode = (code) => {
-        this.setState({mobile: '+' + code})
+        this.setState({mobile_number: '+' + code})
     }
 
     signup = async () => {
         let responseJson = await AuthService.signup(this.state)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
-            this.props.navigation.navigate("AuthVerifyMobile", {loginInfo})
+            if (this.state.mobile.length > 8) {
+                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo:this.state})
+            } else {
+                Auth.login(this.props.navigation, loginInfo)
+            }
         }
         else {
             Alert.alert('Error',
@@ -78,9 +83,9 @@ export default class Signup extends Component {
                                 title="Mobile"
                                 autoCapitalize="none"
                                 keyboardType="numeric"
-                                value={this.state.mobile}
+                                value={this.state.mobile_number}
                                 underlineColorAndroid="white"
-                                onChangeText={(mobile) => this.setState({mobile})}
+                                onChangeText={(mobile_number) => this.setState({mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
                             />
                             <TextInput
@@ -110,7 +115,7 @@ export default class Signup extends Component {
                         <TouchableHighlight
                             style={styles.submit}
                             onPress={() => this.signup()}>
-                            <Text style={{color: 'white'}}>
+                            <Text style={{color: 'white', fontSize:20}}>
                                 Sign up
                             </Text>
                         </TouchableHighlight>
@@ -130,14 +135,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop:10,
+        paddingTop: 10,
     },
     submit: {
         marginTop: 10,
         height: 50,
         borderRadius: 25,
         backgroundColor: Colors.lightblue,
-        marginHorizontal:10,
+        marginHorizontal: 10,
         alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',

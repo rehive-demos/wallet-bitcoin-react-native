@@ -5,6 +5,7 @@ import ResetNavigation from './../../util/resetNavigation'
 import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Big from 'big.js'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -59,9 +60,9 @@ export default class AmountEntry extends Component {
     withdrawConfirmed = async () => {
         const data = await AsyncStorage.getItem('currency')
         const currency = JSON.parse(data)
-        let amount = this.state.amount
+        let amount = new Big(this.state.amount)
         for (let i = 0; i < currency.divisibility; i++) {
-            amount = amount * 10
+          amount = amount.times(10)
         }
 
         let responseJson = await TransectionService.withdraw(amount, this.state.reference)
@@ -79,32 +80,32 @@ export default class AmountEntry extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <Header
-                    navigation={this.props.navigation}
-                    back
-                    title="Withdraw"
+          <View style={{flex: 1}}>
+            <Header
+              navigation={this.props.navigation}
+              back
+              title="Withdraw"
+            />
+            <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
+              <View style={{flex: 1}}>
+                <TextInput
+                  title="Amount"
+                  placeholder="Enter amount here"
+                  autoCapitalize="none"
+                  keyboardType="numeric"
+                  underlineColorAndroid="white"
+                  onChangeText={this.changeAmount}
                 />
-                <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
-                    <View style={{flex: 1}}>
-                        <TextInput
-                            title="Amount"
-                            placeholder="Enter amount here"
-                            autoCapitalize="none"
-                            keyboardType="numeric"
-                            underlineColorAndroid="white"
-                            onChangeText={this.changeAmount}
-                        />
-                    </View>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={this.withdraw}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Withdraw
-                        </Text>
-                    </TouchableHighlight>
-                </KeyboardAvoidingView>
-            </View>
+              </View>
+              <TouchableHighlight
+                style={styles.submit}
+                onPress={this.withdraw}>
+                <Text style={{color: 'white', fontSize: 20}}>
+                    Withdraw
+                </Text>
+              </TouchableHighlight>
+            </KeyboardAvoidingView>
+          </View>
         )
     }
 }

@@ -18,7 +18,7 @@ export default class InitialScreen extends Component {
             <View style={styles.container}>
                 <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
                     <Image
-                        source={require('./../../../assets/icons/logo.png')}
+                        source={require('./../../../assets/icons/new_logo.png')}
                         resizeMode="contain"
                         style={styles.image}/>
                 </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 25,
         justifyContent: 'center',
-        paddingVertical:10
+        paddingVertical:25,
     },
     button: {
         backgroundColor: Colors.lightblue,
