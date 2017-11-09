@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, AsyncStorage, TouchableHighlight, Text, Image, TouchableWithoutFeedback} from 'react-native'
+import {View, StyleSheet, AsyncStorage, TouchableHighlight, Alert, Text, Image, TouchableWithoutFeedback} from 'react-native'
 import moment from 'moment'
 import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
+import AccountService from './../../services/accountService'
 import Transactions from './transactions'
 import Auth from './../../util/auth'
 import Colors from './../../config/colors'
@@ -23,6 +24,10 @@ export default class Home extends Component {
                 currency: {},
             },
             reference: '',
+            selectedCurrency: -1,
+            company: {
+                name: '',
+            },
         }
     }
 
@@ -38,7 +43,7 @@ export default class Home extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.getBalanceInfo()
         this.getUserInfo()
     }
@@ -60,6 +65,12 @@ export default class Home extends Component {
             if (token === null) {
                 await this.logout()
             }
+            let responseJson2 = await UserInfoService.getCompany()
+            if (responseJson2.status === "success") {
+                this.setState({
+                    company: responseJson2.data,
+                })
+            }
         }
         else {
             this.logout()
@@ -72,10 +83,20 @@ export default class Home extends Component {
             const account = responseJson.data.results[0].currencies[0]
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
             this.setState({
+                account: responseJson.data.results[0].name,
+                default: account,
                 symbol: account.currency.symbol,
-                reference: responseJson.data.results[0].reference
+                reference: responseJson.data.results[0].reference,
+                balance: this.setBalance(account.balance, account.currency.divisibility),
             })
-            this.setState({balance: this.setBalance(account.balance, account.currency.divisibility)})
+            let responseJson2 = await AccountService.getAllAccountCurrencies(this.state.reference)
+            if (responseJson2.status === "success") {
+                const currencies = responseJson2.data.results
+                this.setState({
+                    currencies,
+                    selectedCurrency : -1,
+                })
+            }
         }
         else {
             this.logout()
@@ -99,6 +120,50 @@ export default class Home extends Component {
         return amount.toFixed(8).replace(/\.?0+$/, "")
     }
 
+    tap1 = () => {
+        this.setState({
+            showTransaction: !this.state.showTransaction,
+        });
+    }
+
+    longTap1 = async () => {
+        Alert.alert(
+            "Are you sure?",
+            "Set it as active currency?",
+            [
+                {text: 'Yes', onPress: () => this.changeAccount()},
+                {
+                    text: 'No',
+                    style: 'cancel',
+                },
+            ]
+        )
+    }
+
+    changeAccount = async () => {
+        let responseJson = await AccountService.setActiveCurrency(this.state.reference, this.state.currencies[this.state.selectedCurrency].currency.code)
+        if (responseJson.status === "success") {
+            Alert.alert(
+                "Success",
+                "Your active currency has been changed successfully.",
+                [{text: 'OK'}]
+            )
+        }
+    }
+
+    tap2 = () => {
+        let index = (this.state.selectedCurrency + 1) % this.state.currencies.length
+        if (this.state.currencies[index].currency.symbol === this.state.symbol) {
+            index = (index + 1) % this.state.currencies.length
+        }
+        console.log(index)
+        this.setState({
+            selectedCurrency: index,
+            symbol: this.state.currencies[index].currency.symbol,
+            balance: this.setBalance(this.state.currencies[index].balance, this.state.currencies[index].currency.divisibility),
+        });
+    }
+
     render() {
         /*let swipeBtns = [{
             text: 'Show',
@@ -114,20 +179,46 @@ export default class Home extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
+                    homeRight
                 />
                 <View style={styles.balance}>
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={{fontSize: 25, color: 'white'}}>
-                            {this.state.symbol}
-                        </Text>
-                        <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
-                            {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
-                        </Text>
-                    </View>
+                    <TouchableHighlight style={{flex:1}}><View></View></TouchableHighlight>
+                    <TouchableHighlight
+                        onPress={() => this.tap1()}
+                        onLongPress={() => this.longTap1()}
+                        style={{flex:1}}>
+                        <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center',}}>
+                            <Text style={{fontSize: 20, color: 'white'}}>
+                                {this.state.account}
+                            </Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={{fontSize: 25, color: 'white'}}>
+                                    {this.state.symbol}
+                                </Text>
+                                <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
+                                    {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight 
+                        style={{flex:1}}
+                        onPress={() => this.tap2()}>
+                        <View></View>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.transaction}>
+                    {this.state.showTransaction === false ? <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
+                        <View style={{
+                            marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
+                        }}>
+                            <Text style={{fontSize: 24, fontWeight: 'normal', color: Colors.black}}>
+                                Welcome to {this.state.company.name}
+                            </Text>
+                        </View>
+                    </View> :
                     <Transactions updateBalance={this.getBalanceInfo} showDialog={this.showDialog}
-                                  logout={this.logout}/>
+                                  logout={this.logout}/>}
                 </View>
                 <View style={styles.buttonbar}>
                     <TouchableHighlight
@@ -198,9 +289,8 @@ const styles = StyleSheet.create({
     },
     balance: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: Colors.lightblue,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
     },
     transaction: {
         flex: 5,
