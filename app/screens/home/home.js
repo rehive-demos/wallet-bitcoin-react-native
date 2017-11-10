@@ -75,7 +75,7 @@ export default class Home extends Component {
                 symbol: account.currency.symbol,
                 reference: responseJson.data.results[0].reference
             })
-            this.setState({balance: this.setBalance(account.balance, account.currency.divisibility)})
+            this.setState({balance: this.setBalance(account.available_balance, account.currency.divisibility)})
         }
         else {
             this.logout()
