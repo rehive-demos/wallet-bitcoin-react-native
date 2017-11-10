@@ -87,7 +87,7 @@ export default class Home extends Component {
                 default: account,
                 symbol: account.currency.symbol,
                 reference: responseJson.data.results[0].reference,
-                balance: this.setBalance(account.balance, account.currency.divisibility),
+                balance: this.setBalance(account.available_balance, account.currency.divisibility),
             })
             let responseJson2 = await AccountService.getAllAccountCurrencies(this.state.reference)
             if (responseJson2.status === "success") {
@@ -160,7 +160,7 @@ export default class Home extends Component {
         this.setState({
             selectedCurrency: index,
             symbol: this.state.currencies[index].currency.symbol,
-            balance: this.setBalance(this.state.currencies[index].balance, this.state.currencies[index].currency.divisibility),
+            balance: this.setBalance(this.state.currencies[index].available_balance, this.state.currencies[index].currency.divisibility),
         });
     }
 
