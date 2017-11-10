@@ -28,6 +28,7 @@ export default class Home extends Component {
             company: {
                 name: '',
             },
+            code: '',
         }
     }
 
@@ -85,6 +86,7 @@ export default class Home extends Component {
             this.setState({
                 account: responseJson.data.results[0].name,
                 default: account,
+                code: account.currency.code,
                 symbol: account.currency.symbol,
                 reference: responseJson.data.results[0].reference,
                 balance: this.setBalance(account.available_balance, account.currency.divisibility),
@@ -158,7 +160,9 @@ export default class Home extends Component {
         }
         console.log(index)
         this.setState({
+            showTransaction: false,
             selectedCurrency: index,
+            code: this.state.currencies[index].currency.code,
             symbol: this.state.currencies[index].currency.symbol,
             balance: this.setBalance(this.state.currencies[index].available_balance, this.state.currencies[index].currency.divisibility),
         });
@@ -219,8 +223,10 @@ export default class Home extends Component {
                             </Text>
                         </View>
                     </View> :
-                    <Transactions updateBalance={this.getBalanceInfo} showDialog={this.showDialog}
-                                  logout={this.logout}/>}
+                    <Transactions updateBalance={this.getBalanceInfo} 
+                                currency={this.state.code}
+                                showDialog={this.showDialog}
+                                logout={this.logout}/>}
                 </View>
                 <View style={styles.buttonbar}>
                     <TouchableHighlight

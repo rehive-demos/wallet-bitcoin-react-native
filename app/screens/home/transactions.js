@@ -80,7 +80,7 @@ export default class Transactions extends Component {
         this.setState({
             data: [],
         })
-        let responseJson = await TransactionService.getAllTransactions()
+        let responseJson = await TransactionService.getAllTransactionsByCurrecny(this.props.currency)
         this.setData(responseJson)
     }
 
