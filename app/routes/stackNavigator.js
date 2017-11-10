@@ -12,6 +12,7 @@ import WithdrawalAmountEntry from './../screens/withdraw/amountEntry'
 import SendMoney from './../screens/transfer/amountEntry'
 import SendTo from './../screens/transfer/sendTo'
 import QRcodeScanner from './../screens/transfer/qrcodeScanner'
+import AccountsB from './../screens/accounts/accountsB'
 import AccountCurrencies from './../screens/accounts/accountCurrencies'
 import UploadImage from './../screens/settings/profileImage/uploadImage'
 import SettingsPersonalDetails from './../screens/settings/personalDetails'
@@ -78,6 +79,9 @@ const Stack = {
     },
     QRcodeScanner: {
         screen: QRcodeScanner,
+    },
+    AccountsB: {
+        screen: AccountsB,
     },
     AccountCurrencies: {
         screen: AccountCurrencies,

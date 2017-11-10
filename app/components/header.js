@@ -56,10 +56,7 @@ export default class Account extends Component {
                                 color="white"
                                 style={{paddingRight: 10}}
                                 onPress={() => 
-                                    {/* this.props.navigation.navigate(
-                                    'AccountCurrencies',
-                                    {reference:this.props.homeRight}
-                                    ) */}
+                                     this.props.navigation.navigate('AccountsB') 
                                  }
                             />
                         </TouchableOpacity> :
