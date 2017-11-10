@@ -71,7 +71,7 @@ export default class Home extends Component {
       const account = responseJson.data.results[0].currencies[0]
       AsyncStorage.setItem('currency', JSON.stringify(account.currency))
       this.setState({ symbol: account.currency.symbol })
-      this.setState({ balance: this.setBalance(account.balance, account.currency.divisibility) })
+      this.setState({ balance: this.setBalance(account.available_balance, account.currency.divisibility) })
     }
     else {
       this.logout()
