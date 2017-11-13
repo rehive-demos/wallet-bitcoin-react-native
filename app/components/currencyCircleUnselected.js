@@ -28,14 +28,14 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     row: {
-      width: 60,
-      justifyContent: 'flex-start', 
+      width: 70,
+      justifyContent: 'flex-start',
       alignItems: 'center',
     },
     options: {
-        height: 50,
-        width: 50,
-        borderRadius: 25,
+        height: 60,
+        width: 60,
+        borderRadius: 30,
         justifyContent: 'center', 
         alignItems: 'center',
     },
