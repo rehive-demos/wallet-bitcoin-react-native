@@ -6,6 +6,7 @@ import UserInfoService from './../../services/userInfoService'
 import AccountService from './../../services/accountService'
 import Transactions from './transactions'
 import Auth from './../../util/auth'
+import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
@@ -45,6 +46,7 @@ export default class Home extends Component {
     }
 
     async componentDidMount() {
+        NetInfo.check()
         this.getBalanceInfo()
         this.getUserInfo()
     }
