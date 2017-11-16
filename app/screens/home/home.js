@@ -46,7 +46,7 @@ export default class Home extends Component {
     }
 
     async componentDidMount() {
-        NetInfo.check()
+        NetInfo.check(this.props.navigation)
         this.getBalanceInfo()
         this.getUserInfo()
     }

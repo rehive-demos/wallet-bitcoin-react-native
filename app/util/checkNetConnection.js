@@ -2,19 +2,31 @@ import { NetInfo, Alert  } from 'react-native'
 import resetNavigation from './resetNavigation'
 
 const netInfo = {
-  check: async (navigation, loginInfo) => {
+  check: async (navigation) => {
     NetInfo.isConnected.fetch().then(isConnected => {
-      Alert.alert('Network status', 'Connection is ' + (isConnected ? 'online' : 'offline'));
+      
       if (isConnected) {
         NetInfo.isConnected.addEventListener(
           'change',
           handleConnectivityChange
         );
       }
+      else {
+        navigation.navigate("NoNetConnection")
+      }
     });
     function handleConnectivityChange(isConnected) {
-      Alert.alert('Network status', 'Then, is ' + (isConnected ? 'online' : 'offline'));
+      if (isConnected) {
+        
+      }
+      else {
+        navigation.navigate("NoNetConnection")
+      }
     }
+  },
+
+  getInfo : async () => {
+    return NetInfo.isConnected.fetch()
   },
 }
 

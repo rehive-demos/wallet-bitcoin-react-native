@@ -42,10 +42,14 @@ import Pin from './../screens/settings/security/pin'
 import SettingsNotifications from './../screens/settings/notifications/notifications'
 import EmailNotifications from './../screens/settings/notifications/emailNotifications'
 import MobileNotifications from './../screens/settings/notifications/mobileNotifications'
+import NoNetConnection from './../screens/home/noNetConnection'
 
 const Stack = {
     Home: {
         screen: Home,
+    },
+    NoNetConnection: {
+        screen: NoNetConnection,
     },
     InitialScreen:{
         screen:InitialScreen
