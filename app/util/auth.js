@@ -5,7 +5,6 @@ const auth = {
   login: async (navigation, loginInfo) => {
     await AsyncStorage.setItem("token", loginInfo.token)
     await AsyncStorage.setItem("user", JSON.stringify(loginInfo.user))
-    console.log("go home")
     await resetNavigation.dispatchToSingleRoute(navigation, "Home")
   },
   logout: async (navigation) => {
