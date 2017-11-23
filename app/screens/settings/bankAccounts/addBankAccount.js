@@ -72,6 +72,7 @@ export default class AddBankAccount extends Component {
         <Header
           navigation={this.props.navigation}
           back
+          smallTitle
           title="Add new bank account"
         />
         <AddBankAccountComponent

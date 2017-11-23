@@ -57,14 +57,14 @@ export default class AmountEntry extends Component {
             <TouchableHighlight
               style={[styles.submit, { backgroundColor: Colors.red }]}
               onPress={() => this.reload()}>
-              <Text style={{ color: 'white', fontSize: 18 }}>
+              <Text style={{ color: 'white', fontSize: 20 }}>
                 Skip
             </Text>
             </TouchableHighlight>
             <TouchableHighlight
-              style={styles.submit}
+              style={[styles.submit,{marginLeft:25}]}
               onPress={this.verify}>
-              <Text style={{ color: 'white', fontSize: 18 }}>
+              <Text style={{ color: 'white', fontSize: 20 }}>
                 Verify
             </Text>
             </TouchableHighlight>
@@ -82,12 +82,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   submit: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: Colors.lightblue,
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
+      flex: 1,
+      marginBottom:10,
+      backgroundColor: Colors.lightblue,
+      borderRadius: 25,
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
   },
   input: {
     height: 60,
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     height: 65,
+    marginHorizontal: 20,
     flexDirection: 'row',
     alignSelf: 'stretch',
   },
