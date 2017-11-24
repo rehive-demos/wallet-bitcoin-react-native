@@ -10,6 +10,7 @@ import Accounts from './../screens/accounts/accounts'
 import Receive from './../screens/receive/receive'
 import Logout from './../screens/auth/logout'
 import DrawerHeader from './../components/drawerHeader'
+import GetVerified from './../screens/settings/getVerified/getVerified2'
 import Colors from './../config/colors'
 
 const RouteConfigs = {
@@ -27,6 +28,9 @@ const RouteConfigs = {
     },
     Accounts: {
         screen: Accounts,
+    },
+    GetVerified:{
+        screen: GetVerified,
     },
     Settings: {
         screen: Settings,
