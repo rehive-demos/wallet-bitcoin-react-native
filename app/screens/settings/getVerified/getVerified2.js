@@ -105,13 +105,13 @@ export default class GetVerified extends Component {
                     title="Get verified"
                 />
                 <View style={{flex: 1, paddingTop: 10}}>
-                    <Option title="Email" subtitle={this.state.email} buttonText={this.state.email_status}/>
-                    <Option title="Mobile" subtitle={this.state.mobile_number} buttonText={this.state.mobile_number_status}/>
+                    <Option title="Email" subtitle={this.state.email} buttonText={this.state.email_status.toUpperCase()}/>
+                    <Option title="Mobile" subtitle={this.state.mobile_number} buttonText={this.state.mobile_number_status.toUpperCase()}/>
                     <Option title="Basic Info" subtitle={this.state.basic_info}
-                            buttonText="Incomplete"/>
-                    <Option title="Address" subtitle={this.state.address} buttonText={this.state.address_status}/>
-                    <Option title="Proof of Identification" subtitle="Waiting for approval" buttonText="Complete"/>
-                    <Option title="Proof of Address" subtitle="Waiting for approval" buttonText="Pending"/>
+                            buttonText="INCOMPLETE"/>
+                    <Option title="Address" subtitle={this.state.address} buttonText={this.state.address_status.toUpperCase()}/>
+                    <Option title="Proof of Identification" subtitle="Waiting for approval" buttonText="COMPLETE"/>
+                    <Option title="Proof of Address" subtitle="Waiting for approval" buttonText="PENDING"/>
                 </View>
             </View>
         )
