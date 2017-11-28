@@ -17,17 +17,18 @@ export default class GetVerified extends Component {
         this.state = {
             user: '',
             email: '',
-            email_status:'',
+            email_status: '',
             mobile_number: '',
-            mobile_number_status:'',
+            mobile_number_status: '',
             basic_info: '',
-            basic_info_status:'',
+            basic_info_status: '',
             address: '',
-            address_status:'',
+            address_status: '',
             identification: '',
-            identification_status:'',
+            identification_status: '',
             document: '',
-            document_status:'',
+            document_status: '',
+            proof_of_address_status:''
         }
     }
 
@@ -36,9 +37,9 @@ export default class GetVerified extends Component {
         user = JSON.parse(user)
         this.setState({
             user: user,
-            email:user.email,
-            mobile_number:user.mobile_number,
-            basic_info:user.first_name +' '+ user.last_name,
+            email: user.email,
+            mobile_number: user.mobile_number,
+            basic_info: user.first_name + ' ' + user.last_name,
         })
         let responseJson = await SettingsService.getAllEmails()
         if (responseJson.status === "success") {
@@ -73,26 +74,50 @@ export default class GetVerified extends Component {
                 for (let i = 0; i < data.length; i++) {
                     if (data[i].verified) {
                         this.setState({
-                            mobile_number_status:'Verified'
+                            mobile_number_status: 'Verified'
                         })
                     }
                 }
-                if(this.state.mobile_number_status!='Verified'){
+                if (this.state.mobile_number_status != 'Verified') {
                     this.setState({
-                        mobile_number_status:'Pending'
+                        mobile_number_status: 'Pending'
                     })
                 }
             }
         }
 
-        let responseJsonAddress =await UserInfoService.getAddress()
-        if(responseJsonAddress.status==='success'){
-            const data=responseJsonAddress.data
+        let responseJsonAddress = await UserInfoService.getAddress()
+        if (responseJsonAddress.status === 'success') {
+            const data = responseJsonAddress.data
             this.setState({
-                address:data.line_1+','+data.line_2+','+data.city+','+data.state_province+','+data.country+','+data.postal_code,
-                address_status:data.status
+                address: data.line_1 + ',' + data.line_2 + ',' + data.city + ',' + data.state_province + ',' + data.country + ',' + data.postal_code,
+                address_status: data.status
             })
         }
+
+        let responseJsonDocuments = await UserInfoService.getAllDocuments()
+        if (responseJsonDocuments.status === 'success') {
+            const data = responseJsonDocuments.data.results
+            console.log(data)
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].document_category)
+                if (data[i].document_category === "Proof Of Address" && data[i].status == 'verified') {
+                    this.setState({
+                        proof_of_address_status: 'verified'
+                    })
+                }
+                if (this.state.proof_of_address_status != 'verified' && data[i].status=='pending') {
+                    this.setState({
+                        proof_of_address_status: 'pending'
+                    })
+                }
+            }
+        }
+
+    }
+
+    goTo = (path,name) => {
+        this.props.navigation.navigate(path,{name})
     }
 
     render() {
@@ -100,18 +125,34 @@ export default class GetVerified extends Component {
             <View style={styles.container}>
                 <Header
                     navigation={this.props.navigation}
-                    back
+                    drawer
                     homeRight
                     title="Get verified"
                 />
                 <View style={{flex: 1, paddingTop: 10}}>
-                    <Option title="Email" subtitle={this.state.email} buttonText={this.state.email_status.toUpperCase()}/>
-                    <Option title="Mobile" subtitle={this.state.mobile_number} buttonText={this.state.mobile_number_status.toUpperCase()}/>
+                    <Option title="Email" subtitle={this.state.email}
+                            buttonText={this.state.email_status.toUpperCase()}
+                            gotoAddress="SettingsEmailAddresses" goTo={this.goTo}/>
+
+                    <Option title="Mobile" subtitle={this.state.mobile_number}
+                            buttonText={this.state.mobile_number_status.toUpperCase()}
+                            gotoAddress="SettingsMobileNumbers" goTo={this.goTo}/>
+
                     <Option title="Basic Info" subtitle={this.state.basic_info}
-                            buttonText="INCOMPLETE"/>
-                    <Option title="Address" subtitle={this.state.address} buttonText={this.state.address_status.toUpperCase()}/>
-                    <Option title="Proof of Identification" subtitle="Waiting for approval" buttonText="COMPLETE"/>
-                    <Option title="Proof of Address" subtitle="Waiting for approval" buttonText="PENDING"/>
+                            buttonText="VERIFIED"
+                            gotoAddress="SettingsPersonalDetails" goTo={this.goTo}/>
+
+                    <Option title="Address" subtitle={this.state.address}
+                            buttonText={this.state.address_status.toUpperCase()}
+                            gotoAddress="SettingsAddress" goTo={this.goTo}/>
+
+                    <Option title="Proof of Identity" subtitle="Waiting for approval"
+                            buttonText="VERIFIED"
+                            gotoAddress="document" goTo={this.goTo}/>
+
+                    <Option title="Proof of Address" subtitle="Waiting for approval"
+                            buttonText={this.state.proof_of_address_status.toUpperCase()}
+                            gotoAddress="document" goTo={this.goTo}/>
                 </View>
             </View>
         )
