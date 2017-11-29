@@ -14,13 +14,14 @@ export default class AmountEntry extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            routeName:this.props.navigation.state.params.routeName,
             email: '',
             primary: false,
         }
     }
 
     reload = () => {
-        ResetNavigation.dispatchUnderDrawer(this.props.navigation, 'Settings', 'SettingsEmailAddresses')
+        ResetNavigation.dispatchUnderDrawer(this.props.navigation, this.state.routeName?'GetVerified':'Settings', 'SettingsEmailAddresses')
     }
 
     add = async () => {

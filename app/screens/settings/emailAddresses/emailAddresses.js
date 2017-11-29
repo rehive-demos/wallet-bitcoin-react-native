@@ -14,7 +14,9 @@ export default class Settings extends Component {
 
     constructor(props) {
         super(props);
+        const {params}=this.props.navigation.state.params
         this.state = {
+            routeName:params.name,
             refreshing: false,
             loading: false,
             loadingMessage: '',
@@ -56,7 +58,7 @@ export default class Settings extends Component {
                     params: {},
 
                     // navigate can have a nested navigate action that will be run inside the child router
-                    action: NavigationActions.navigate({routeName: 'Settings'}),
+                    action: NavigationActions.navigate({routeName: this.state.routeName!=null?'GetVerified':'Settings'}),
                 }),
                 NavigationActions.navigate({routeName: 'SettingsEmailAddresses'}),
             ],
@@ -153,7 +155,7 @@ export default class Settings extends Component {
                 />
                 <TouchableHighlight
                     style={styles.submit}
-                    onPress={() => this.props.navigation.navigate("AddEmailAddress")}>
+                    onPress={() => this.props.navigation.navigate("AddEmailAddress",{routeName:this.state.routeName})}>
                     <Text style={{color: 'white', fontSize: 20}}>
                         Add email address
                     </Text>

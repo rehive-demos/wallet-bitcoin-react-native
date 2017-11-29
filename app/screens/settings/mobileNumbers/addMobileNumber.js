@@ -13,6 +13,7 @@ export default class AmountEntry extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            routeName:this.props.navigation.state.params.routeName,
             number: '+1',
             primary: false,
         }
@@ -22,10 +23,10 @@ export default class AmountEntry extends Component {
         this.setState({number: '+' + code})
     }
     add = async () => {
-        let responseJson = await SettingsService.addMobile(this.state)
+        let responseJson = await SettingsService.addMobile({number:this.state.number,primary:this.state.primary})
 
         if (responseJson.status === "success") {
-            this.props.navigation.navigate("VerifyMobileNumber")
+            this.props.navigation.navigate("VerifyMobileNumber",{routeName:this.state.routeName})
         }
         else {
             Alert.alert('Error',

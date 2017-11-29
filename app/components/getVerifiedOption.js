@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableHighlight, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, TouchableHighlight, ScrollView, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
 import Colors from './../config/colors'
 
 export default class Options extends Component {
@@ -27,24 +27,27 @@ export default class Options extends Component {
 
     render() {
         return (
-            <TouchableHighlight style={styles.options}
-                                onPress={() => this.props.goTo(this.props.gotoAddress,this.props.title)}>
-                <View style={styles.optionsElement}>
-                    <ScrollView style={{flex: 1, marginRight: 8}}>
-                        <Text style={[styles.optionsText, {color: 'gray', fontSize: 20}]}>
-                            {this.props.title}
-                        </Text>
-                        <Text style={styles.optionsText}>
-                            {this.props.subtitle}
-                        </Text>
-                    </ScrollView>
-                    <View style={[styles.submit, {borderColor: this.state.color}]}>
-                        <Text style={[styles.optionsText, {color: this.state.color}]}>
-                            {this.props.buttonText}
-                        </Text>
+            <View style={styles.options}>
+                <TouchableWithoutFeedback onPress={() => this.props.goTo(this.props.gotoAddress, this.props.title)}>
+                    <View style={styles.optionsElement}>
+                        <ScrollView style={{flex: 1, marginRight: 8}}>
+                            <TouchableOpacity onPress={() => this.props.goTo(this.props.gotoAddress, this.props.title)}>
+                                <Text style={[styles.optionsText, {color: Colors.darkgray, fontSize: 20}]}>
+                                    {this.props.title}
+                                </Text>
+                                <Text style={styles.optionsText}>
+                                    {this.props.subtitle}
+                                </Text>
+                            </TouchableOpacity>
+                        </ScrollView>
+                        <View style={[styles.submit, {borderColor: this.state.color}]}>
+                            <Text style={[styles.optionsText, {color: this.state.color}]}>
+                                {this.props.buttonText}
+                            </Text>
+                        </View>
                     </View>
-                </View>
-            </TouchableHighlight>
+                </TouchableWithoutFeedback>
+            </View>
         )
     }
 }

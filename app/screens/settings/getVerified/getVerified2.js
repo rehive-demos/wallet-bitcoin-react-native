@@ -24,15 +24,32 @@ export default class GetVerified extends Component {
             basic_info_status: '',
             address: '',
             address_status: '',
-            identification: '',
-            identification_status: '',
-            document: '',
-            document_status: '',
-            proof_of_address_status:''
+            proof_of_identity: '',
+            proof_of_identity_status: '',
+            advance_proof_of_address: '',
+            advance_proof_of_identity_status: '',
+            proof_of_address: '',
+            proof_of_address_status: ''
         }
     }
 
     async componentWillMount() {
+        this.getData()
+
+        this.emails()
+
+        this.mobiles()
+
+        this.addresses()
+
+        this.documents()
+    }
+
+    goTo = (path, name) => {
+        this.props.navigation.navigate(path, {name})
+    }
+
+    getData=async()=>{
         let user = await AsyncStorage.getItem('user')
         user = JSON.parse(user)
         this.setState({
@@ -41,6 +58,18 @@ export default class GetVerified extends Component {
             mobile_number: user.mobile_number,
             basic_info: user.first_name + ' ' + user.last_name,
         })
+        if (this.state.basic_info!=' ') {
+            this.setState({
+                basic_info_status: 'verified'
+            })
+        } else {
+            this.setState({
+                basic_info_status: 'incomplete'
+            })
+        }
+    }
+
+    emails=async()=>{
         let responseJson = await SettingsService.getAllEmails()
         if (responseJson.status === "success") {
             const data = responseJson.data;
@@ -62,7 +91,9 @@ export default class GetVerified extends Component {
                 responseJson.message,
                 [{text: 'OK'}])
         }
+    }
 
+    mobiles=async()=>{
         let responseJsonMobile = await SettingsService.getAllMobiles()
         if (responseJsonMobile.status === 'success') {
             const data = responseJsonMobile.data
@@ -84,8 +115,14 @@ export default class GetVerified extends Component {
                     })
                 }
             }
+        }else {
+            Alert.alert('Error',
+                responseJsonMobile.message,
+                [{text: 'OK'}])
         }
+    }
 
+    addresses=async()=>{
         let responseJsonAddress = await UserInfoService.getAddress()
         if (responseJsonAddress.status === 'success') {
             const data = responseJsonAddress.data
@@ -93,32 +130,94 @@ export default class GetVerified extends Component {
                 address: data.line_1 + ',' + data.line_2 + ',' + data.city + ',' + data.state_province + ',' + data.country + ',' + data.postal_code,
                 address_status: data.status
             })
+        }else {
+            Alert.alert('Error',
+                responseJsonAddress.message,
+                [{text: 'OK'}])
         }
+    }
 
+
+    documents=async()=>{
         let responseJsonDocuments = await UserInfoService.getAllDocuments()
+
+        let id_verified = 0, id_pending = 0, a_id_verified = 0, a_id_pending = 0, address_verified=0,address_pending=0, address_denied = 0;
         if (responseJsonDocuments.status === 'success') {
             const data = responseJsonDocuments.data.results
-            console.log(data)
             for (let i = 0; i < data.length; i++) {
-                console.log(data[i].document_category)
+                if (data[i].document_category === "Proof Of Identity" && data[i].status == 'verified') {
+                    id_verified=id_verified+1
+                }
+                if (data[i].document_category === "Proof Of Identity" && data[i].status == 'pending') {
+                    id_pending=id_pending+1
+                }
+                if (data[i].document_category === "Advanced Proof Of Identity" && data[i].status == 'verified') {
+                    a_id_verified=a_id_verified+1
+                }
+                if (data[i].document_category === "Advanced Proof Of Identity" && data[i].status == 'pending') {
+                    a_id_pending=a_id_pending+1
+                }
                 if (data[i].document_category === "Proof Of Address" && data[i].status == 'verified') {
-                    this.setState({
-                        proof_of_address_status: 'verified'
-                    })
+                    address_verified=address_verified+1
                 }
-                if (this.state.proof_of_address_status != 'verified' && data[i].status=='pending') {
-                    this.setState({
-                        proof_of_address_status: 'pending'
-                    })
+                if (data[i].document_category === "Proof Of Address" && data[i].status == 'pending') {
+                    address_pending=address_pending+1
                 }
+
             }
+
+
+            if(id_verified>0){
+                this.setState({
+                    proof_of_identity_status:'verified'
+                })
+            }else if(id_pending>0){
+                this.setState({
+                    proof_of_identity_status:'pending'
+                })
+            }else{
+                this.setState({
+                    proof_of_identity_status:'incomplete'
+                })
+            }
+            if(a_id_verified>0){
+                this.setState({
+                    advence_proof_of_identity_status:'verified'
+                })
+            }else if(a_id_pending>0){
+                this.setState({
+                    advance_proof_of_identity_status:'pending'
+                })
+            }else{
+                this.setState({
+                    advance_proof_of_identity_status:'incomplete'
+                })
+            }
+
+            if(address_verified>0){
+                this.setState({
+                    proof_of_address_status:'verified'
+                })
+            }else if(address_pending>0){
+                this.setState({
+                    proof_of_address_status:'pending'
+                })
+            }else if(address_denied>0){
+                this.setState({
+                    proof_of_address_status:'denied'
+                })
+            }else{
+                this.setState({
+                    proof_of_address_status:'incomplete'
+                })
+            }
+        }else {
+            Alert.alert('Error',
+                responseJsonDocuments.message,
+                [{text: 'OK'}])
         }
-
     }
 
-    goTo = (path,name) => {
-        this.props.navigation.navigate(path,{name})
-    }
 
     render() {
         return (
@@ -139,7 +238,7 @@ export default class GetVerified extends Component {
                             gotoAddress="SettingsMobileNumbers" goTo={this.goTo}/>
 
                     <Option title="Basic Info" subtitle={this.state.basic_info}
-                            buttonText="VERIFIED"
+                            buttonText={this.state.basic_info_status.toUpperCase()}
                             gotoAddress="SettingsPersonalDetails" goTo={this.goTo}/>
 
                     <Option title="Address" subtitle={this.state.address}
@@ -147,12 +246,16 @@ export default class GetVerified extends Component {
                             gotoAddress="SettingsAddress" goTo={this.goTo}/>
 
                     <Option title="Proof of Identity" subtitle="Waiting for approval"
-                            buttonText="VERIFIED"
-                            gotoAddress="document" goTo={this.goTo}/>
+                            buttonText={this.state.proof_of_identity_status.toUpperCase()}
+                            gotoAddress="Document" goTo={this.goTo}/>
+
+                    <Option title="Advanced Proof of Identity" subtitle="Waiting for approval"
+                            buttonText={this.state.advance_proof_of_identity_status.toUpperCase()}
+                            gotoAddress="Document" goTo={this.goTo}/>
 
                     <Option title="Proof of Address" subtitle="Waiting for approval"
                             buttonText={this.state.proof_of_address_status.toUpperCase()}
-                            gotoAddress="document" goTo={this.goTo}/>
+                            gotoAddress="Document" goTo={this.goTo}/>
                 </View>
             </View>
         )
