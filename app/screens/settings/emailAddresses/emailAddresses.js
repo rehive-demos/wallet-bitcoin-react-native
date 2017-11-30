@@ -3,6 +3,7 @@ import {View, StyleSheet, ListView, Alert, AsyncStorage, TouchableHighlight, Tex
 import {NavigationActions} from 'react-navigation'
 import Spinner from 'react-native-loading-spinner-overlay'
 import EmailAddress from './../../../components/emailAddress'
+import ResetNavigation from './../../../util/resetNavigation'
 import SettingsService from './../../../services/settingsService'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
@@ -14,9 +15,9 @@ export default class Settings extends Component {
 
     constructor(props) {
         super(props);
-        const {params}=this.props.navigation.state.params
+        console.log("emailAddress: "+ this.props.navigation.state.params.name)
         this.state = {
-            routeName:params.name,
+            routeName: this.props.navigation.state.params?this.props.navigation.state.params.name:null,
             refreshing: false,
             loading: false,
             loadingMessage: '',
@@ -50,20 +51,8 @@ export default class Settings extends Component {
     }
 
     reload = () => {
-        const resetAction = NavigationActions.reset({
-            index: 1,
-            actions: [
-                NavigationActions.navigate({
-                    routeName: 'Home',
-                    params: {},
-
-                    // navigate can have a nested navigate action that will be run inside the child router
-                    action: NavigationActions.navigate({routeName: this.state.routeName!=null?'GetVerified':'Settings'}),
-                }),
-                NavigationActions.navigate({routeName: 'SettingsEmailAddresses'}),
-            ],
-        })
-        this.props.navigation.dispatch(resetAction)
+        console.log("emailAddress: "+ this.state.routeName)
+        ResetNavigation.dispatchUnderDrawer(this.props.navigation, this.state.routeName != null ? 'GetVerified' : 'Settings', 'SettingsEmailAddresses')
     }
 
     makePrimary = async (id) => {

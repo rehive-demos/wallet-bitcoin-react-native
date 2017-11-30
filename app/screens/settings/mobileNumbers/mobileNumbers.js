@@ -16,7 +16,7 @@ export default class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            routeName: this.props.navigation.state.params.name,
+            routeName: this.props.navigation.params?this.props.navigation.params.name:null,
             refreshing: false,
             loading: false,
             loadingMessage: "",
@@ -32,7 +32,6 @@ export default class Settings extends Component {
 
     getData = async () => {
         let responseJson = await SettingsService.getAllMobiles()
-
         if (responseJson.status === "success") {
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2)});
             const data = responseJson.data

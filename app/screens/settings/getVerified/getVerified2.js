@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert} from 'react-native'
+import {View, Text, StyleSheet, TouchableHighlight, AsyncStorage, Alert, ScrollView} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
@@ -26,7 +26,7 @@ export default class GetVerified extends Component {
             address_status: '',
             proof_of_identity: '',
             proof_of_identity_status: '',
-            advance_proof_of_address: '',
+            advance_proof_of_identity: '',
             advance_proof_of_identity_status: '',
             proof_of_address: '',
             proof_of_address_status: ''
@@ -82,7 +82,7 @@ export default class GetVerified extends Component {
             }
             if (this.state.email_status !== 'Verified') {
                 this.setState({
-                    email_status: 'Pending'
+                    email_status: 'Pending',
                 })
             }
         }
@@ -99,7 +99,8 @@ export default class GetVerified extends Component {
             const data = responseJsonMobile.data
             if (data.length == 0) {
                 this.setState({
-                    mobile_number_status: 'Incomplete'
+                    mobile_number_status: 'Incomplete',
+                    mobile_number:'Yet not provided'
                 })
             } else {
                 for (let i = 0; i < data.length; i++) {
@@ -111,7 +112,8 @@ export default class GetVerified extends Component {
                 }
                 if (this.state.mobile_number_status != 'Verified') {
                     this.setState({
-                        mobile_number_status: 'Pending'
+                        mobile_number_status: 'Pending',
+                        mobile:'Waiting for appoval'
                     })
                 }
             }
@@ -169,46 +171,56 @@ export default class GetVerified extends Component {
 
             if(id_verified>0){
                 this.setState({
-                    proof_of_identity_status:'verified'
+                    proof_of_identity_status:'verified',
+                    proof_of_identity:'Approved'
                 })
             }else if(id_pending>0){
                 this.setState({
-                    proof_of_identity_status:'pending'
+                    proof_of_identity_status:'pending',
+                    proof_of_identity:'Waiting for approval'
                 })
             }else{
                 this.setState({
-                    proof_of_identity_status:'incomplete'
+                    proof_of_identity_status:'incomplete',
+                    proof_of_identity:'Yet not provided'
                 })
             }
             if(a_id_verified>0){
                 this.setState({
-                    advence_proof_of_identity_status:'verified'
+                    advence_proof_of_identity_status:'verified',
+                    advance_proof_of_identity:'Approved'
                 })
             }else if(a_id_pending>0){
                 this.setState({
-                    advance_proof_of_identity_status:'pending'
+                    advance_proof_of_identity_status:'pending',
+                    advance_proof_of_identity:'Waiting for approval'
                 })
             }else{
                 this.setState({
-                    advance_proof_of_identity_status:'incomplete'
+                    advance_proof_of_identity_status:'incomplete',
+                    advance_proof_of_identity:'Yet not provided'
                 })
             }
 
             if(address_verified>0){
                 this.setState({
-                    proof_of_address_status:'verified'
+                    proof_of_address_status:'verified',
+                    proof_of_address:'Approved'
                 })
             }else if(address_pending>0){
                 this.setState({
-                    proof_of_address_status:'pending'
+                    proof_of_address_status:'pending',
+                    proof_of_address:'Waiting for approval'
                 })
             }else if(address_denied>0){
                 this.setState({
-                    proof_of_address_status:'denied'
+                    proof_of_address_status:'denied',
+                    proof_of_address:'Document is not good enough'
                 })
             }else{
                 this.setState({
-                    proof_of_address_status:'incomplete'
+                    proof_of_address_status:'incomplete',
+                    proof_of_address:'Yet not provided'
                 })
             }
         }else {
@@ -228,7 +240,21 @@ export default class GetVerified extends Component {
                     homeRight
                     title="Get verified"
                 />
-                <View style={{flex: 1, paddingTop: 10}}>
+                <ScrollView style={styles.mainContainer}>
+                    <View style={styles.titleContainer}>
+                        <Text style={{fontSize:16}}>
+                            Your default account is currently on tier 1. You can view your limits and fees by following the
+                            links below. Complete the steps below if you want to increase your verification level.
+                        </Text>
+                        <View style={styles.buttonsContainer}>
+                            <Text style={[styles.buttonText,{paddingRight:8}]}>
+                                Limits
+                            </Text>
+                            <Text style={[styles.buttonText,{paddingLeft:8}]}>
+                                Fees
+                            </Text>
+                        </View>
+                    </View>
                     <Option title="Email" subtitle={this.state.email}
                             buttonText={this.state.email_status.toUpperCase()}
                             gotoAddress="SettingsEmailAddresses" goTo={this.goTo}/>
@@ -245,18 +271,18 @@ export default class GetVerified extends Component {
                             buttonText={this.state.address_status.toUpperCase()}
                             gotoAddress="SettingsAddress" goTo={this.goTo}/>
 
-                    <Option title="Proof of Identity" subtitle="Waiting for approval"
+                    <Option title="Proof of Identity" subtitle={this.state.proof_of_identity}
                             buttonText={this.state.proof_of_identity_status.toUpperCase()}
                             gotoAddress="Document" goTo={this.goTo}/>
 
-                    <Option title="Advanced Proof of Identity" subtitle="Waiting for approval"
+                    <Option title="Advanced Proof of Identity" subtitle={this.state.advance_proof_of_identity}
                             buttonText={this.state.advance_proof_of_identity_status.toUpperCase()}
                             gotoAddress="Document" goTo={this.goTo}/>
 
-                    <Option title="Proof of Address" subtitle="Waiting for approval"
+                    <Option title="Proof of Address" subtitle={this.state.proof_of_address}
                             buttonText={this.state.proof_of_address_status.toUpperCase()}
                             gotoAddress="Document" goTo={this.goTo}/>
-                </View>
+                </ScrollView>
             </View>
         )
     }
@@ -267,4 +293,21 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
+    mainContainer:{
+        flex: 1,
+    },
+    titleContainer:{
+        padding:20,
+        backgroundColor:Colors.lightgray
+    },
+    buttonsContainer:{
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        paddingTop:10,
+    },
+    buttonText:{
+        color:Colors.lightblue,
+        fontSize:16,
+    }
+
 })

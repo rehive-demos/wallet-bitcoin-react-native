@@ -13,6 +13,7 @@ export default class AmountEntry extends Component {
 
     constructor(props) {
         super(props);
+        console.log("addEmailAddress Params: "+ this.props.navigation.state.params.routeName)
         this.state = {
             routeName:this.props.navigation.state.params.routeName,
             email: '',
@@ -21,6 +22,7 @@ export default class AmountEntry extends Component {
     }
 
     reload = () => {
+        console.log("addEmailAddress: "+ this.state.routeName)
         ResetNavigation.dispatchUnderDrawer(this.props.navigation, this.state.routeName?'GetVerified':'Settings', 'SettingsEmailAddresses')
     }
 
