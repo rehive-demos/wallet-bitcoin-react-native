@@ -116,7 +116,7 @@ export default class Transactions extends Component {
     render() {
         if (this.state.noTransaction) {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingBottom: 10,paddingLeft:10,paddingRight:10}}>
                     <ScrollView
                         refreshControl={
                             <RefreshControl
@@ -142,7 +142,7 @@ export default class Transactions extends Component {
         }
         else {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingVertical: 10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingBottom: 10}}>
                     <FlatList
                         data={this.state.data}
                         renderItem={({item}) => (

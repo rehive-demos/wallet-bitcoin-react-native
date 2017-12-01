@@ -10,7 +10,7 @@ var settingsService = {
   },
 
   editBankAccount: (id, data) => {
-    return BaseService.patch('user/crypto-accounts/' + id + '/', data)
+    return BaseService.patch('user/bank-accounts/' + id + '/', data)
   },
 
   getAllBitcoinAddresses: () => {
