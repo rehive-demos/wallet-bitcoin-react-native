@@ -19,6 +19,8 @@ export default class Options extends Component {
         } else if (this.props.buttonText === 'INCOMPLETE' || this.props.buttonText === 'DENIED') {
             color = Colors.red
         }
+        if(this.props.title=="Proof of Address")
+            console.log("Options: "+color)
 
         this.setState({
             color: color

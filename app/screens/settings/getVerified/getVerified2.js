@@ -74,9 +74,14 @@ export default class GetVerified extends Component {
         if (responseJson.status === "success") {
             const data = responseJson.data;
             for (let i = 0; i < data.length; i++) {
-                if (data[i].verified === 'true') {
+                if (data[i].verified === true) {
                     this.setState({
                         email_status: 'Verified'
+                    })
+                }
+                if(data[i].primary===true){
+                    this.setState({
+                        email:data[i].email
                     })
                 }
             }
@@ -109,11 +114,15 @@ export default class GetVerified extends Component {
                             mobile_number_status: 'Verified'
                         })
                     }
+                    if(data[i].primary){
+                        this.setState({
+                            mobile_number:data[i].number
+                        })
+                    }
                 }
                 if (this.state.mobile_number_status != 'Verified') {
                     this.setState({
                         mobile_number_status: 'Pending',
-                        mobile:'Waiting for appoval'
                     })
                 }
             }
