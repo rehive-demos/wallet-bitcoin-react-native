@@ -120,6 +120,7 @@ export default class AmountEntry extends Component {
                             title="Note"
                             placeholder="Enter note here"
                             autoCapitalize="none"
+                            placeholderTextColor="lightgray"
                             multiline={true}
                             underlineColorAndroid="white"
                             onChangeText={(note) => this.setState({note})}

@@ -116,7 +116,7 @@ export default class Transactions extends Component {
     render() {
         if (this.state.noTransaction) {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray,paddingHorizontal:10}}>
                     <ScrollView
                         refreshControl={
                             <RefreshControl
@@ -139,7 +139,7 @@ export default class Transactions extends Component {
         }
         else {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingVertical: 10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray}}>
                     <FlatList
                         data={this.state.data}
                         renderItem={({item}) => (
@@ -149,7 +149,7 @@ export default class Transactions extends Component {
                                 subtitle={moment(item.created).fromNow()}
                                 rightTitle={`${item.currency.symbol}${this.getAmount(item.amount, item.currency.divisibility)}`}
                                 rightTitleStyle={{'color': '#bdc6cf'}}
-                                containerStyle={{paddingLeft: 10, paddingRight: 20}}
+                                containerStyle={{paddingRight: 20}}
                                 hideChevron
                                 roundAvatar
                                 onPress={() => {

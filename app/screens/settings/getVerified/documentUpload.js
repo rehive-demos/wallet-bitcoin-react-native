@@ -84,16 +84,16 @@ export default class DocumentUpload extends Component {
                             source={{uri: this.state.image.uri}}
                         />
                     </TouchableHighlight>
-                    <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonbar}>
                         <TouchableHighlight
-                            style={[styles.button, {backgroundColor: Colors.red}]}
+                            style={[styles.submit, {backgroundColor: Colors.red}]}
                             onPress={() => this.props.navigation.goBack()}>
                             <Text style={{color: 'white', fontSize: 20}}>
                                 Cancel
                             </Text>
                         </TouchableHighlight>
                         <TouchableHighlight
-                            style={styles.button}
+                            style={[styles.submit,{marginLeft: 25}]}
                             onPress={() => this.saveImage()}>
                             <Text style={{color: 'white', fontSize: 20}}>
                                 Upload
@@ -114,13 +114,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-    buttonsContainer: {
-        height: 65,
-        backgroundColor: Colors.lightblue,
+    buttonbar: {
+        position: 'absolute',
+        bottom:0,
         flexDirection: 'row',
-        alignSelf: 'stretch',
+        paddingHorizontal: 25,
+        justifyContent: 'center',
+        paddingVertical: 10,
+        backgroundColor: 'transparent',
     },
-    button: {
+    submit: {
+        backgroundColor: Colors.lightblue,
+        height: 50,
+        borderRadius: 25,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
