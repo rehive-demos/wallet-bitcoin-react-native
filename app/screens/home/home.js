@@ -10,6 +10,8 @@ import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
+let inputLength=0;
+
 export default class Home extends Component {
     static navigationOptions = {
         label: 'Home',
@@ -55,7 +57,8 @@ export default class Home extends Component {
         for (let i = 0; i < divisibility; i++) {
             balance = balance / 10
         }
-
+        let balanceString=balance.toString()
+        inputLength=balanceString.length
         return balance
     }
 
@@ -193,16 +196,16 @@ export default class Home extends Component {
                         underlayColor={Colors.lightblue}
                         onPress={() => this.tap1()}
                         onLongPress={() => this.longTap1()}
-                        style={{flex:1}}>
+                        style={{flex:4}}>
                         <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center',}}>
                             <Text style={{fontSize: 18, color: 'white'}}>
                                 {this.state.account}
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: 23, color: 'white'}}>
+                                <Text style={{fontSize: inputLength<8?23:12, color: 'white'}}>
                                     {this.state.symbol}
                                 </Text>
-                                <Text style={{paddingLeft: 5, fontSize: 40, color: 'white'}}>
+                                <Text style={{paddingLeft: 5, fontSize: inputLength<8?40:20, color: 'white'}}>
                                     {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                                 </Text>
                             </View>
