@@ -114,7 +114,7 @@ export default class Receive extends Component {
                         />
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoTitleText}>
-                                issuer
+                                Issuer
                             </Text>
                             <Text style={styles.infoDetailsText}>
                                 {this.state.issuer}
@@ -137,7 +137,7 @@ export default class Receive extends Component {
                         </View>
                         <View style={[styles.infoContainer, {backgroundColor: 'white'}]}>
                             <Text style={styles.infoTitleText}>
-                                account
+                                Account
                             </Text>
                             <Text style={styles.infoDetailsText}>
                                 {this.state.account}
@@ -160,7 +160,7 @@ export default class Receive extends Component {
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoTitleText}>
-                                key
+                                Key
                             </Text>
                             <Text style={styles.infoDetailsText}>
                                 {this.state.key}
@@ -195,7 +195,7 @@ export default class Receive extends Component {
                         style={styles.submit}
                         onPress={() => this.saveToken()}>
                         <Text style={{color: 'white', fontSize: 20}}>
-                            Save
+                            Submit
                         </Text>
                     </TouchableHighlight>
                     {
