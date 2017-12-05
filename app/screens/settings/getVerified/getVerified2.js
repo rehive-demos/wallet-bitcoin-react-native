@@ -147,8 +147,28 @@ export default class GetVerified extends Component {
         let responseJsonAddress = await UserInfoService.getAddress()
         if (responseJsonAddress.status === 'success') {
             const data = responseJsonAddress.data
+            let address='';
+            if(data.line_1){
+                address=address+data.line_1+','
+            }
+            if(data.line_2){
+                address=address+data.line_2+','
+            }
+            if(data.city){
+                address=address+data.city+','
+            }
+            if(data.state_province){
+                address=address+data.state_province+','
+            }
+            if(data.country){
+                address=address+data.country+','
+            }
+            if(data.postal_code){
+                address=address+data.postal_code
+            }
+
             this.setState({
-                address: data.line_1 + ',' + data.line_2 + ',' + data.city + ',' + data.state_province + ',' + data.country + ',' + data.postal_code,
+                address: address,
                 address_status: data.status
             })
         } else {
