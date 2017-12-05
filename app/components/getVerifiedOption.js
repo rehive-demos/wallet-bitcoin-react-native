@@ -10,7 +10,7 @@ export default class Options extends Component {
         }
     }
 
-    componentWillReceiveProps() {
+    componentWillMount() {
         let color;
         if (this.props.buttonText === 'PENDING') {
             color = Colors.darkgray
@@ -19,8 +19,6 @@ export default class Options extends Component {
         } else if (this.props.buttonText === 'INCOMPLETE' || this.props.buttonText === 'DENIED') {
             color = Colors.red
         }
-        if(this.props.title=="Proof of Address")
-            console.log("Options: "+color)
 
         this.setState({
             color: color
@@ -34,10 +32,10 @@ export default class Options extends Component {
                     <View style={styles.optionsElement}>
                         <ScrollView style={{flex: 1, marginRight: 8}}>
                             <TouchableOpacity onPress={() => this.props.goTo(this.props.gotoAddress, this.props.title)}>
-                                <Text style={[styles.optionsText, {color: Colors.darkgray, fontSize: 20}]}>
+                                <Text numberOfLines={1} style={[styles.optionsText, {color: Colors.darkgray, fontSize: 20}]}>
                                     {this.props.title}
                                 </Text>
-                                <Text style={styles.optionsText}>
+                                <Text numberOfLines={1} style={styles.optionsText}>
                                     {this.props.subtitle}
                                 </Text>
                             </TouchableOpacity>
