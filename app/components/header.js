@@ -10,7 +10,8 @@ export default class Account extends Component {
         super(props)
         this.state = {
             offline: false,
-            online:false
+            online:false,
+            firstTime: true
         }
     }
 
@@ -32,7 +33,7 @@ export default class Account extends Component {
         this.setState({
             offline: !isConnected
         })
-        if(isConnected){
+        if(!this.state.firstTime && isConnected){
             this.setState({
                 online:true
             })
@@ -42,6 +43,10 @@ export default class Account extends Component {
                 })
             },5000)
         }
+
+        this.setState({
+            firstTime: false
+        })
     }
 
     render() {
