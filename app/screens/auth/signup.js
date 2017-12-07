@@ -36,7 +36,6 @@ export default class Signup extends Component {
         }
         console.log(data)
         let responseJson = await AuthService.signup(data)
-        
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
             if (data.mobile_number) {
