@@ -81,6 +81,16 @@ export default class Home extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0]
+            let switches = account.switches
+            switches = switches.filter(word => word.tx_type === 'credit')
+            if (switches.length > 0) {
+                let creditSwitch = switches[0]
+                if (!creditSwitch.enabled) {
+                    this.setState({
+                        transactionSwitch: false,
+                    })
+                }
+            }
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
             this.setState({
                 symbol: account.currency.symbol,
