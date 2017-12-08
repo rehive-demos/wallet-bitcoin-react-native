@@ -23,6 +23,7 @@ export default class Home extends Component {
                 currency: {},
             },
             reference: '',
+            transactionSwitch: true,
         }
     }
 
@@ -56,6 +57,16 @@ export default class Home extends Component {
         if (responseJson.status === "success") {
             AsyncStorage.removeItem('user')
             AsyncStorage.setItem('user', JSON.stringify(responseJson.data))
+            let switches = responseJson.data.switches
+            switches = switches.filter(word => word.tx_type === 'credit')
+            if (switches.length > 0) {
+                let creditSwitch = switches[0]
+                if (!creditSwitch.enabled) {
+                    this.setState({
+                        transactionSwitch: false,
+                    })
+                }
+            }
             const token = await AsyncStorage.getItem('token')
             if (token === null) {
                 await this.logout()
@@ -70,6 +81,16 @@ export default class Home extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0]
+            let switches = account.switches
+            switches = switches.filter(word => word.tx_type === 'credit')
+            if (switches.length > 0) {
+                let creditSwitch = switches[0]
+                if (!creditSwitch.enabled) {
+                    this.setState({
+                        transactionSwitch: false,
+                    })
+                }
+            }
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
             this.setState({
                 symbol: account.currency.symbol,
@@ -114,6 +135,7 @@ export default class Home extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
+                    transactionSwitch={this.state.transactionSwitch}
                 />
                 <View style={styles.balance}>
                     <View style={{flexDirection: 'row'}}>
