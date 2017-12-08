@@ -3,35 +3,32 @@ import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native'
 import Colors from './../config/colors'
 
 export default class Account extends Component {
-    constructor(props) {
-        super(props);
-        const color = this.props.active === true ? Colors.lightgray : 'orange'
-        this.state = {
-            balance: 0,
-            color,
-        }
-    }
 
     render() {
         return (
-            <TouchableHighlight
-                style={ styles.row}
-                onPress={()=>{this.props.setViewAccount(this.props.code)}}>
+            <View style={styles.row}>
                 <View style={[styles.options, {backgroundColor: Colors.lightgray}]}>
                     <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-                        {this.props.code}
+                        {this.props.rowData.code}
                     </Text>
                 </View>
-            </TouchableHighlight>
+                <View style={{paddingLeft:20,justifyContent:'center'}}>
+                    <Text style={{color:Colors.black,fontSize: 16}}>
+                        {this.props.rowData.description}
+                    </Text>
+                </View>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     row: {
-        width: 70,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        flexDirection:'row',
+        borderBottomColor: Colors.lightgray
     },
     options: {
         height: 60,

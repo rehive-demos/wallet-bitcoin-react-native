@@ -1,39 +1,44 @@
 import BaseService from './baseService'
 
 var UserInfoService = {
-  getCompany: () => {
-    return BaseService.get('company/')
-  },
 
-  getDepositInfo: () => {
-    return BaseService.get('company/bank-account/')
-  },
+    getCompany: () => {
+        return BaseService.get('company/')
+    },
 
-  getActiveAccount: () => {
-    return BaseService.get('accounts/?active=true')
-  },
+    getAllCompanyCurrencies: () => {
+        return BaseService.get('company/currencies/')
+    },
 
-  getAddress: () => {
-    return BaseService.get('user/address/')
-  },
+    getDepositInfo: () => {
+        return BaseService.get('company/bank-account/')
+    },
 
-  updateAddress: (data) => {
-    return BaseService.patch('user/address/', data)
-  },
+    getActiveAccount: () => {
+        return BaseService.get('accounts/?active=true')
+    },
 
-  getUserDetails: () => {
-    return BaseService.get('user/')
-  },
+    getAddress: () => {
+        return BaseService.get('user/address/')
+    },
 
-  updateUserDetails: (data) => {
-    return BaseService.patch('user/', data)
-  },
+    updateAddress: (data) => {
+        return BaseService.patch('user/address/', data)
+    },
 
-  uploadProfileImage: (file) => {
-    let formData = new FormData()
-    formData.append('profile', file)
-    return BaseService.fileUpload('user/', formData)
-  },
+    getUserDetails: () => {
+        return BaseService.get('user/')
+    },
+
+    updateUserDetails: (data) => {
+        return BaseService.patch('user/', data)
+    },
+
+    uploadProfileImage: (file) => {
+        let formData = new FormData()
+        formData.append('profile', file)
+        return BaseService.fileUpload('user/', formData)
+    },
 }
 
 export default UserInfoService
