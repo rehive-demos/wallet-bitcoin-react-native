@@ -53,7 +53,7 @@ export default class Account extends Component {
         return (
             <View style={{paddingTop: Expo.Constants.statusBarHeight, backgroundColor:Colors.lightblue}}>
                 {
-                    !this.props.transactionSwitch &&
+                    this.props.transactionSwitch === false &&
                      <View style={{paddingVertical:4, paddingHorizontal: 20, backgroundColor:Colors.red, justifyContent:'center',alignItems:'center'}}>
                         <Text style={{color:'white', textAlign: 'center'}}>
                             Your account is disabled for that account.
