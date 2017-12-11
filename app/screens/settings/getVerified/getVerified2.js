@@ -326,7 +326,6 @@ export default class GetVerified extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
-                    homeRight
                     title="Get verified"
                 />
                 <View style={styles.mainContainer}>

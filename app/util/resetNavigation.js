@@ -34,7 +34,7 @@ const resetNavigation = {
                         params: {},
                         action: NavigationActions.navigate({routeName: drawerRoute}),
                     }),
-                    NavigationActions.navigate({routeName: finalRoute}),
+                    //NavigationActions.navigate({routeName: finalRoute}),
                 ],
             })
             navigation.dispatch(resetAction)
