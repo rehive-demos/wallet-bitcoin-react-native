@@ -107,7 +107,7 @@ export default class Receive extends Component {
                     title="Token authentication"
                 />
                 <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'} keyboardVerticalOffset={85}>
-                    <ScrollView style={{flex: 1,paddingBottom:10}}>
+                    <ScrollView style={{flex: 1, paddingBottom: 10}}>
                         <Image
                             style={{width: 250, height: 250, alignSelf: 'center'}}
                             source={{uri: this.state.imageURI}}
@@ -190,22 +190,34 @@ export default class Receive extends Component {
                             returnKeyType='next'
                             onChangeText={(token) => this.setState({token: token})}
                         />
+                        <View style={{backgroundColor:'white',height:70}}/>
                     </ScrollView>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={() => this.saveToken()}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Submit
-                        </Text>
-                    </TouchableHighlight>
                     {
-                        this.state.delete &&
-                        <TouchableHighlight
-                            style={[styles.submit, {backgroundColor: Colors.red}]}
-                            onPress={() => this.deleteTwoFactorAuth()}
-                        >
-                            <Text style={{color: 'white', fontSize: 20}}> Delete</Text>
-                        </TouchableHighlight>
+                        this.state.delete ?
+                            <View style={styles.buttonbar}>
+                                <TouchableHighlight
+                                    style={[styles.submit, {backgroundColor: Colors.red,marginRight:25}]}
+                                    onPress={() => this.deleteTwoFactorAuth()}
+                                >
+                                    <Text style={{color: 'white', fontSize: 20}}> Delete</Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    style={styles.submit}
+                                    onPress={() => this.saveToken()}>
+                                    <Text style={{color: 'white', fontSize: 20}}>
+                                        Submit
+                                    </Text>
+                                </TouchableHighlight>
+                            </View> :
+                            <View style={styles.buttonbar}>
+                                <TouchableHighlight
+                                    style={styles.submit}
+                                    onPress={() => this.saveToken()}>
+                                    <Text style={{color: 'white', fontSize: 20}}>
+                                        Submit
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
                     }
                 </KeyboardAvoidingView>
             </View>
@@ -254,13 +266,21 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     submit: {
-        marginBottom: 10,
-        marginHorizontal: 20,
+        backgroundColor: Colors.lightblue,
         height: 50,
         borderRadius: 25,
-        backgroundColor: Colors.lightblue,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    buttonbar: {
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row',
+        paddingHorizontal: 25,
+        justifyContent: 'center',
+        paddingVertical: 10,
+        backgroundColor: 'transparent',
     },
 })
 

@@ -10,7 +10,7 @@ export default class Account extends Component {
         super(props)
         this.state = {
             offline: false,
-            online:false,
+            online: false,
             firstTime: true,
         }
     }
@@ -33,15 +33,15 @@ export default class Account extends Component {
         this.setState({
             offline: !isConnected
         })
-        if(!this.state.firstTime && isConnected){
+        if (!this.state.firstTime && isConnected) {
             this.setState({
-                online:true
+                online: true
             })
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.setState({
-                    online:false
+                    online: false
                 })
-            },5000)
+            }, 5000)
         }
 
         this.setState({
@@ -51,43 +51,71 @@ export default class Account extends Component {
 
     render() {
         return (
-            <View style={{paddingTop: Expo.Constants.statusBarHeight, backgroundColor:Colors.lightblue}}>
+            <View style={{paddingTop: Expo.Constants.statusBarHeight, backgroundColor: Colors.lightblue}}>
                 {
                     this.props.creditSwitch === false && this.props.debitSwitch === true &&
-                     <View style={{paddingVertical:4, paddingHorizontal: 20, backgroundColor:Colors.red, justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:'white', textAlign: 'center'}}>
+                    <View style={{
+                        paddingVertical: 4,
+                        paddingHorizontal: 20,
+                        backgroundColor: Colors.red,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>
                             Deposits are temporarily disabled.
                         </Text>
                     </View>
                 }
                 {
                     this.props.debitSwitch === false && this.props.creditSwitch === true &&
-                     <View style={{paddingVertical:4, paddingHorizontal: 20, backgroundColor:Colors.red, justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:'white', textAlign: 'center'}}>
+                    <View style={{
+                        paddingVertical: 4,
+                        paddingHorizontal: 20,
+                        backgroundColor: Colors.red,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>
                             Withdrawals are temporarily disabled.
                         </Text>
                     </View>
                 }
                 {
                     this.props.debitSwitch === false && this.props.creditSwitch === false &&
-                     <View style={{paddingVertical:4, paddingHorizontal: 20, backgroundColor:Colors.red, justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:'white', textAlign: 'center'}}>
+                    <View style={{
+                        paddingVertical: 4,
+                        paddingHorizontal: 20,
+                        backgroundColor: Colors.red,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{color: 'white', textAlign: 'center'}}>
                             Transactions are temporarily disabled.
                         </Text>
                     </View>
                 }
                 {
                     this.state.offline &&
-                    <View style={{paddingVertical:4,backgroundColor:Colors.red, justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:'white'}}>
+                    <View style={{
+                        paddingVertical: 4,
+                        backgroundColor: Colors.red,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{color: 'white'}}>
                             No internet Connection
                         </Text>
                     </View>
                 }
                 {
                     this.state.online &&
-                    <View style={{paddingVertical:4,backgroundColor:Colors.green, justifyContent:'center',alignItems:'center'}}>
-                        <Text style={{color:'white'}}>
+                    <View style={{
+                        paddingVertical: 4,
+                        backgroundColor: Colors.green,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{color: 'white'}}>
                             Connected
                         </Text>
                     </View>
@@ -99,12 +127,13 @@ export default class Account extends Component {
                             null
                         }
                         {this.props.back ?
-                            <TouchableOpacity style={{padding: 20}}>
+                            <TouchableOpacity style={{padding: 20}}
+                                              onPress={() => this.props.navigation.goBack()}
+                            >
                                 <Icon
                                     name="ios-arrow-back"
                                     size={35}
                                     color="white"
-                                    onPress={() => this.props.navigation.goBack()}
                                 />
                             </TouchableOpacity> :
                             null
@@ -120,28 +149,27 @@ export default class Account extends Component {
                     </View>
                     <View style={styles.rightIcon}>
                         {this.props.right ?
-                            <TouchableOpacity style={{padding: 10}}>
+                            <TouchableOpacity style={{padding: 10}}
+                                              onPress={() => this.props.navigation.navigate('QRcodeScanner')}
+                            >
                                 <Icon
                                     name="ios-qr-scanner-outline"
                                     size={30}
                                     color="white"
                                     style={{paddingRight: 10}}
-                                    onPress={() => this.props.navigation.navigate('QRcodeScanner')}
                                 />
                             </TouchableOpacity> :
                             null
                         }
                         {this.props.homeRight ?
                             <TouchableOpacity
+                                onPress={() => this.props.navigation.navigate('AccountsB')}
                                 style={{flex: 1, padding: 10, alignItems: 'flex-end', justifyContent: 'flex-start'}}>
                                 <Icon
                                     name="ios-arrow-up-outline"
                                     size={30}
                                     color="white"
                                     style={{paddingRight: 10}}
-                                    onPress={() =>
-                                        this.props.navigation.navigate('AccountsB')
-                                    }
                                 />
                             </TouchableOpacity> :
                             null
@@ -158,7 +186,7 @@ const styles = StyleSheet.create({
         width: "100%",
         flexDirection: 'row',
         backgroundColor: Colors.lightblue,
-        height: 55 ,
+        height: 55,
     },
     left: {
         flex: 1,

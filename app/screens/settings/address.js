@@ -5,6 +5,7 @@ import UserInfoService from './../../services/userInfoService'
 import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 
 export default class Address extends Component {
     static navigationOptions = {
@@ -138,13 +139,9 @@ export default class Address extends Component {
                             onChangeText={(postal_code) => this.setState({postal_code})}
                         />
                     </ScrollView>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={() => this.save()}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Save
-                        </Text>
-                    </TouchableHighlight>
+                    <Button
+                        title="Save"
+                        onPress={() => this.save()}/>
                 </KeyboardAvoidingView>
             </View>
         )

@@ -17,6 +17,7 @@ import UserInfoService from './../../services/userInfoService'
 import ResetNavigation from './../../util/resetNavigation'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 import TextInput from './../../components/textInput'
 
 const languages = {
@@ -212,13 +213,9 @@ export default class Settings extends Component {
                             </TouchableHighlight>
                         </View>
                     </ScrollView>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={() => this.save()}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Save
-                        </Text>
-                    </TouchableHighlight>
+                    <Button
+                        title="Save"
+                        onPress={() => this.save()}/>
                 </KeyboardAvoidingView>
                 <Modal
                     animationInTiming={500}

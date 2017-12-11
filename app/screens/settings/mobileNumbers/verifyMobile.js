@@ -5,6 +5,7 @@ import ResetNavigation from './../../../util/resetNavigation'
 import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
+import Button from './../../../components/button'
 
 export default class AmountEntry extends Component {
   static navigationOptions = {

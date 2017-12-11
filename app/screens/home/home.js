@@ -7,6 +7,7 @@ import Transactions from './transactions'
 import Auth from './../../util/auth'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 
 export default class Home extends Component {
     static navigationOptions = {

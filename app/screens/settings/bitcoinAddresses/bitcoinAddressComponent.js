@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {ScrollView, StyleSheet, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
 import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
+import Button from './../../../components/button'
 
 export default class BitcoinAddressComponent extends Component {
 
@@ -18,13 +19,9 @@ export default class BitcoinAddressComponent extends Component {
                         onChangeText={this.props.updateAddress}
                     />
                 </ScrollView>
-                <TouchableHighlight
-                    style={styles.submit}
-                    onPress={this.props.onPress}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Save
-                    </Text>
-                </TouchableHighlight>
+                <Button
+                    title="Save"
+                    onPress={this.props.onPress}/>
             </KeyboardAvoidingView>
         );
     }

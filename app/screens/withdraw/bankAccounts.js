@@ -4,6 +4,7 @@ import Account from './../../components/bankAccount'
 import SettingsService from './../../services/settingsService'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 
 export default class BankAccounts extends Component {
     static navigationOptions = {
@@ -88,16 +89,12 @@ export default class BankAccounts extends Component {
                     renderRow={(rowData) => <Account onPress={this.getAmount} reference={rowData.code}
                                                      name={rowData.bank_name}/>}
                 />
-                <TouchableHighlight
-                    style={styles.submit}
+                <Button
+                    title="Add bank account"
                     onPress={() => this.props.navigation.navigate("AddBankAccount", {
                         parentRoute: 'Withdraw',
                         nextRoute: 'BankAccounts'
-                    })}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Add bank account
-                    </Text>
-                </TouchableHighlight>
+                    })}/>
             </View>
         )
     }

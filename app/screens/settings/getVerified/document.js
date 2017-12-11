@@ -3,6 +3,7 @@ import {Modal, View, StyleSheet, Text, TouchableHighlight} from 'react-native'
 import {ImagePicker} from 'expo'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
+import Button from './../../../components/button'
 
 export default class Document extends Component {
 
@@ -61,13 +62,9 @@ export default class Document extends Component {
                 </View>
                 <View style={styles.bottomContainer}>
                     <View style={{flex: 1}}/>
-                    <TouchableHighlight
-                        style={styles.upload}
-                        onPress={() => this.openModal()}>
-                        <Text style={{fontSize: 20, color: 'white'}}>
-                            Upload
-                        </Text>
-                    </TouchableHighlight>
+                    <Button
+                        title="Upload"
+                        onPress={() => this.openModal()}/>
                 </View>
                 <Modal
                     animationType={"slide"}

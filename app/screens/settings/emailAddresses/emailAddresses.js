@@ -6,6 +6,7 @@ import EmailAddress from './../../../components/emailAddress'
 import SettingsService from './../../../services/settingsService'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
+import Button from './../../../components/button'
 
 export default class Settings extends Component {
     static navigationOptions = {
@@ -151,13 +152,9 @@ export default class Settings extends Component {
                                                           verify={this.verify} delete={this.delete}
                                                           reload={this.reload}/>}
                 />
-                <TouchableHighlight
-                    style={styles.submit}
-                    onPress={() => this.props.navigation.navigate("AddEmailAddress")}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Add email address
-                    </Text>
-                </TouchableHighlight>
+                <Button
+                    title="Add email address"
+                    onPress={() => this.props.navigation.navigate("AddEmailAddress")}/>
             </View>
         )
     }

@@ -18,6 +18,7 @@ import UserInfoService from './../../services/userInfoService'
 import Auth from './../../util/auth'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 
 export default class SendTo extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -207,13 +208,9 @@ export default class SendTo extends Component {
                                 />
                             </View>
                         </View>
-                        <TouchableHighlight
-                            style={styles.submit}
-                            onPress={this.send}>
-                            <Text style={{color: 'white', fontSize: 20}}>
-                                Next
-                            </Text>
-                        </TouchableHighlight>
+                        <Button
+                            title="Next"
+                            onPress={this.send}/>
                     </KeyboardAvoidingView>
                 </View>
             )

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {
     View,
     Text,
-    Button,
     StyleSheet,
     KeyboardAvoidingView,
     Alert,
@@ -97,7 +96,7 @@ export default class twoFactorSmsAuth extends Component {
                             changeCountryCode={this.changeCountryCode}
                         />
                     </View>
-                    <TouchableHighlight
+                    {/*<TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.sendSms()}>
                         <Text style={{color: 'white', fontSize: 20}}>
@@ -112,6 +111,33 @@ export default class twoFactorSmsAuth extends Component {
                         >
                             <Text style={{color: 'white', fontSize: 20}}> Delete</Text>
                         </TouchableHighlight>
+                    }*/}
+                    {
+                        this.state.delete ?
+                            <View style={styles.buttonbar}>
+                                <TouchableHighlight
+                                    style={[styles.submit, {backgroundColor: Colors.red,marginRight:25}]}
+                                    onPress={() => this.deleteTwoFactorAuth()}
+                                >
+                                    <Text style={{color: 'white', fontSize: 20}}> Delete</Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    style={styles.submit}
+                                    onPress={() => this.sendSms()}>
+                                    <Text style={{color: 'white', fontSize: 20}}>
+                                        Save
+                                    </Text>
+                                </TouchableHighlight>
+                            </View> :
+                            <View style={styles.buttonbar}>
+                                <TouchableHighlight
+                                    style={styles.submit}
+                                    onPress={() => this.sendSms()}>
+                                    <Text style={{color: 'white', fontSize: 20}}>
+                                        Save
+                                    </Text>
+                                </TouchableHighlight>
+                            </View>
                     }
                 </KeyboardAvoidingView>
             </View>
@@ -153,13 +179,21 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     submit: {
-        marginBottom: 10,
-        marginHorizontal: 20,
+        backgroundColor: Colors.lightblue,
         height: 50,
         borderRadius: 25,
-        backgroundColor: Colors.lightblue,
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    buttonbar: {
+        position: 'absolute',
+        bottom: 0,
+        flexDirection: 'row',
+        paddingHorizontal: 25,
+        justifyContent: 'center',
+        paddingVertical: 10,
+        backgroundColor: 'transparent',
     },
     buttonColor: {
         color: 'white'

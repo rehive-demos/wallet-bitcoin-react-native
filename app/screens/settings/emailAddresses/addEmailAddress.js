@@ -5,6 +5,7 @@ import ResetNavigation from './../../../util/resetNavigation'
 import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
 import Header from './../../../components/header'
+import Button from './../../../components/button'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -54,13 +55,9 @@ export default class AmountEntry extends Component {
                             onChangeText={(email) => this.setState({email})}
                         />
                     </View>
-                    <TouchableHighlight
-                        style={styles.submit}
-                        onPress={this.add}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                            Save
-                        </Text>
-                    </TouchableHighlight>
+                    <Button
+                        title="Save"
+                        onPress={this.add}/>
                 </KeyboardAvoidingView>
             </View>
         )

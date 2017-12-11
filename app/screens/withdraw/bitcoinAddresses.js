@@ -4,6 +4,7 @@ import Account from './../../components/bankAccount'
 import SettingsService from './../../services/settingsService'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 
 export default class BitcoinAddresses extends Component {
     static navigationOptions = {
@@ -70,16 +71,12 @@ export default class BitcoinAddresses extends Component {
                     renderRow={(rowData) => <Account onPress={this.getAmount} reference={rowData.code}
                                                      name={rowData.address}/>}
                 />
-                <TouchableHighlight
-                    style={styles.submit}
+                <Button
+                    title="Add bitcoin address"
                     onPress={() => this.props.navigation.navigate("AddBitcoinAddress", {
                         parentRoute: 'Withdraw',
                         nextRoute: 'BitcoinAddresses'
-                    })}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Add bitcoin address
-                    </Text>
-                </TouchableHighlight>
+                    })}/>
             </View>
         )
     }

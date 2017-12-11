@@ -16,6 +16,7 @@ import TextInput from './../../components/textInput'
 import TextInputMultiLine from './../../components/textInputMultiline'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
 import Big from 'big.js'
 
 export default class AmountEntry extends Component {
@@ -134,14 +135,9 @@ export default class AmountEntry extends Component {
                                 </Text>
                             </View>
                         </TouchableWithoutFeedback > :
-                        <TouchableHighlight
-                            style={styles.submit}
-                            onPress={this.send}>
-
-                            <Text style={{color: 'white', fontSize: 20}}>
-                                Send
-                            </Text>
-                        </TouchableHighlight>
+                        <Button
+                            title="Send"
+                            onPress={this.send}/>
 
                     }
                 </KeyboardAvoidingView>

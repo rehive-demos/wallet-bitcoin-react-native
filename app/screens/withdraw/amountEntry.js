@@ -6,6 +6,7 @@ import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 import Big from 'big.js'
+import Button from './../../components/button'
 
 export default class AmountEntry extends Component {
     static navigationOptions = {
@@ -97,13 +98,9 @@ export default class AmountEntry extends Component {
                   onChangeText={this.changeAmount}
                 />
               </View>
-              <TouchableHighlight
-                style={styles.submit}
-                onPress={this.withdraw}>
-                <Text style={{color: 'white', fontSize: 20}}>
-                    Withdraw
-                </Text>
-              </TouchableHighlight>
+              <Button
+                  title="Withdraw"
+                onPress={this.withdraw}/>
             </KeyboardAvoidingView>
           </View>
         )

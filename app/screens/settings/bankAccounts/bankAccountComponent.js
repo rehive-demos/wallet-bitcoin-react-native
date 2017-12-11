@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {ScrollView, StyleSheet, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
 import TextInput from './../../../components/textInput'
 import Colors from './../../../config/colors'
+import Button from './../../../components/button'
 
 export default class BankAccountComponent extends Component {
 
@@ -74,14 +75,10 @@ export default class BankAccountComponent extends Component {
                         onChangeText={(text) => this.props.updateBIC(text)}
                     />
                 </ScrollView>
-                <TouchableHighlight
-                    style={styles.submit}
+                <Button
+                    title="Save"
                     ref="save"
-                    onPress={this.props.save}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Save
-                    </Text>
-                </TouchableHighlight>
+                    onPress={this.props.save}/>
             </KeyboardAvoidingView>
         );
     }

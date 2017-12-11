@@ -6,6 +6,8 @@ import TextInput from './../../components/textInput'
 import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import Button from './../../components/button'
+
 
 export default class Signup extends Component {
     static navigationOptions = {
@@ -60,7 +62,9 @@ export default class Signup extends Component {
                     title="Create new account"
                 />
                 <View style={styles.mainContainer}>
-                    <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
+                    <KeyboardAvoidingView style={styles.container}
+                                          behavior="padding"
+                                          keyboardVerticalOffset={85}>
                         <ScrollView keyboardDismissMode={'interactive'}>
                             <TextInput
                                 title="First name"
@@ -117,13 +121,9 @@ export default class Signup extends Component {
                                 onChangeText={(password2) => this.setState({password2})}
                             />
                         </ScrollView>
-                        <TouchableHighlight
-                            style={styles.submit}
-                            onPress={() => this.signup()}>
-                            <Text style={{color: 'white', fontSize:20}}>
-                                Sign up
-                            </Text>
-                        </TouchableHighlight>
+                        <Button
+                            title="Sign Up"
+                            onPress={() => this.signup()}/>
                     </KeyboardAvoidingView>
                 </View>
             </View>
@@ -135,21 +135,11 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: 'white',
-        paddingVertical: 10,
+        paddingTop: 10,
     },
     container: {
         flex: 1,
         flexDirection: 'column',
         paddingTop: 10,
-    },
-    submit: {
-        marginTop: 10,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: Colors.lightblue,
-        marginHorizontal: 10,
-        alignSelf: 'stretch',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 })
