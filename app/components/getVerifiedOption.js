@@ -71,11 +71,10 @@ const styles = StyleSheet.create({
     },
     submit: {
         paddingHorizontal: 10,
-        marginLeft: 8,
         height: 40,
         borderWidth: 1,
         borderRadius: 20,
-        alignSelf: 'stretch',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 })

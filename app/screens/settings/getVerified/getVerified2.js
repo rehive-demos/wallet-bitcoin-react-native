@@ -67,16 +67,8 @@ export default class GetVerified extends Component {
             email: user.email,
             mobile_number: user.mobile_number,
             basic_info: user.first_name + ' ' + user.last_name,
+            basic_info_status: user.status
         })
-        if (this.state.basic_info != ' ') {
-            this.setState({
-                basic_info_status: 'verified'
-            })
-        } else {
-            this.setState({
-                basic_info_status: 'incomplete'
-            })
-        }
     }
 
     emails = async () => {
@@ -341,8 +333,7 @@ export default class GetVerified extends Component {
                     <View style={styles.titleContainer}>
                         <Text style={{fontSize: 16}}>
                             Your default account is currently on tier 1. You can view your limits and fees by following
-                            the
-                            links below. Complete the steps below if you want to increase your verification level.
+                            the links below. Complete the steps below if you want to increase your verification level.
                         </Text>
                         <View style={styles.buttonsContainer}>
                             <Text style={[styles.buttonText, {paddingRight: 8}]}>
@@ -365,7 +356,7 @@ export default class GetVerified extends Component {
                                 buttonText={this.state.email_status.toUpperCase()}
                                 gotoAddress="SettingsEmailAddresses" goTo={this.goTo}/>
 
-                        < Option title="Mobile" subtitle={this.state.mobile_number}
+                        <Option title="Mobile" subtitle={this.state.mobile_number}
                                  buttonText={this.state.mobile_number_status.toUpperCase()}
                                  gotoAddress="SettingsMobileNumbers" goTo={this.goTo}/>
 

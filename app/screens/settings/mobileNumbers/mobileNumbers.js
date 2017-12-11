@@ -16,7 +16,7 @@ export default class Settings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            routeName: this.props.navigation.params?this.props.navigation.params.name:null,
+            routeName: this.props.navigation.state.params ? this.props.navigation.state.params.name:null,
             refreshing: false,
             loading: false,
             loadingMessage: "",
@@ -24,6 +24,7 @@ export default class Settings extends Component {
                 rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
             }),
         }
+        console.log(this.state.routeName)
     }
 
     componentWillMount() {
