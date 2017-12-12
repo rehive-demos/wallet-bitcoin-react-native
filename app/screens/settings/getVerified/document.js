@@ -15,7 +15,18 @@ export default class Document extends Component {
         const params = this.props.navigation.state.params
         this.state = {
             title: params.name,
+            getVerified: false,
             modalVisible: false,
+        }
+    }
+
+    componentWillMount(){
+        if (this.state.title === "Proof of Identity" ||
+            this.state.title === "Advanced Proof of Identity" ||
+            this.state.title === "Proof of Address") {
+            this.setState({
+                getVerified: true
+            })
         }
     }
 
@@ -31,7 +42,7 @@ export default class Document extends Component {
         })
         this.setState({modalVisible: false})
         if (!result.cancelled) {
-            this.props.navigation.navigate("DocumentUpload", {image: result, type: this.state.title})
+            this.props.navigation.navigate("DocumentUpload", {getVerified:this.state.getVerified,image: result, type: this.state.title})
         }
     }
 
@@ -42,7 +53,7 @@ export default class Document extends Component {
         })
         this.setState({modalVisible: false})
         if (!result.cancelled) {
-            this.props.navigation.navigate("DocumentUpload", {image: result, type: this.state.title})
+            this.props.navigation.navigate("DocumentUpload", {getVerified:this.state.getVerified,image: result, type: this.state.title})
         }
     }
 

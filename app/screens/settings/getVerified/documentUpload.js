@@ -17,12 +17,13 @@ export default class DocumentUpload extends Component {
         this.state = {
             image: params.image,
             type: params.type,
+            getVerified:params.getVerified,
             loading: false,
         }
     }
 
     goBackAndReload = () => {
-        ResetNavigation.dispatchUnderDrawer(this.props.navigation, "Settings", 'SettingsGetVerified')
+        ResetNavigation.dispatchUnderDrawer(this.props.navigation, this.state.getVerified?"GetVerified":"Settings", 'SettingsGetVerified')
     }
 
     saveImage = async () => {

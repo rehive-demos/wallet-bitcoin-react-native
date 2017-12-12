@@ -258,60 +258,6 @@ export default class GetVerified extends Component {
             this.setState({
                 loading: false
             })
-            /* if(id_verified>0){
-             this.setState({
-             proof_of_identity_status:'verified',
-             proof_of_identity:'Approved'
-             })
-             }else if(id_pending>0){
-             this.setState({
-             proof_of_identity_status:'pending',
-             proof_of_identity:'Waiting for approval'
-             })
-             }else{
-             this.setState({
-             proof_of_identity_status:'incomplete',
-             proof_of_identity:'Yet not provided'
-             })
-             }
-             if(a_id_verified>0){
-             this.setState({
-             advence_proof_of_identity_status:'verified',
-             advance_proof_of_identity:'Approved'
-             })
-             }else if(a_id_pending>0){
-             this.setState({
-             advance_proof_of_identity_status:'pending',
-             advance_proof_of_identity:'Waiting for approval'
-             })
-             }else{
-             this.setState({
-             advance_proof_of_identity_status:'incomplete',
-             advance_proof_of_identity:'Yet not provided'
-             })
-             }
-
-             if(address_verified>0){
-             this.setState({
-             proof_of_address_status:'verified',
-             proof_of_address:'Approved'
-             })
-             }else if(address_pending>0){
-             this.setState({
-             proof_of_address_status:'pending',
-             proof_of_address:'Waiting for approval'
-             })
-             }else if(address_denied>0){
-             this.setState({
-             proof_of_address_status:'denied',
-             proof_of_address:'Document is not good enough'
-             })
-             }else{
-             this.setState({
-             proof_of_address_status:'incomplete',
-             proof_of_address:'Yet not provided'
-             })
-             }*/
         } else {
             Alert.alert('Error',
                 responseJsonDocuments.message,
