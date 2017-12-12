@@ -5,16 +5,17 @@ import UserInfoService from './../../services/userInfoService'
 import TextInput from './../../components/textInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import ResetNavigation from './../../util/resetNavigation'
 
 export default class Address extends Component {
     static navigationOptions = {
         title: 'Address',
     }
 
-    constructor() {
-        super()
-
+    constructor(props) {
+        super(props)
         this.state = {
+            routeName:this.props.navigation.state.params ? this.props.navigation.state.params.name:null,
             line_1: '',
             line_2: '',
             city: '',
@@ -27,6 +28,7 @@ export default class Address extends Component {
     componentDidMount() {
         this.getAddress()
     }
+
 
     getAddress = async () => {
         let responseJson = await UserInfoService.getAddress()
@@ -52,13 +54,18 @@ export default class Address extends Component {
         let responseJson = await UserInfoService.updateAddress(this.state)
         //console.log(responseJson)
         if (responseJson.status === "success") {
-            this.props.navigation.goBack()
+            this.reload()
         }
         else {
             Alert.alert('Error',
                 responseJson.message,
                 [{text: 'OK'}])
         }
+    }
+
+
+    reload = () => {
+        ResetNavigation.dispatchToDrawerRoute(this.props.navigation, this.state.routeName != null ? 'GetVerified' : 'Settings')
     }
 
     render() {

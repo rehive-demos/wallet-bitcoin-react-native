@@ -126,6 +126,7 @@ export default class GetVerified extends Component {
                 if (this.state.mobile_number_status != 'Verified') {
                     this.setState({
                         mobile_number_status: 'Pending',
+                        mobile_number:data[0].number
                     })
                 }
             }
