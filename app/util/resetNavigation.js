@@ -25,24 +25,40 @@ const resetNavigation = {
     },
 
     dispatchUnderDrawer: (navigation, drawerRoute, finalRoute) => {
-        const resetAction = NavigationActions.reset({
-            index: 1,
-            actions: [
-                NavigationActions.navigate({
-                    routeName: 'Home',
-                    params: {},
-                    action: NavigationActions.navigate({routeName: drawerRoute}),
-                }),
-                NavigationActions.navigate({routeName: finalRoute}),
-            ],
-        })
-        navigation.dispatch(resetAction)
+        if (drawerRoute === "GetVerified") {
+            const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Home',
+                        params: {},
+                        action: NavigationActions.navigate({routeName: drawerRoute}),
+                    }),
+                    //NavigationActions.navigate({routeName: finalRoute}),
+                ],
+            })
+            navigation.dispatch(resetAction)
+        } else {
+            const resetAction = NavigationActions.reset({
+                index: 1,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: 'Home',
+                        params: {},
+                        action: NavigationActions.navigate({routeName: drawerRoute}),
+                    }),
+                    NavigationActions.navigate({routeName: finalRoute}),
+                ],
+            })
+            navigation.dispatch(resetAction)
+        }
     },
     dispatchUnderTwoFactor: (navigation) => {
         const resetAction = NavigationActions.reset({
             index: 2,
             actions: [
-                NavigationActions.navigate({routeName: 'Home',
+                NavigationActions.navigate({
+                    routeName: 'Home',
                     action: NavigationActions.navigate({routeName: 'Settings'}),
                 }),
                 NavigationActions.navigate({routeName: 'SettingsSecurity'}),
