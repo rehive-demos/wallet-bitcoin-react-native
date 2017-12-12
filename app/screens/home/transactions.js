@@ -131,7 +131,7 @@ export default class Transactions extends Component {
                                 Welcome to {this.state.company.name}
                             </Text>
                             <Text style={{paddingTop: 15, fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
-                                {this.state.verified ? null : "Please verify your email address to redeem any unclaimed transactions."}
+                                {this.state.verified ? null : "Please verify your email address to redeem any unclaimed transactions. "}
                                 Pull to refresh your balance.
                             </Text>
                         </View>
