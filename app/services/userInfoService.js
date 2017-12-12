@@ -1,7 +1,6 @@
 import BaseService from './baseService'
 
 var UserInfoService = {
-
     getCompany: () => {
         return BaseService.get('company/')
     },
@@ -38,6 +37,9 @@ var UserInfoService = {
         let formData = new FormData()
         formData.append('profile', file)
         return BaseService.fileUpload('user/', formData)
+    },
+    getAllDocuments:()=>{
+        return BaseService.get('user/documents/')
     },
 }
 

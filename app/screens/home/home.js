@@ -77,6 +77,25 @@ export default class Home extends Component {
         if (responseJson.status === "success") {
             AsyncStorage.removeItem('user')
             AsyncStorage.setItem('user', JSON.stringify(responseJson.data))
+            let switches = responseJson.data.switches
+            let creditSwitches = switches.filter(word => word.tx_type === 'credit')
+            if (creditSwitches.length > 0) {
+                let creditSwitch = creditSwitches[0]
+                if (!creditSwitch.enabled) {
+                    this.setState({
+                        creditSwitch: false,
+                    })
+                }
+            }
+            let debitSwitches = switches.filter(word => word.tx_type === 'debit')
+            if (debitSwitches.length > 0) {
+                let debitSwitch = debitSwitches[0]
+                if (!debitSwitch.enabled) {
+                    this.setState({
+                        debitSwitch: false,
+                    })
+                }
+            }
             const token = await AsyncStorage.getItem('token')
             if (token === null) {
                 await this.logout()
@@ -97,6 +116,25 @@ export default class Home extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0]
+            let switches = account.switches
+            let creditSwitches = switches.filter(word => word.tx_type === 'credit')
+            if (creditSwitches.length > 0) {
+                let creditSwitch = creditSwitches[0]
+                if (!creditSwitch.enabled) {
+                    this.setState({
+                        creditSwitch: false,
+                    })
+                }
+            }
+            let debitSwitches = switches.filter(word => word.tx_type === 'debit')
+            if (debitSwitches.length > 0) {
+                let debitSwitch = debitSwitches[0]
+                if (!debitSwitch.enabled) {
+                    this.setState({
+                        debitSwitch: false,
+                    })
+                }
+            }
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
             this.setState({
                 account: responseJson.data.results[0].name,
@@ -125,7 +163,7 @@ export default class Home extends Component {
     }
 
     showDialog = (item) => {
-        this.setState({dataToShow: item});
+        this.setState({ dataToShow: item });
         this.popupDialog.show()
     }
 
@@ -245,18 +283,18 @@ export default class Home extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.props.navigation.navigate("Receive")}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Text style={{ color: 'white', fontSize: 20 }}>
                             Receive
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={[styles.submit, {marginLeft: 25}]}
+                        style={[styles.submit, { marginLeft: 25 }]}
                         onPress={() => this.props.navigation.navigate("SendTo", {
                             reference: "",
                             balance: this.state.balance
                         })}>
 
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Text style={{ color: 'white', fontSize: 20 }}>
                             Send
                         </Text>
                     </TouchableHighlight>
@@ -266,13 +304,13 @@ export default class Home extends Component {
                         this.popupDialog = popupDialog;
                     }}
                     height={250}>
-                    <View style={{flex: 1}}>
-                        <View style={{flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20}}>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
                             <Image
                                 source={require('./../../../assets/icons/placeholder.png')}
-                                style={{height: 80, width: 80, margin: 10}}
+                                style={{ height: 80, width: 80, margin: 10 }}
                             />
-                            <Text style={{fontSize: 20, color: Colors.black}}>
+                            <Text style={{ fontSize: 20, color: Colors.black }}>
                                 {this.state.dataToShow.label + ": " + this.state.dataToShow.currency.symbol + this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility)}
                             </Text>
                         </View>
@@ -284,13 +322,13 @@ export default class Home extends Component {
                             paddingLeft: 20,
                             paddingRight: 20
                         }}>
-                            <View style={{flex: 2, justifyContent: 'center'}}>
-                                <Text style={{fontSize: 15, alignSelf: "flex-start", color: Colors.black}}>
+                            <View style={{ flex: 2, justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}>
                                     {moment(this.state.dataToShow.created).format('lll')}
                                 </Text>
                             </View>
-                            <View style={{flex: 1, justifyContent: 'center'}}>
-                                <Text style={{fontSize: 15, alignSelf: "flex-end", color: Colors.black}}>
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 15, alignSelf: "flex-end", color: Colors.black }}>
                                     {this.state.dataToShow.status}
                                 </Text>
                             </View>

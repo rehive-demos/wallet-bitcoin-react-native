@@ -14,16 +14,19 @@ export default class AmountEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      routeName:this.props.navigation.state.params.routeName,
       otp: '',
     }
   }
 
   reload = () => {
-    ResetNavigation.dispatchUnderDrawer(this.props.navigation, 'Settings', 'SettingsMobileNumbers')
+    
+    console.log("addEmailAddress: "+ this.state.routeName)
+    ResetNavigation.dispatchUnderDrawer(this.props.navigation, this.state.routeName!=null? 'GetVerified':'Settings', 'SettingsMobileNumbers')
   }
 
   verify = async () => {
-    let responseJson = await SettingsService.verifyMobile(this.state)
+    let responseJson = await SettingsService.verifyMobile({otp:this.state.otp})
 
     if (responseJson.status === "success") {
       this.reload()
@@ -50,6 +53,7 @@ export default class AmountEntry extends Component {
               placeholder="OTP"
               autoCapitalize="none"
               keyboardType="numeric"
+              underlineColorAndroid="white"
               onChangeText={(otp) => this.setState({ otp })}
             />
           </View>

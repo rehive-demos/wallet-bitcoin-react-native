@@ -40,6 +40,7 @@ export default class Account extends Component {
                         borderColor: Colors.lightgray
                     })}
                     {...this.props}
+                    underlineColorAndroid="white"
                     style={[styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}]}
                 />
             </View>

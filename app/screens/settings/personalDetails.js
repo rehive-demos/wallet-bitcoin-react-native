@@ -29,10 +29,11 @@ export default class Settings extends Component {
         title: 'Personal details',
     }
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
+            routeName: this.props.navigation.state.params ? this.props.navigation.state.params.name:null,
             nationality: '',
             first_name: '',
             last_name: '',
@@ -119,7 +120,7 @@ export default class Settings extends Component {
         if (responseJson.status === "success") {
             await AsyncStorage.removeItem('user')
             await AsyncStorage.setItem('user', JSON.stringify(responseJson.data))
-            ResetNavigation.dispatchToDrawerRoute(this.props.navigation, "Settings")
+            ResetNavigation.dispatchToDrawerRoute(this.props.navigation, this.state.routeName?"GetVerified":"Settings")
         }
         else {
             Alert.alert('Error',

@@ -30,10 +30,15 @@ export default class Signup extends Component {
     }
 
     signup = async () => {
-        let responseJson = await AuthService.signup(this.state)
+        let data = this.state;
+        if (data.mobile_number.length < 8) {
+            delete data.mobile_number
+        }
+        console.log(data)
+        let responseJson = await AuthService.signup(data)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
-            if (this.state.mobile_number.length > 8) {
+            if (data.mobile_number) {
                 this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo:this.state})
             } else {
                 Auth.login(this.props.navigation, loginInfo)
