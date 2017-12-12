@@ -17,10 +17,26 @@ export default class Document extends Component {
             title: params.name,
             getVerified: false,
             modalVisible: false,
+            type:'other'
         }
     }
 
     componentWillMount(){
+        if (this.state.title === "Proof of Identity") {
+            this.setState({
+                type: "government_id"
+            })
+        }
+        if (this.state.title === "Advanced Proof of Identity") {
+            this.setState({
+                type: "id_confirmation"
+            })
+        }
+        if (this.state.title === "Proof of Address") {
+            this.setState({
+                type:"utility_bill"
+            })
+        }
         if (this.state.title === "Proof of Identity" ||
             this.state.title === "Advanced Proof of Identity" ||
             this.state.title === "Proof of Address") {
@@ -42,7 +58,11 @@ export default class Document extends Component {
         })
         this.setState({modalVisible: false})
         if (!result.cancelled) {
-            this.props.navigation.navigate("DocumentUpload", {getVerified:this.state.getVerified,image: result, type: this.state.title})
+            this.props.navigation.navigate("DocumentUpload", {
+                getVerified:this.state.getVerified,
+                image: result,
+                doc_type:this.state.type,
+                type: this.state.title})
         }
     }
 
@@ -53,7 +73,11 @@ export default class Document extends Component {
         })
         this.setState({modalVisible: false})
         if (!result.cancelled) {
-            this.props.navigation.navigate("DocumentUpload", {getVerified:this.state.getVerified,image: result, type: this.state.title})
+            this.props.navigation.navigate("DocumentUpload", {
+                getVerified:this.state.getVerified,
+                image: result,
+                doc_type:this.state.type,
+                type: this.state.title})
         }
     }
 

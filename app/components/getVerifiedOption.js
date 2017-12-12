@@ -6,14 +6,14 @@ export default class Options extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            color: 'black'
+            color: Colors.black
         }
     }
 
     componentWillMount() {
         let color;
         if (this.props.buttonText === 'PENDING') {
-            color = Colors.darkgray
+            color = Colors.black
         } else if (this.props.buttonText === 'VERIFIED') {
             color = Colors.green
         } else if (this.props.buttonText === 'INCOMPLETE' || this.props.buttonText === 'DENIED') {
@@ -32,7 +32,7 @@ export default class Options extends Component {
                     <View style={styles.optionsElement}>
                         <ScrollView style={{flex: 1, marginRight: 8}}>
                             <TouchableOpacity onPress={() => this.props.goTo(this.props.gotoAddress, this.props.title)}>
-                                <Text numberOfLines={1} style={[styles.optionsText, {color: Colors.darkgray, fontSize: 20}]}>
+                                <Text numberOfLines={1} style={[styles.optionsText, {color: Colors.black, fontSize: 16}]}>
                                     {this.props.title}
                                 </Text>
                                 <Text numberOfLines={1} style={styles.optionsText}>
@@ -41,7 +41,7 @@ export default class Options extends Component {
                             </TouchableOpacity>
                         </ScrollView>
                         <View style={[styles.submit, {borderColor: this.state.color}]}>
-                            <Text style={[styles.optionsText, {color: this.state.color}]}>
+                            <Text style={[styles.optionsText, {fontSize:13,color: this.state.color}]}>
                                 {this.props.buttonText}
                             </Text>
                         </View>
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     optionsText: {
-        fontSize: 16,
+        fontSize: 13,
         color: Colors.black,
     },
     submit: {
         paddingHorizontal: 10,
-        height: 40,
+        height: 24,
         borderWidth: 1,
         borderRadius: 20,
         justifyContent: 'center',

@@ -17,6 +17,7 @@ export default class DocumentUpload extends Component {
         this.state = {
             image: params.image,
             type: params.type,
+            doc_type:params.doc_type,
             getVerified:params.getVerified,
             loading: false,
         }
@@ -36,7 +37,7 @@ export default class DocumentUpload extends Component {
             name,
             type: 'image/jpg',
         }
-        var type = "other"
+        var type = this.state.doc_type
 
         // if (this.state.type === "ID Document") {
 

@@ -67,7 +67,8 @@ export default class GetVerified extends Component {
             email: user.email,
             mobile_number: user.mobile_number,
             basic_info: user.first_name + ' ' + user.last_name,
-            basic_info_status: user.status
+            basic_info_status: user.status,
+            address_status:user.kyc.addresses.status?user.kyc.addresses.status:'incomplete'
         })
     }
 
@@ -107,7 +108,7 @@ export default class GetVerified extends Component {
             if (data.length == 0) {
                 this.setState({
                     mobile_number_status: 'Incomplete',
-                    mobile_number: 'Yet not provided'
+                    mobile_number: 'Not yet provided'
                 })
             } else {
                 for (let i = 0; i < data.length; i++) {
@@ -160,8 +161,7 @@ export default class GetVerified extends Component {
             }
 
             this.setState({
-                address: address,
-                address_status: data.status
+                address: address
             })
         } else {
             Alert.alert('Error',
@@ -200,7 +200,7 @@ export default class GetVerified extends Component {
             } else {
                 this.setState({
                     proof_of_identity_status: 'incomplete',
-                    proof_of_identity: 'Yet not provided'
+                    proof_of_identity: 'Not yet provided'
                 })
             }
 
@@ -226,7 +226,7 @@ export default class GetVerified extends Component {
             } else {
                 this.setState({
                     advance_proof_of_identity_status: 'incomplete',
-                    advance_proof_of_identity: 'Yet not provided'
+                    advance_proof_of_identity: 'Not yet provided'
                 })
             }
 
@@ -252,7 +252,7 @@ export default class GetVerified extends Component {
             } else {
                 this.setState({
                     proof_of_address_status: 'incomplete',
-                    proof_of_address: 'Yet not provided'
+                    proof_of_address: 'Not yet provided'
                 })
             }
             this.setState({
@@ -297,11 +297,11 @@ export default class GetVerified extends Component {
                     }
                     {   !this.state.loading &&
                     <ScrollView style={{flex: 1}}>
-                        <Option title="Email" subtitle={this.state.email}
+                        <Option title="Email address" subtitle={this.state.email}
                                 buttonText={this.state.email_status.toUpperCase()}
                                 gotoAddress="SettingsEmailAddresses" goTo={this.goTo}/>
 
-                        <Option title="Mobile" subtitle={this.state.mobile_number}
+                        <Option title="Mobile number" subtitle={this.state.mobile_number}
                                  buttonText={this.state.mobile_number_status.toUpperCase()}
                                  gotoAddress="SettingsMobileNumbers" goTo={this.goTo}/>
 
