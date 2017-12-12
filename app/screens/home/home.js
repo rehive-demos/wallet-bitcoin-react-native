@@ -1,5 +1,14 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, AsyncStorage, TouchableHighlight, Alert, Text, Image, TouchableWithoutFeedback} from 'react-native'
+import {
+    View,
+    StyleSheet,
+    AsyncStorage,
+    TouchableHighlight,
+    Alert,
+    Text,
+    Image,
+    TouchableWithoutFeedback
+} from 'react-native'
 import moment from 'moment'
 import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
@@ -9,8 +18,9 @@ import Auth from './../../util/auth'
 import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import HomeCard from './../../components/homeCard'
 
-let inputLength=0;
+let inputLength = 0;
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -57,8 +67,8 @@ export default class Home extends Component {
         for (let i = 0; i < divisibility; i++) {
             balance = balance / 10
         }
-        let balanceString=balance.toString()
-        inputLength=balanceString.length
+        let balanceString = balance.toString()
+        inputLength = balanceString.length
         return balance
     }
 
@@ -101,7 +111,7 @@ export default class Home extends Component {
                 const currencies = responseJson2.data.results
                 this.setState({
                     currencies,
-                    selectedCurrency : -1,
+                    selectedCurrency: -1,
                 })
             }
         }
@@ -175,14 +185,14 @@ export default class Home extends Component {
 
     render() {
         /*let swipeBtns = [{
-            text: 'Show',
-            backgroundColor: Colors.lightgray,
-            underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-            onPress: () => this.props.navigation.navigate(
-                'AccountCurrencies',
-                {reference: this.state.reference}
-            )
-        }];*/
+         text: 'Show',
+         backgroundColor: Colors.lightgray,
+         underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+         onPress: () => this.props.navigation.navigate(
+         'AccountCurrencies',
+         {reference: this.state.reference}
+         )
+         }];*/
         return (
             <View style={styles.container}>
                 <Header
@@ -191,47 +201,45 @@ export default class Home extends Component {
                     homeRight
                 />
                 <View style={styles.balance}>
-                    <TouchableHighlight style={{flex:1}}><View></View></TouchableHighlight>
+                    <TouchableHighlight style={{flex: 1}}><View></View></TouchableHighlight>
                     <TouchableHighlight
                         underlayColor={Colors.lightblue}
                         onPress={() => this.tap1()}
                         onLongPress={() => this.longTap1()}
-                        style={{flex:4}}>
-                        <View style={{flex:1, justifyContent: 'flex-start', alignItems: 'center',}}>
+                        style={{flex: 4}}>
+                        <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center',}}>
                             <Text style={{fontSize: 18, color: 'white'}}>
                                 {this.state.account}
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: inputLength<8?23:12, color: 'white'}}>
+                                <Text style={{fontSize: inputLength < 8 ? 23 : 12, color: 'white'}}>
                                     {this.state.symbol}
                                 </Text>
-                                <Text style={{paddingLeft: 5, fontSize: inputLength<8?40:20, color: 'white'}}>
+                                <Text style={{paddingLeft: 5, fontSize: inputLength < 8 ? 40 : 20, color: 'white'}}>
                                     {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                                 </Text>
                             </View>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight 
+                    <TouchableHighlight
                         underlayColor={Colors.lightblue}
-                        style={{flex:1}}
+                        style={{flex: 1}}
                         onPress={() => this.tap2()}>
                         <View></View>
                     </TouchableHighlight>
                 </View>
                 <View style={styles.transaction}>
-                    {this.state.showTransaction === false ? <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
-                        <View style={{
-                            marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
-                        }}>
-                            <Text style={{fontSize: 23, fontWeight: 'normal', color: Colors.black}}>
-                                Welcome to {this.state.company.name}
-                            </Text>
-                        </View>
-                    </View> :
-                    <Transactions updateBalance={this.getBalanceInfo} 
-                                currency={this.state.code}
-                                showDialog={this.showDialog}
-                                logout={this.logout}/>}
+                    {this.state.showTransaction === false ?
+                        <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
+                            <HomeCard title="Welcome to Rehive"
+                                      text="Put your logo and brand here."
+                                      buttonText="Cool"
+                                      buttonId={1}/>
+                        </View> :
+                        <Transactions updateBalance={this.getBalanceInfo}
+                                      currency={this.state.code}
+                                      showDialog={this.showDialog}
+                                      logout={this.logout}/>}
                 </View>
                 <View style={styles.buttonbar}>
                     <TouchableHighlight
@@ -311,7 +319,7 @@ const styles = StyleSheet.create({
     },
     buttonbar: {
         position: 'absolute',
-        bottom:0,
+        bottom: 0,
         flexDirection: 'row',
         paddingHorizontal: 25,
         justifyContent: 'center',

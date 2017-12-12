@@ -6,6 +6,7 @@ import {
     FlatList,
     ScrollView,
     RefreshControl,
+    ActivityIndicator
 } from 'react-native'
 import {ListItem} from "react-native-elements"
 import TransactionService from './../../services/transactionService'
@@ -21,6 +22,7 @@ export default class Transactions extends Component {
         this.state = {
             noTransaction: false,
             verified: true,
+            initialLoading:true,
             loading: false,
             data: [],
             nextUrl: null,
@@ -40,12 +42,14 @@ export default class Transactions extends Component {
             this.setState({
                 data,
                 noTransaction: false,
+                initialLoading:false,
                 nextUrl: responseJson.data.next,
             })
         }
         else {
             this.props.logout()
         }
+
 
         if (this.state.data.length === 0) {
             let responseJson = await UserInfoService.getCompany()
@@ -105,10 +109,10 @@ export default class Transactions extends Component {
     }
 
     getAmount = (amount, divisibility) => {
-      amount = new Big(amount)
-      for (let i = 0; i < divisibility; i++) {
-        amount = amount.div(10)
-      }
+        amount = new Big(amount)
+        for (let i = 0; i < divisibility; i++) {
+            amount = amount.div(10)
+        }
 
         return amount.toFixed(8).replace(/\.?0+$/, "")
     }
@@ -116,7 +120,7 @@ export default class Transactions extends Component {
     render() {
         if (this.state.noTransaction) {
             return (
-                <View style={{flex: 1, backgroundColor: Colors.lightgray,paddingHorizontal:10}}>
+                <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 10}}>
                     <ScrollView
                         refreshControl={
                             <RefreshControl
@@ -133,37 +137,47 @@ export default class Transactions extends Component {
                             </Text>
                         </View>
                     </ScrollView>
-                    
+
                 </View>
             )
         }
         else {
             return (
                 <View style={{flex: 1, backgroundColor: Colors.lightgray}}>
-                    <FlatList
-                        data={this.state.data}
-                        renderItem={({item}) => (
-                            <ListItem
-                                avatar={item.user.profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgmT5tM-IGcFDpqZ87p9zKGaWQuzpvAcDKfOTPYfx5A9zOmbTh8RMMFg'}
-                                title={item.tx_type === 'credit' ? "Received" : "Sent"}
-                                subtitle={moment(item.created).fromNow()}
-                                rightTitle={`${item.currency.symbol}${this.getAmount(item.amount, item.currency.divisibility)}`}
-                                rightTitleStyle={{'color': '#bdc6cf'}}
-                                containerStyle={{paddingRight: 20}}
-                                hideChevron
-                                roundAvatar
-                                onPress={() => {
-                                    this.props.showDialog(item)
-                                }}
-                                //containerStyle={{'backgroundColor':'#FAFBFC'}}
-                            />
-                        )}
-                        keyExtractor={tx => tx.id}
-                        onRefresh={this.handleRefresh.bind(this)}
-                        refreshing={this.state.refreshing}
-                        onEndReached={this.handleLoadMore.bind(this)}
-                        onEndReachedThreshold={50}
-                    />
+                    {
+                        this.state.initialLoading &&
+                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                            <ActivityIndicator size="large"/>
+                        </View>
+
+                    }
+                    {
+                        !this.state.initialLoading &&
+                        <FlatList
+                            data={this.state.data}
+                            renderItem={({item}) => (
+                                <ListItem
+                                    avatar={item.user.profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgmT5tM-IGcFDpqZ87p9zKGaWQuzpvAcDKfOTPYfx5A9zOmbTh8RMMFg'}
+                                    title={item.tx_type === 'credit' ? "Received" : "Sent"}
+                                    subtitle={moment(item.created).fromNow()}
+                                    rightTitle={`${item.currency.symbol}${this.getAmount(item.amount, item.currency.divisibility)}`}
+                                    rightTitleStyle={{'color': '#bdc6cf'}}
+                                    containerStyle={{paddingRight: 20}}
+                                    hideChevron
+                                    roundAvatar
+                                    onPress={() => {
+                                        this.props.showDialog(item)
+                                    }}
+                                    //containerStyle={{'backgroundColor':'#FAFBFC'}}
+                                />
+                            )}
+                            keyExtractor={tx => tx.id}
+                            onRefresh={this.handleRefresh.bind(this)}
+                            refreshing={this.state.refreshing}
+                            onEndReached={this.handleLoadMore.bind(this)}
+                            onEndReachedThreshold={50}
+                        />
+                    }
                 </View>
             )
         }
