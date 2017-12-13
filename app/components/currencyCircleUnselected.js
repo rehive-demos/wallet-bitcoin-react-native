@@ -16,10 +16,10 @@ export default class Account extends Component {
         return (
             <TouchableHighlight
                 style={ styles.row}
-                onPress={()=>{this.props.setViewAccount(this.props.code)}}>
+                onPress={()=>{this.props.setViewAccount(this.props.currency)}}>
                 <View style={[styles.options, {backgroundColor: Colors.lightgray}]}>
                     <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-                        {this.props.code}
+                        {this.props.currency.code}
                     </Text>
                 </View>
             </TouchableHighlight>

@@ -6,6 +6,7 @@ import {
     TouchableHighlight,
     Alert,
     Text,
+    ScrollView,
     Image,
     TouchableWithoutFeedback
 } from 'react-native'
@@ -42,6 +43,7 @@ export default class Home extends Component {
                 name: '',
             },
             code: '',
+            transactionView:false
         }
     }
 
@@ -163,7 +165,7 @@ export default class Home extends Component {
     }
 
     showDialog = (item) => {
-        this.setState({ dataToShow: item });
+        this.setState({dataToShow: item});
         this.popupDialog.show()
     }
 
@@ -211,9 +213,8 @@ export default class Home extends Component {
         if (this.state.currencies[index].currency.symbol === this.state.symbol) {
             index = (index + 1) % this.state.currencies.length
         }
-        console.log(index)
         this.setState({
-            showTransaction: false,
+            transactionView:true,
             selectedCurrency: index,
             code: this.state.currencies[index].currency.code,
             symbol: this.state.currencies[index].currency.symbol,
@@ -222,15 +223,6 @@ export default class Home extends Component {
     }
 
     render() {
-        /*let swipeBtns = [{
-         text: 'Show',
-         backgroundColor: Colors.lightgray,
-         underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-         onPress: () => this.props.navigation.navigate(
-         'AccountCurrencies',
-         {reference: this.state.reference}
-         )
-         }];*/
         return (
             <View style={styles.container}>
                 <Header
@@ -267,34 +259,49 @@ export default class Home extends Component {
                     </TouchableHighlight>
                 </View>
                 <View style={styles.transaction}>
-                    {this.state.showTransaction === false ?
-                        <View style={{flex: 1, backgroundColor: Colors.lightgray, padding: 10}}>
-                            <HomeCard title="Welcome to Rehive"
-                                      text="Put your logo and brand here."
-                                      buttonText="Cool"
-                                      buttonId={1}/>
-                        </View> :
-                        <Transactions updateBalance={this.getBalanceInfo}
-                                      currency={this.state.code}
-                                      showDialog={this.showDialog}
-                                      logout={this.logout}/>}
+                    {
+                        this.state.showTransaction === false ?
+                            <View style={{flex: 1, backgroundColor: Colors.lightgray,paddingHorizontal:20}}>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                    <HomeCard title="Welcome to Rehive"
+                                              text="Put your logo and brand here."
+                                              buttonText="Cool"/>
+                                    <HomeCard title="Get started"
+                                              text="Tell your customers what your app is about."
+                                              buttonText="Let's go"/>
+                                    <HomeCard title="This is a demo app"
+                                              text="Note that you have to verify your email or
+                                                mobile number to claim funds that has been sent to you."/>
+                                    <HomeCard title="Get Verified"
+                                              text="Go to Get Verified page"
+                                              buttonText="Verify"
+                                              navigation={this.props.navigation}/>
+                                    <View style={styles.falseView}/>
+
+                                </ScrollView>
+                            </View> :
+                            <Transactions updateBalance={this.getBalanceInfo}
+                                          currency={this.state.code}
+                                          showDialog={this.showDialog}
+                                          logout={this.logout}/>
+                    }
                 </View>
                 <View style={styles.buttonbar}>
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.props.navigation.navigate("Receive")}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Receive
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={[styles.submit, { marginLeft: 25 }]}
+                        style={[styles.submit, {marginLeft: 25}]}
                         onPress={() => this.props.navigation.navigate("SendTo", {
                             reference: "",
                             balance: this.state.balance
                         })}>
 
-                        <Text style={{ color: 'white', fontSize: 20 }}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Send
                         </Text>
                     </TouchableHighlight>
@@ -304,13 +311,13 @@ export default class Home extends Component {
                         this.popupDialog = popupDialog;
                     }}
                     height={250}>
-                    <View style={{ flex: 1 }}>
-                        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+                    <View style={{flex: 1}}>
+                        <View style={{flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20}}>
                             <Image
                                 source={require('./../../../assets/icons/placeholder.png')}
-                                style={{ height: 80, width: 80, margin: 10 }}
+                                style={{height: 80, width: 80, margin: 10}}
                             />
-                            <Text style={{ fontSize: 20, color: Colors.black }}>
+                            <Text style={{fontSize: 20, color: Colors.black}}>
                                 {this.state.dataToShow.label + ": " + this.state.dataToShow.currency.symbol + this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility)}
                             </Text>
                         </View>
@@ -322,13 +329,13 @@ export default class Home extends Component {
                             paddingLeft: 20,
                             paddingRight: 20
                         }}>
-                            <View style={{ flex: 2, justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}>
+                            <View style={{flex: 2, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-start", color: Colors.black}}>
                                     {moment(this.state.dataToShow.created).format('lll')}
                                 </Text>
                             </View>
-                            <View style={{ flex: 1, justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 15, alignSelf: "flex-end", color: Colors.black }}>
+                            <View style={{flex: 1, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-end", color: Colors.black}}>
                                     {this.state.dataToShow.status}
                                 </Text>
                             </View>
@@ -380,5 +387,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    falseView: {
+        height: 70
+    }
 })
 

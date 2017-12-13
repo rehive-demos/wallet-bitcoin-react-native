@@ -18,22 +18,36 @@ import Big from 'big.js'
 export default class Transactions extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             noTransaction: false,
             verified: true,
-            initialLoading:true,
+            initialLoading: true,
             loading: false,
             data: [],
             nextUrl: null,
             error: null,
             refreshing: false,
             company: {},
+            currency: this.props.currency,
+            updateBalance: this.props.updateBalance,
+            showDialog: this.props.showDialog
         };
     }
 
     componentDidMount() {
-        this.getData()
+        this.getData(this.state.currency)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.currency !== nextProps.currency) {
+            this.setState({
+                initialLoading: true,
+                currency: nextProps.currency,
+                updateBalance: nextProps.updateBalance,
+                showDialog: nextProps.showDialog
+            })
+            this.getData(nextProps.currency)
+        }
     }
 
     setData = async (responseJson) => {
@@ -42,7 +56,7 @@ export default class Transactions extends Component {
             this.setState({
                 data,
                 noTransaction: false,
-                initialLoading:false,
+                initialLoading: false,
                 nextUrl: responseJson.data.next,
             })
         }
@@ -80,19 +94,20 @@ export default class Transactions extends Component {
         }
     }
 
-    getData = async () => {
+    getData = async (currency) => {
         this.setState({
             data: [],
+            initialLoading: true
         })
-        let responseJson = await TransactionService.getAllTransactionsByCurrecny(this.props.currency)
+        let responseJson = await TransactionService.getAllTransactionsByCurrecny(currency)
         this.setData(responseJson)
     }
 
     handleRefresh() {
-        this.props.updateBalance()
+        this.state.updateBalance()
         if (this.state.loading !== true) {
             this.setState({refreshing: true});
-            this.getData().then(() => {
+            this.getData(this.state.currency).then(() => {
                 this.setState({refreshing: false});
             })
         }
@@ -121,22 +136,32 @@ export default class Transactions extends Component {
         if (this.state.noTransaction) {
             return (
                 <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 10}}>
-                    <ScrollView
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.refreshing}
-                                onRefresh={this.handleRefresh.bind(this)}
-                            />
-                        }>
-                        <View style={{
-                            marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
-                        }}>
-                            <Text style={{paddingTop: 15, fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
-                                {this.state.verified ? null : "Please verify your email address to redeem any unclaimed transactions. "}
-                                Pull to refresh your balance.
-                            </Text>
+                    {
+                        this.state.initialLoading &&
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <ActivityIndicator size="large"/>
                         </View>
-                    </ScrollView>
+
+                    }
+                    {
+                        !this.state.initialLoading &&
+                        <ScrollView
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={this.state.refreshing}
+                                    onRefresh={this.handleRefresh.bind(this)}
+                                />
+                            }>
+                            <View style={{
+                                marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
+                            }}>
+                                <Text style={{paddingTop: 15, fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
+                                    {this.state.verified ? null : "Please verify your email address to redeem any unclaimed transactions. "}
+                                    Pull to refresh your balance.
+                                </Text>
+                            </View>
+                        </ScrollView>
+                    }
 
                 </View>
             )
@@ -146,7 +171,7 @@ export default class Transactions extends Component {
                 <View style={{flex: 1, backgroundColor: Colors.lightgray}}>
                     {
                         this.state.initialLoading &&
-                        <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                             <ActivityIndicator size="large"/>
                         </View>
 
@@ -166,7 +191,7 @@ export default class Transactions extends Component {
                                     hideChevron
                                     roundAvatar
                                     onPress={() => {
-                                        this.props.showDialog(item)
+                                        this.state.showDialog(item)
                                     }}
                                     //containerStyle={{'backgroundColor':'#FAFBFC'}}
                                 />

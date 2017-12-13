@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
-import {ScrollView, View, ListView, StyleSheet, Text, Alert, RefreshControl,TouchableHighlight} from 'react-native'
+import {ScrollView, View, ListView, StyleSheet, Text, Alert, RefreshControl, TouchableHighlight} from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import Icon from 'react-native-vector-icons/Ionicons'
-import UserInfoService from '../../services/userInfoService'
+import UserInfoService from './../../services/userInfoService'
+import AccountService from './../../services/accountService'
 import CurrencyCircle from './../../components/currencyCircle'
 import AccountsBCurrency from './../../components/accountsBCurrency'
 import CurrencyCircleUnselected from './../../components/currencyCircleUnselected'
 import Header from './../../components/header'
 import Account from './../../components/accountB'
 import Colors from './../../config/colors'
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2)});
 
 export default class Accounts extends Component {
     static navigationOptions = {
@@ -20,9 +23,15 @@ export default class Accounts extends Component {
         this.state = {
             activeCurrency: '',
             isShown: true,
+            balance: 0,
+            symbol: '',
+            activeCurrencyDescription: '',
             dataSource: new ListView.DataSource({
                 rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
             }),
+            accountDataSource: new ListView.DataSource({
+                rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
+            })
         }
     }
 
@@ -32,11 +41,9 @@ export default class Accounts extends Component {
     }
 
     getAllCompanyCurrencies = async () => {
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2)});
         let responseJson = await UserInfoService.getAllCompanyCurrencies()
         if (responseJson.status === 'success') {
             let data = responseJson.data.results
-            console.log(data)
             let ids = data.map((obj, index) => index);
             this.setState({
                 refreshing: false,
@@ -49,16 +56,42 @@ export default class Accounts extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === 'success') {
             let data = responseJson.data.results
-            this.setViewAccount(data[0].currencies[0].currency.code)
+            this.setViewAccount(data[0].currencies[0].currency)
+            this.getSelectedCurrencyBalance(data[0].currencies[0].currency.code)
         }
     }
-    setViewAccount = async (data) => {
+    setBalance = (balance, divisibility) => {
+        for (let i = 0; i < divisibility; i++) {
+            balance = balance / 10
+        }
+        let balanceString = balance.toString()
+        return balance
+    }
+    setViewAccount = async (rowData) => {
         this.setState({
-            activeCurrency: data
+            activeCurrency: rowData.code,
+            symbol: rowData.symbol,
+            activeCurrencyDescription: rowData.description,
+            isShown: true
         })
-
+        this.getSelectedCurrencyBalance(rowData.code)
     }
 
+    getSelectedCurrencyBalance = async (code) => {
+        let responseJson = await AccountService.getSelectedCurrency(code)
+        if (responseJson.status === 'success') {
+            let data = responseJson.data.results
+            let i, j, balance = 0, zarAccount = [];
+            for (i = 0; i < data.length; i++) {
+                zarAccount = data[i].currencies.filter(account => account.currency.code === code)
+                balance = balance + zarAccount[0].balance
+            }
+            this.setState({
+                balance: this.setBalance(balance, zarAccount[0].currency.divisibility),
+                accountDataSource: ds.cloneWithRows(data)
+            })
+        }
+    }
 
     render() {
         return (
@@ -79,7 +112,7 @@ export default class Accounts extends Component {
                             showsHorizontalScrollIndicator={false}
                             style={{flexDirection: 'row'}}
                             dataSource={this.state.dataSource}
-                            renderRow={(rowData) => <CurrencyCircleUnselected code={rowData.code}
+                            renderRow={(rowData) => <CurrencyCircleUnselected currency={rowData}
                                                                               setViewAccount={this.setViewAccount}/>}
                         />
                     </View>
@@ -87,10 +120,10 @@ export default class Accounts extends Component {
                 <View style={{flex: 1, flexDirection: 'row', backgroundColor: 'white'}}>
                     <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
                         <Text style={{color: Colors.black, fontSize: 17}}>
-                            South African Rand
+                            {this.state.activeCurrencyDescription}
                         </Text>
                         <Text style={{color: Colors.black, fontSize: 17}}>
-                            R1000.00
+                            {this.state.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                     </View>
                     <TouchableHighlight
@@ -110,9 +143,10 @@ export default class Accounts extends Component {
                     {!this.state.isShown &&
                     <ScrollView>
                         <ListView
-                            style={{backgroundColor: 'white',borderTopColor:Colors.lightgray,borderTopWidth:1}}
+                            style={{backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1}}
                             dataSource={this.state.dataSource}
-                            renderRow={(rowData) => <AccountsBCurrency rowData={rowData}/>}
+                            renderRow={(rowData) => <AccountsBCurrency rowData={rowData}
+                                                                       setViewAccount={this.setViewAccount}/>}
                         />
                     </ScrollView>
                     }
@@ -129,15 +163,25 @@ export default class Accounts extends Component {
                                 DEFAULT ACCOUNTS
                             </Text>
                         </View>
-                        <Account name={"Cheque account"} symbol={"R"} amount={500.00} active={true}/>
-                        <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>
-                        <View style={styles.account}>
-                            <Text style={{color: Colors.black, fontSize: 20}}>
-                                Your ACCOUNTS
-                            </Text>
-                        </View>
-                        <Account name={"Cheque account"} symbol={"R"} amount={500.00} active={false}/>
-                        <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>
+                        <ListView
+                            style={{backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1}}
+                            dataSource={this.state.accountDataSource}
+                            renderRow={(rowData) => <Account
+                                name={rowData.name}
+                                symbol={this.state.symbol}
+                                code={this.state.activeCurrency}
+                                currencies={rowData.currencies}/>}
+
+                        />
+                        {/*<Account name={"Cheque account"} symbol={"R"} amount={500.00} active={true}/>
+                         <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>
+                         <View style={styles.account}>
+                         <Text style={{color: Colors.black, fontSize: 20}}>
+                         Your ACCOUNTS
+                         </Text>
+                         </View>
+                         <Account name={"Cheque account"} symbol={"R"} amount={500.00} active={false}/>
+                         <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>*/}
                         <Text style={styles.addAccountText}
                               onPress={() => this.props.navigation.navigate('AddAccountB')}>
                             Add account
