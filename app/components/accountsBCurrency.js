@@ -6,16 +6,18 @@ export default class AccountsBCurrency extends Component {
 
     render() {
         return (
-            <TouchableHighlight style={{flex:1}} onPress={() => this.props.setViewAccount(this.props.rowData)}>
+            <TouchableHighlight style={{flex:1}}
+                                underlayColor={Colors.darkergray}
+                                onPress={()=>{this.props.setViewAccount(this.props.currency)}}>
                 <View style={styles.row}>
-                    <View style={[styles.options, {backgroundColor: Colors.lightgray}]}>
+                    <View style={[styles.options, {backgroundColor: Colors.darkergray}]}>
                         <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-                            {this.props.rowData.code}
+                            {this.props.currency.code}
                         </Text>
                     </View>
                     <View style={{paddingLeft: 20, justifyContent: 'center'}}>
                         <Text style={{color: Colors.black, fontSize: 16}}>
-                            {this.props.rowData.description}
+                            {this.props.currency.description}
                         </Text>
                     </View>
                 </View>

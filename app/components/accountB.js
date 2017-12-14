@@ -1,28 +1,31 @@
-
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableHighlight, Image} from 'react-native'
+import {View, Text, StyleSheet, TouchableHighlight, TouchableWithoutFeedback,Image} from 'react-native'
 import Colors from './../config/colors'
 import IconF from 'react-native-vector-icons/FontAwesome'
+import CheckBox from 'react-native-check-box'
 
 export default class Account extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            currencies:this.props.currencies,
-            active:false,
-            balance:0,
-            code:this.props.code,
+        this.state = {
+            currencies: this.props.currencies,
+            active: false,
+            balance: 0,
+            code: this.props.code,
+            reference: this.props.reference,
         }
     }
-    componentWillMount(){
-        let i=0,j=0;
-        let zarAccount=this.state.currencies.filter(account=>account.currency.code===this.state.code)
+
+    componentWillMount() {
+        let i = 0, j = 0;
+        let zarAccount = this.state.currencies.filter(account => account.currency.code === this.state.code)
         this.setState({
-            balance:this.setBalance(zarAccount[0].balance,zarAccount[0].currency.divisibility),
-            active:zarAccount[0].active
+            balance: this.setBalance(zarAccount[0].balance, zarAccount[0].currency.divisibility),
+            active: zarAccount[0].active
         })
 
     }
+
     setBalance = (balance, divisibility) => {
         for (let i = 0; i < divisibility; i++) {
             balance = balance / 10
@@ -30,29 +33,49 @@ export default class Account extends Component {
         let balanceString = balance.toString()
         return balance
     }
+
     render() {
         return (
-          <View style={{height:70, padding:10, paddingHorizontal:20, borderBottomWidth:2, borderBottomColor: Colors.lightgray, justifyContent:'center', backgroundColor:'white'}}>
-          
-            <View style={{flexDirection:'row', flex:1}}>
-              <View style={{flex:1, justifyContent:'center'}}>
-                <Text style={{color: Colors.darkgray, fontSize:17}}>
-                  {this.props.name}
-                </Text>
-                <Text style={{color: Colors.black, fontSize:22}}>
-                  {this.props.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
-                </Text>
-              </View>
-              <View style={{justifyContent:'center'}}>
-                <IconF
-                  name="check-square"
-                  size={40}
-                  color={this.state.active ? Colors.green : Colors.lightgray}
-                />
-              </View>
+            <View style={{
+                height: 70,
+                padding: 10,
+                paddingHorizontal: 20,
+                borderBottomWidth: 2,
+                borderBottomColor: Colors.lightgray,
+                justifyContent: 'center',
+                backgroundColor: 'white'
+            }}>
+
+                <View style={{flexDirection: 'row', flex: 1}}>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                        <Text style={{color: Colors.darkergray, fontSize: 10}}>
+                            {this.props.name}
+                        </Text>
+                        <Text style={{color: Colors.black, fontSize: 16}}>
+                            {this.props.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
+                        </Text>
+                    </View>
+                    {/*<CheckBox
+                        style={{padding: 10}}
+                        onClick={() => {
+                            this.props.setActiveCurrency(this.state.reference, this.state.code)
+                        }}
+                        isChecked={this.state.active}
+                    />*/}
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            this.props.setActiveCurrency(this.state.reference, this.state.code)
+                        }}
+                        style={{justifyContent: 'center'}} >
+                        <IconF
+                            name="check-square"
+                            size={40}
+                            color={this.state.active ? Colors.green : Colors.lightgray}
+                        />
+                    </TouchableWithoutFeedback>
+                </View>
+
             </View>
-              
-          </View>
         )
     }
 }

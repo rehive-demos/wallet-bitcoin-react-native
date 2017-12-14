@@ -14,29 +14,37 @@ export default class Account extends Component {
 
     render() {
         return (
-            <TouchableHighlight
-                style={ styles.row}
-                onPress={()=>{this.props.setViewAccount(this.props.currency)}}>
-                <View style={[styles.options, {backgroundColor: Colors.lightgray}]}>
-                    <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-                        {this.props.currency.code}
+            <View
+                style={ styles.row}>
+                <TouchableHighlight
+                    underlayColor={Colors.darkestgray}
+                    onPress={() => {
+                        this.props.setViewAccount(this.props.currency)
+                    }}
+                    style={[styles.options, {backgroundColor: Colors.darkestgray}]}>
+                    <Text style={{
+                        color: 'white',
+                        fontSize: this.props.currency.code.length < 4 ? 16 : 8,
+                        fontWeight: 'bold'
+                    }}>
+                        {this.props.currency.code.substr(0,6)}
                     </Text>
-                </View>
-            </TouchableHighlight>
+                </TouchableHighlight>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     row: {
-        width: 70,
+        width: 60,
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
     options: {
-        height: 60,
-        width: 60,
-        borderRadius: 30,
+        height: 50,
+        width: 50,
+        borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
     },

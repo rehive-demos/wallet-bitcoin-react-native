@@ -11,6 +11,7 @@
     "react": "16.0.0-alpha.6",
     "react-moment": "0.2.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-17.0.0.tar.gz",
+    "react-native-check-box": "^2.0.2",
     "react-native-country-picker-modal": "^0.3.0-rc1",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "0.13.0",
