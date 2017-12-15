@@ -37,22 +37,10 @@ export default class HomeCard extends Component {
             this.state.showCard ?
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        {this.props.image === 'logo' && <Image
-                            source={require('./../../assets/icons/new_logo.png')}
+                        <Image
+                            source={this.props.image}
                             resizeMode="contain"
-                            style={styles.logoimage}/>}
-                        {this.props.image === 'cool3' && <Image
-                            source={require('./../../assets/icons/cool1.jpg')}
-                            resizeMode="contain"
-                            style={styles.image}/>}
-                        {this.props.image === 'cool2' && <Image
-                            source={require('./../../assets/icons/cool2.jpg')}
-                            resizeMode="contain"
-                            style={styles.image}/>}
-                        {this.props.image === 'cool1' && <Image
-                            source={require('./../../assets/icons/cool3.jpeg')}
-                            resizeMode="contain"
-                            style={styles.image}/>}
+                            style={styles.image}/>
                     </View>
                     <Text style={[styles.titleText, {fontWeight: 'bold'}]}>
                         {this.props.title}
@@ -60,17 +48,13 @@ export default class HomeCard extends Component {
                     <Text style={[styles.titleText, {fontSize: 18}]}>
                         {this.props.text}
                     </Text>
-                    {
-                        this.props.buttonText &&
-                        <View style={styles.falseView}/>
-                    }
-                    {
-                        this.props.buttonText &&
+                    <View style={styles.falseView}/>
+                    <View style={{flexDirection:'row',flex:1,justifyContent:'flex-end',alignItems:'center'}}>
                         <Text style={styles.buttonText}
                               onPress={() => this.goto(this.props.navigation ? this.props.navigation : null)}>
                             {this.props.buttonText}
                         </Text>
-                    }
+                    </View>
                 </View> :
                 null
 
@@ -93,7 +77,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        marginVertical:20,
+        marginVertical: 20,
         maxWidth: 250,
         height: 120,
     },
@@ -124,7 +108,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: Colors.lightblue,
         fontSize: 18,
-        textAlign: 'right'
     },
     falseView: {
         borderBottomWidth: 1,

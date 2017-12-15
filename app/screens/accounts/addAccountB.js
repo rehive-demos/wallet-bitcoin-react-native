@@ -1,5 +1,15 @@
 import React, {Component} from 'react'
-import {ScrollView, View, ListView, StyleSheet, Text, Alert, RefreshControl, TouchableHighlight} from 'react-native'
+import {
+    ScrollView,
+    View,
+    ListView,
+    StyleSheet,
+    Text,
+    Alert,
+    RefreshControl,
+    KeyboardAvoidingView,
+    TouchableHighlight
+} from 'react-native'
 import InfiniteScrollView from 'react-native-infinite-scroll-view'
 import Icon from 'react-native-vector-icons/Ionicons'
 import AccountService from './../../services/accountService'
@@ -32,18 +42,20 @@ export default class Accounts extends Component {
                     back
                     title="Accounts"
                 />
-                <TextInput
-                    title="Account Name"
-                    placeholder="e.g. savings"
-                    underlineColorAndroid="white"
-                />
-                <TouchableHighlight
-                    style={styles.submit}
-                    onPress={() => console.log("Next button Pressed")}>
-                    <Text style={{color: 'white', fontSize: 20}}>
-                        Next
-                    </Text>
-                </TouchableHighlight>
+                <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
+                    <TextInput
+                        title="Account Name"
+                        placeholder="e.g. savings"
+                        underlineColorAndroid="white"
+                    />
+                    <TouchableHighlight
+                        style={styles.submit}
+                        onPress={() => console.log("Next button Pressed")}>
+                        <Text style={{color: 'white', fontSize: 20}}>
+                            Next
+                        </Text>
+                    </TouchableHighlight>
+                </KeyboardAvoidingView>
             </View>
         )
     }
@@ -54,6 +66,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+    },
+    mainContainer: {
+        flex: 1,
+        paddingTop:10,
+        backgroundColor: 'white',
+        justifyContent: 'space-between'
     },
     account: {
         height: 50,
@@ -69,11 +87,8 @@ const styles = StyleSheet.create({
         fontSize: 17
     },
     submit: {
-        position:'absolute',
-        bottom:10,
-        left:0,
-        right:0,
         marginHorizontal: 20,
+        marginBottom:10,
         height: 50,
         borderRadius: 25,
         backgroundColor: Colors.lightblue,
