@@ -37,12 +37,24 @@ export default class HomeCard extends Component {
             this.state.showCard ?
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        <Image
+                        {this.props.image === 'logo' && <Image
                             source={require('./../../assets/icons/new_logo.png')}
                             resizeMode="contain"
-                            style={styles.image}/>
+                            style={styles.logoimage}/>}
+                        {this.props.image === 'cool3' && <Image
+                            source={require('./../../assets/icons/cool1.jpg')}
+                            resizeMode="contain"
+                            style={styles.image}/>}
+                        {this.props.image === 'cool2' && <Image
+                            source={require('./../../assets/icons/cool2.jpg')}
+                            resizeMode="contain"
+                            style={styles.image}/>}
+                        {this.props.image === 'cool1' && <Image
+                            source={require('./../../assets/icons/cool3.jpeg')}
+                            resizeMode="contain"
+                            style={styles.image}/>}
                     </View>
-                    <Text style={styles.titleText}>
+                    <Text style={[styles.titleText, {fontWeight: 'bold'}]}>
                         {this.props.title}
                     </Text>
                     <Text style={[styles.titleText, {fontSize: 18}]}>
@@ -81,12 +93,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
+        marginVertical:20,
+        maxWidth: 250,
+        height: 120,
+    },
+    logoimage: {
         maxWidth: 250,
         height: 120,
     },
     titleText: {
         color: Colors.black,
-        fontSize: 24,
+        fontSize: 20,
         paddingVertical: 5
     },
     buttonBar: {

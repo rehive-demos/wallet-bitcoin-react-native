@@ -6,10 +6,12 @@ export default {
     lightblue: '#3D95CE',
     lightgray: '#EBEBEB',
     darkgray: '#4D4D4D',
+    lightergray: '#F6F6F6',
     darkestgray:'#A6A6A6',
-    darkergray:'#A8A8A8',
+    darkergray:'#D8D8D8',
     drawerHeaderText: '#C0C9CF',
     transactionBackground: '#F7F7F7',
     whitesmoke: '#F6F6F6',
     drawerColor: '#333B42',
+    gold: '#F8CF51',
 }

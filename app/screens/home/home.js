@@ -264,15 +264,19 @@ export default class Home extends Component {
                             <View style={{flex: 1, backgroundColor: Colors.lightgray,paddingHorizontal:20}}>
                                 <ScrollView showsVerticalScrollIndicator={false}>
                                     <HomeCard title="Welcome to Rehive"
+                                              image="logo"
                                               text="Put your logo and brand here."
                                               buttonText="Cool"/>
                                     <HomeCard title="Get started"
+                                              image="cool1"
                                               text="Tell your customers what your app is about."
                                               buttonText="Let's go"/>
                                     <HomeCard title="This is a demo app"
-                                              text="Note that you have to verify your email or
-                                                mobile number to claim funds that has been sent to you."/>
+                                              image="cool2"
+                                              text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
+                                              buttonText="Cool"/>
                                     <HomeCard title="Get Verified"
+                                              image="cool3"
                                               text="Go to Get Verified page"
                                               buttonText="Verify"
                                               navigation={this.props.navigation}/>

@@ -156,8 +156,7 @@ export default class Transactions extends Component {
                                 marginTop: 10, flexDirection: 'column', backgroundColor: 'white', padding: 20
                             }}>
                                 <Text style={{paddingTop: 15, fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
-                                    {this.state.verified ? null : "Please verify your email address to redeem any unclaimed transactions. "}
-                                    Pull to refresh your balance.
+                                    {this.state.verified ? "No transactions yet." : "Please verify your email address to redeem any unclaimed transactions. Pull to refresh your balance."}
                                 </Text>
                             </View>
                         </ScrollView>

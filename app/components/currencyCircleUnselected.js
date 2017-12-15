@@ -17,11 +17,11 @@ export default class Account extends Component {
             <View
                 style={ styles.row}>
                 <TouchableHighlight
-                    underlayColor={Colors.darkestgray}
+                    underlayColor={Colors.darkergray}
                     onPress={() => {
                         this.props.setViewAccount(this.props.currency)
                     }}
-                    style={[styles.options, {backgroundColor: Colors.darkestgray}]}>
+                    style={[styles.options, {backgroundColor: Colors.darkergray}]}>
                     <Text style={{
                         color: 'white',
                         fontSize: this.props.currency.code.length < 4 ? 16 : 8,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableHighlight, TouchableWithoutFeedback,Image} from 'react-native'
 import Colors from './../config/colors'
-import IconF from 'react-native-vector-icons/FontAwesome'
+import IconF from 'react-native-vector-icons/Ionicons'
 import CheckBox from 'react-native-check-box'
 
 export default class Account extends Component {
@@ -37,21 +37,24 @@ export default class Account extends Component {
     render() {
         return (
             <View style={{
-                height: 70,
+                height: 60,
                 padding: 10,
                 paddingHorizontal: 20,
                 borderBottomWidth: 2,
                 borderBottomColor: Colors.lightgray,
                 justifyContent: 'center',
+                alignItems: 'center',
                 backgroundColor: 'white'
             }}>
 
-                <View style={{flexDirection: 'row', flex: 1}}>
+                <View style={{flexDirection: 'row', flex: 1, 
+                    justifyContent: 'center',
+                    alignItems: 'center',}}>
                     <View style={{flex: 1, justifyContent: 'center'}}>
-                        <Text style={{color: Colors.darkergray, fontSize: 10}}>
+                        <Text style={{color: Colors.darkestgray, fontSize: 14}}>
                             {this.props.name}
                         </Text>
-                        <Text style={{color: Colors.black, fontSize: 16}}>
+                        <Text style={{color: Colors.black, fontSize: 18}}>
                             {this.props.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                     </View>
@@ -66,10 +69,10 @@ export default class Account extends Component {
                         onPress={() => {
                             this.props.setActiveCurrency(this.state.reference, this.state.code)
                         }}
-                        style={{justifyContent: 'center'}} >
+                        style={{justifyContent: 'center', alignItems:'center'}} >
                         <IconF
-                            name="check-square"
-                            size={40}
+                            name="md-checkbox"
+                            size={30}
                             color={this.state.active ? Colors.green : Colors.lightgray}
                         />
                     </TouchableWithoutFeedback>
@@ -82,7 +85,7 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     options: {
-        height: 80,
+        height: 50,
         paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderBottomColor: Colors.lightgray,

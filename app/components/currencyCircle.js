@@ -16,8 +16,8 @@ export default class Account extends Component {
         return (
             <View
                 style={ styles.row}>
-                <View style={[styles.options, {backgroundColor: 'orange'}]}>
-                  <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>
+                <View style={[styles.options, {backgroundColor: Colors.gold}]}>
+                  <Text style={{color:'white', fontSize:18, fontWeight:'bold'}}>
                     {this.props.code}
                   </Text>
                 </View>
