@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableHighlight, TouchableWithoutFeedback,Image} from 'react-native'
 import Colors from './../config/colors'
 import IconF from 'react-native-vector-icons/Ionicons'
-import CheckBox from 'react-native-check-box'
 
 export default class Account extends Component {
     constructor(props) {
