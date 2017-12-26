@@ -37,9 +37,9 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     row: {
-        width: 60,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingHorizontal:10,
     },
     options: {
         height: 50,

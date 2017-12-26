@@ -25,7 +25,7 @@ const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => JSON.stringify(r
 
 export default class Accounts extends Component {
     static navigationOptions = {
-        title: 'Accounts',
+        title: 'Currencies',
     }
 
     constructor(props) {
@@ -167,10 +167,10 @@ export default class Accounts extends Component {
                          <CurrencyCircleUnselected code={"EUR"} />
                          <CurrencyCircleUnselected code={"TAKA"} /> */}
                         <ListView
+                            pagingEnabled={true}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             style={{ flexDirection: 'row' }}
-                            contentContainerStyle={{justifyContent:'flex-end'}}
                             dataSource={this.state.dataSource}
                             renderRow={(rowData) => <CurrencyCircleUnselected currency={rowData}
                                 setViewAccount={this.setViewAccount} />}
@@ -239,6 +239,7 @@ export default class Accounts extends Component {
                                         reference={rowData.reference}
                                         symbol={this.state.symbol}
                                         setActiveCurrency={this.setActiveCurrency}
+                                        enableEmptySections
                                         code={this.state.activeCurrency}
                                         currencies={rowData.currencies} />}
 

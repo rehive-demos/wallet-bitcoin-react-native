@@ -228,7 +228,7 @@ export default class Home extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
-                    homeRight
+                    /*homeRight*/
                 />
                 <View style={styles.balance}>
                     <TouchableHighlight style={{flex: 1}}><View></View></TouchableHighlight>

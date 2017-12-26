@@ -17,25 +17,28 @@ export default class Account extends Component {
             <View
                 style={ styles.row}>
                 <View style={[styles.options, {backgroundColor: Colors.gold}]}>
-                  <Text style={{color:'white', fontSize:18, fontWeight:'bold'}}>
-                    {this.props.code}
+                  <Text style={{
+                      color:'white',
+                      fontSize: this.props.code.length < 4 ? 16 : 8,
+                      fontWeight:'bold'}}>
+                    {this.props.code.substr(0,6)}
                   </Text>
                 </View>
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
     row: {
-      width: 100,
       justifyContent: 'flex-start',
       alignItems: 'center',
     },
     options: {
-        height: 70,
-        width: 70,
-        borderRadius: 35,
+        height: 50,
+        width: 50,
+        borderRadius: 25,
         justifyContent: 'center', 
         alignItems: 'center',
     },

@@ -85,9 +85,9 @@ const Stack = {
     QRcodeScanner: {
         screen: QRcodeScanner,
     },
-    AccountsB: {
+    /*AccountsB: {
         screen: AccountsB,
-    },
+    },*/
     AddAccountB: {
         screen: AddAccountB
     },
