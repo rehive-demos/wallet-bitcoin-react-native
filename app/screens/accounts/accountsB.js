@@ -158,17 +158,18 @@ export default class Accounts extends Component {
                 <Header
                     navigation={this.props.navigation}
                     back
-                    title="Accounts"
+                    title="Currencies"
                 />
                 <View style={styles.currencyListHeader}>
                     <CurrencyCircle code={this.state.activeCurrency} />
-                    <View style={{ flex: 1, flexDirection: 'row', paddingRight: 10, paddingLeft:30, }}>
+                    <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 10 }}>
                         {/* <CurrencyCircleUnselected code={"USD"} />
                          <CurrencyCircleUnselected code={"EUR"} />
                          <CurrencyCircleUnselected code={"TAKA"} /> */}
                         <ListView
                             pagingEnabled={true}
                             horizontal={true}
+                            removeClippedSubviews={false}
                             showsHorizontalScrollIndicator={false}
                             style={{ flexDirection: 'row' }}
                             dataSource={this.state.dataSource}

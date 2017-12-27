@@ -7,6 +7,7 @@ import Settings from './../screens/settings/settings'
 import Withdraw from './../screens/withdraw/withdraw'
 import About from './../screens/about/about'
 import Accounts from './../screens/accounts/accounts'
+import NewAccounts from './../screens/accounts/newAccount'
 import Receive from './../screens/receive/receive'
 import Logout from './../screens/auth/logout'
 import DrawerHeader from './../components/drawerHeader'
@@ -19,7 +20,7 @@ const RouteConfigs = {
         screen: Home,
     },
     Accounts: {
-        screen: Accounts,
+        screen: NewAccounts,
     },
     Currencies:{
         screen:Currencies

@@ -14,8 +14,7 @@ export default class Account extends Component {
 
     render() {
         return (
-            <View
-                style={ styles.row}>
+            <View style={ styles.row}>
                 <View style={[styles.options, {backgroundColor: Colors.gold}]}>
                   <Text style={{
                       color:'white',

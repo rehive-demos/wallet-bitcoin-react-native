@@ -13,6 +13,7 @@ import SendMoney from './../screens/transfer/amountEntry'
 import SendTo from './../screens/transfer/sendTo'
 import QRcodeScanner from './../screens/transfer/qrcodeScanner'
 import AccountsB from './../screens/accounts/accountsB'
+import NewAccount from './../screens/accounts/newAccount'
 import AddAccountB from './../screens/accounts/addAccountB'
 import AccountCurrencies from './../screens/accounts/accountCurrencies'
 import UploadImage from './../screens/settings/profileImage/uploadImage'
@@ -88,6 +89,9 @@ const Stack = {
     /*AccountsB: {
         screen: AccountsB,
     },*/
+    NewAccount:{
+        screen:NewAccount
+    },
     AddAccountB: {
         screen: AddAccountB
     },
