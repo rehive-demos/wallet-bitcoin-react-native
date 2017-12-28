@@ -15,19 +15,19 @@ export default class AccountCircle extends Component {
             <View style={ styles.row}>
                 <TouchableHighlight
                     underlayColor={this.props.active ? Colors.gold : Colors.darkergray}
-                    onPress={this.props.active ? () => console.log("From account circle") : () => {
+                    onPress={() => {
                         this.props.getSelectedCurrencies(this.props.getAccountList)
-                    } }
+                    }}
                     style={[styles.options, {backgroundColor: this.props.active ? Colors.gold : Colors.darkergray}]}>
                     <Text style={{
                         color: 'white',
                         fontSize: 16,
                         fontWeight: 'bold'
                     }}>
-                        {this.props.getAccountList.name.substr(0, 2)}
+                        {this.props.getAccountList.name.substr(0, 2).toUpperCase()}
                     </Text>
                 </TouchableHighlight>
-                <Text style={{color:Colors.darkergray}}>
+                <Text style={{color: Colors.darkestgray, paddingVertical: 10}}>
                     {this.props.getAccountList.name}
                 </Text>
             </View>
@@ -37,10 +37,9 @@ export default class AccountCircle extends Component {
 
 const styles = StyleSheet.create({
     row: {
-        width:70,
+        width: 80,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingHorizontal: 20,
     },
     options: {
         height: 50,

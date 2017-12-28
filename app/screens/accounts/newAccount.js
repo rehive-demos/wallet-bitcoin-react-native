@@ -50,7 +50,7 @@ export default class NewAccounts extends Component {
     }
 
     async componentWillMount() {
-        this.getData()
+        //this.getData()
         this.getActiveAccount()
     }
 
@@ -70,17 +70,17 @@ export default class NewAccounts extends Component {
      }
      }*/
 
-    getData = async () => {
-        let responseJson = await AccountService.getAllAccounts()
-        if (responseJson.status === 'success') {
-            let data = responseJson.data.results
-            let ids = data.map((obj, index) => index);
-            this.setState({
-                data,
-                dataSource: ds.cloneWithRows(data, ids)
-            })
-        }
-    }
+    /*getData = async () => {
+     let responseJson = await AccountService.getAllAccounts()
+     if (responseJson.status === 'success') {
+     let data = responseJson.data.results
+     let ids = data.map((obj, index) => index);
+     this.setState({
+     data,
+     dataSource: ds.cloneWithRows(data, ids)
+     })
+     }
+     }*/
 
     getActiveAccount = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
@@ -95,16 +95,26 @@ export default class NewAccounts extends Component {
     }
 
     getSelectedCurrencies = async (getAccountList) => {
-        console.log(getAccountList)
-        let responseJson = await AccountService.getAllAccountCurrencies(getAccountList.reference)
-        if (responseJson.status === 'success') {
-            let data = responseJson.data.results
-            this.setState({
-                accountDataSource: ds.cloneWithRows(data),
-                reference: getAccountList.reference,
-                activeAccount: getAccountList,
-                loading: false,
+        this.setState({
+            loading: true
+        })
+        let accountResponse = await AccountService.getAllAccounts()
+        if (accountResponse.status === 'success') {
+            let accountData = accountResponse.data.results
+            let UniqueAccount = accountData.filter((accounts) => {
+                return accounts.reference != getAccountList.reference
             })
+            let responseJson = await AccountService.getAllAccountCurrencies(getAccountList.reference)
+            if (responseJson.status === 'success') {
+                let data = responseJson.data.results
+                this.setState({
+                    dataSource: ds.cloneWithRows(UniqueAccount),
+                    accountDataSource: ds.cloneWithRows(data),
+                    reference: getAccountList.reference,
+                    activeAccount: getAccountList,
+                    loading: false,
+                })
+            }
         }
     }
 
@@ -137,36 +147,67 @@ export default class NewAccounts extends Component {
             <View style={styles.container}>
                 <Header
                     navigation={this.props.navigation}
-                    back
+                    drawer
                     title="Accounts"
                 />
-                <View style={{backgroundColor:Colors.lightgray}}>
+                <View style={{
+                    padding: 20,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    backgroundColor: Colors.whitesmoke
+                }}>
                     <Text style={styles.addAccountText}
                           onPress={() => this.props.navigation.navigate('AddAccountB')}>
                         Add account
                     </Text>
+                    <Icon
+                        name="ios-arrow-up-outline"
+                        size={30}
+                        color={Colors.darkestgray}
+                    />
                 </View>
-                <View style={styles.currencyListHeader}>
-                    {
-                        !this.state.loading &&
-                        <AccountCircle getAccountList={this.state.activeAccount} active/>
-                    }
-                    <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 10}}>
-                        <ListView
-                            pagingEnabled={true}
-                            horizontal={true}
-                            removeClippedSubviews={false}
-                            showsHorizontalScrollIndicator={false}
-                            style={{flexDirection: 'row'}}
-                            dataSource={this.state.dataSource}
-                            /*canLoadMore={!!this.state.nextUrl}
-                             onLoadMoreAsync={this.loadMoreData.bind(this)}*/
-                            enableEmptySections
-                            renderRow={(rowData) => <AccountCircle getAccountList={rowData}
-                                                                   getSelectedCurrencies={this.getSelectedCurrencies}/>}
+                {
+                    this.state.loading &&
+                    <View style={{
+                        backgroundColor: Colors.whitesmoke,
+                        height: 70,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator style={{padding: 10}}
+                                           size="large"
                         />
                     </View>
-                </View>
+                }
+                {
+                    !this.state.loading &&
+                    <ScrollView
+                        automaticallyAdjustContentInsets={false}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        style={{backgroundColor: Colors.whitesmoke, height: 70}}>
+                        <View style={styles.currencyListHeader}>
+                            {
+                                !this.state.loading &&
+                                <AccountCircle getAccountList={this.state.activeAccount} active/>
+                            }
+                            <ListView
+                                pagingEnabled={true}
+                                horizontal={true}
+                                removeClippedSubviews={false}
+                                showsHorizontalScrollIndicator={false}
+                                style={{flexDirection: 'row'}}
+                                dataSource={this.state.dataSource}
+                                /*canLoadMore={!!this.state.nextUrl}
+                                 onLoadMoreAsync={this.loadMoreData.bind(this)}*/
+                                enableEmptySections
+                                renderRow={(rowData) => <AccountCircle getAccountList={rowData}
+                                                                       getSelectedCurrencies={this.getSelectedCurrencies}/>}
+                            />
+                        </View>
+
+                    </ScrollView>
+                }
                 {/*<View style={{flex: 1, flexDirection: 'row', backgroundColor: Colors.whitesmoke}}>
                  <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
                  <Text style={{color: Colors.darkestgray, fontSize: 16}}>
@@ -224,10 +265,10 @@ export default class NewAccounts extends Component {
                             <ListView
                                 style={{backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1}}
                                 dataSource={this.state.accountDataSource}
+                                enableEmptySections
                                 renderRow={(rowData) => <Account
                                     reference={this.state.reference}
                                     setActiveCurrency={this.setActiveCurrency}
-                                    enableEmptySections
                                     currencies={rowData}/>}
 
                             />
@@ -247,11 +288,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     currencyListHeader: {
-        height: 150,
-        padding: 10,
-        paddingTop: 20,
+        paddingVertical: 10,
         flexDirection: 'row',
-        backgroundColor: Colors.lightgray
+        backgroundColor: Colors.whitesmoke
     },
     account: {
         height: 50,
@@ -262,8 +301,6 @@ const styles = StyleSheet.create({
     },
     addAccountText: {
         color: Colors.lightblue,
-        padding: 10,
-        paddingHorizontal: 20,
         fontSize: 17
     },
 })
