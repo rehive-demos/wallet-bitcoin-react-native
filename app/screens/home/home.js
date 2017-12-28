@@ -7,10 +7,12 @@ import {
     Alert,
     Text,
     ScrollView,
+    ListView,
     Image,
     TouchableWithoutFeedback
 } from 'react-native'
 import moment from 'moment'
+import Swiper from 'react-native-swiper'
 import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
 import AccountService from './../../services/accountService'
@@ -23,6 +25,16 @@ import HomeCard from './../../components/homeCard'
 
 let inputLength = 0;
 
+const renderPagination = (index, total, context) => {
+    return (
+        <View style={styles.paginationStyle}>
+            <Text style={{color: 'grey'}}>
+
+            </Text>
+        </View>
+    )
+}
+
 export default class Home extends Component {
     static navigationOptions = {
         label: 'Home',
@@ -32,7 +44,7 @@ export default class Home extends Component {
         super(props)
         this.state = {
             balance: 0,
-            showTransaction: false,
+            showTransaction: true,
             symbol: '',
             dataToShow: {
                 currency: {},
@@ -43,7 +55,10 @@ export default class Home extends Component {
                 name: '',
             },
             code: '',
-            transactionView:false
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
+            }),
+            transactionView: false
         }
     }
 
@@ -151,6 +166,7 @@ export default class Home extends Component {
                 const currencies = responseJson2.data.results
                 this.setState({
                     currencies,
+                    dataSource: this.state.dataSource.cloneWithRows(currencies),
                     selectedCurrency: -1,
                 })
             }
@@ -214,13 +230,14 @@ export default class Home extends Component {
             index = (index + 1) % this.state.currencies.length
         }
         this.setState({
-            transactionView:true,
+            transactionView: true,
             selectedCurrency: index,
             code: this.state.currencies[index].currency.code,
             symbol: this.state.currencies[index].currency.symbol,
             balance: this.setBalance(this.state.currencies[index].available_balance, this.state.currencies[index].currency.divisibility),
         });
     }
+
 
     render() {
         return (
@@ -260,34 +277,86 @@ export default class Home extends Component {
                 </View>
                 <View style={styles.transaction}>
                     {
-                        this.state.showTransaction === false ?
-                            <View style={{flex: 1, backgroundColor: Colors.lightgray,paddingHorizontal:20}}>
+                        this.state.showTransaction &&
+                        <Swiper renderPagination={renderPagination}
+                                loop={false}>
+                            <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20}}>
                                 <ScrollView showsVerticalScrollIndicator={false}>
-                                    <HomeCard title="Welcome to Rehive"
-                                              image={require('./../../../assets/icons/new_logo.png')}
-                                              text="Put your logo and brand here."
-                                              buttonText="Cool"/>
-                                    <HomeCard title="Get started"
-                                              image={require('./../../../assets/icons/cool3.jpeg')}
-                                              text="Tell your customers what your app is about."
-                                              buttonText="Let's go"/>
-                                    <HomeCard title="This is a demo app"
-                                              image={require('./../../../assets/icons/cool2.jpg')}
-                                              text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
-                                              buttonText="Cool"/>
-                                    <HomeCard title="Get verified"
-                                              image={require('./../../../assets/icons/cool1.jpg')}
-                                              text="Go to get verified page"
-                                              buttonText="Verify"
-                                              navigation={this.props.navigation}/>
-                                    <View style={styles.falseView}/>
+                                    <HomeCard
+                                        key={0}
+                                        title="Welcome to Rehive"
+                                        image={require('./../../../assets/icons/new_logo.png')}
+                                        text="Put your logo and brand here."
+                                        buttonText="Cool"/>
+                                    <HomeCard
+                                        key={1}
+                                        title="Get started"
+                                        image={require('./../../../assets/icons/cool3.jpeg')}
+                                        text="Tell your customers what your app is about."
+                                        buttonText="Let's go"/>
+                                    <HomeCard
+                                        key={2}
+                                        title="This is a demo app"
+                                        image={require('./../../../assets/icons/cool2.jpg')}
+                                        text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
+                                        buttonText="Cool"/>
+                                    <HomeCard
+                                        key={3}
+                                        title="Get verified"
+                                        image={require('./../../../assets/icons/cool1.jpg')}
+                                        text="Go to get verified page"
+                                        buttonText="Verify"
+                                        navigation={this.props.navigation}/>
+                                    <View
+                                        key={4}
+                                        style={styles.falseView}/>
 
                                 </ScrollView>
-                            </View> :
-                            <Transactions updateBalance={this.getBalanceInfo}
-                                          currency={this.state.code}
-                                          showDialog={this.showDialog}
-                                          logout={this.logout}/>
+
+                            </View>
+                            <Transactions
+                                updateBalance={this.getBalanceInfo}
+                                currency={this.state.code}
+                                showDialog={this.showDialog}
+                                logout={this.logout}/>
+                        </Swiper>
+                    }
+                    {
+                        !this.state.showTransaction &&
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={(rowData) => {
+                                return (
+                                    <View style={{
+                                        height: 60,
+                                        padding: 10,
+                                        paddingHorizontal: 20,
+                                        borderBottomWidth: 2,
+                                        borderBottomColor: Colors.lightgray,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        backgroundColor: 'white'
+                                    }}>
+
+                                        <View style={{
+                                            flexDirection: 'row', flex: 1,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}>
+                                            <View style={{flex: 1, justifyContent: 'center'}}>
+                                                <Text style={{color: Colors.darkestgray, fontSize: 14}}>
+                                                    {rowData.currency.code}
+                                                </Text>
+                                                <Text style={{color: Colors.black, fontSize: 18}}>
+                                                    {rowData.currency.symbol}{rowData.balance.toFixed(4).replace(/0{0,2}$/, "")}
+                                                </Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                )
+                            }}
+                        />
                     }
                 </View>
                 <View style={styles.buttonbar}>
@@ -393,6 +462,15 @@ const styles = StyleSheet.create({
     },
     falseView: {
         height: 70
+    },
+    paginationStyle: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10
+    },
+    paginationText: {
+        color: 'white',
+        fontSize: 20
     }
 })
 

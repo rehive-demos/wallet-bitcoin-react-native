@@ -35,7 +35,7 @@ export default class HomeCard extends Component {
     render() {
         return (
             this.state.showCard ?
-                <View style={styles.container}>
+                <View key={this.props.key} style={styles.container}>
                     <View style={styles.imageContainer}>
                         <Image
                             source={this.props.image}
