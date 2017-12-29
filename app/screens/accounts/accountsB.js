@@ -116,11 +116,11 @@ export default class Accounts extends Component {
         let companyCurrencyResponse = await UserInfoService.getAllCompanyCurrencies()
         if (companyCurrencyResponse.status === 'success') {
             let data = companyCurrencyResponse.data.results
-            let uniqueCompanyCurrencyResponse=data.filter((currency)=>{
-                return currency.code!=code
+            let uniqueCompanyCurrencyResponse = data.filter((currency) => {
+                return currency.code != code
             })
             this.setState({
-                dataSource:ds.cloneWithRows(uniqueCompanyCurrencyResponse)
+                dataSource: ds.cloneWithRows(uniqueCompanyCurrencyResponse)
             })
         }
 
@@ -132,7 +132,7 @@ export default class Accounts extends Component {
 
                 zarAccount = data[i].currencies.filter(account => account.currency.code === code)
                 if (zarAccount.length > 0) {
-                    balance = balance + zarAccount[0].balance
+                    balance = balance + zarAccount[0].available_balance
                 }
             }
             if (zarAccount.length > 0) {
@@ -172,24 +172,28 @@ export default class Accounts extends Component {
                     drawer
                     title="Currencies"
                 />
-                <View style={styles.currencyListHeader}>
-                    <CurrencyCircle code={this.state.activeCurrency}/>
-                    <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 10}}>
-                        {/* <CurrencyCircleUnselected code={"USD"} />
-                         <CurrencyCircleUnselected code={"EUR"} />
-                         <CurrencyCircleUnselected code={"TAKA"} /> */}
-                        <ListView
-                            pagingEnabled={true}
+                <ScrollView showsHorizontalScrollIndicator={false}
                             horizontal={true}
-                            removeClippedSubviews={false}
-                            showsHorizontalScrollIndicator={false}
-                            style={{flexDirection: 'row'}}
-                            dataSource={this.state.dataSource}
-                            renderRow={(rowData) => <CurrencyCircleUnselected currency={rowData}
-                                                                              setViewAccount={this.setViewAccount}/>}
-                        />
+                            style={{backgroundColor: Colors.whitesmoke,height:40}}>
+                    <View style={styles.currencyListHeader}>
+                        <CurrencyCircle code={this.state.activeCurrency}/>
+                        <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 10}}>
+                            {/* <CurrencyCircleUnselected code={"USD"} />
+                             <CurrencyCircleUnselected code={"EUR"} />
+                             <CurrencyCircleUnselected code={"TAKA"} /> */}
+                            <ListView
+                                pagingEnabled={true}
+                                horizontal={true}
+                                removeClippedSubviews={false}
+                                showsHorizontalScrollIndicator={false}
+                                style={{flexDirection: 'row'}}
+                                dataSource={this.state.dataSource}
+                                renderRow={(rowData) => <CurrencyCircleUnselected currency={rowData}
+                                                                                  setViewAccount={this.setViewAccount}/>}
+                            />
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
                 <View style={{flex: 1, flexDirection: 'row', backgroundColor: Colors.whitesmoke}}>
                     <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
                         <Text style={{color: Colors.darkestgray, fontSize: 16}}>
@@ -268,9 +272,9 @@ export default class Accounts extends Component {
                          <Account name={"Cheque account"} symbol={"R"} amount={500.00} active={false}/>
                          <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>*/}
                         {/*<Text style={styles.addAccountText}
-                              onPress={() => this.props.navigation.navigate('AddAccountB')}>
-                            Add account
-                        </Text>*/}
+                         onPress={() => this.props.navigation.navigate('AddAccountB')}>
+                         Add account
+                         </Text>*/}
                     </ScrollView>
                     }
                 </View>
@@ -287,7 +291,7 @@ const styles = StyleSheet.create({
     },
     currencyListHeader: {
         paddingVertical: 20,
-        paddingBottom:10,
+        paddingBottom: 0,
         paddingLeft: 20,
         flexDirection: 'row',
         backgroundColor: Colors.whitesmoke

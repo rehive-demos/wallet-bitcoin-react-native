@@ -18,7 +18,7 @@ export default class Account extends Component {
     componentWillMount() {
         let i = 0, j = 0;
         this.setState({
-            balance: this.setBalance(this.state.currencies.balance,
+            balance: this.setBalance(this.state.currencies.available_balance,
                 this.state.currencies.currency.divisibility ),
             active: this.state.currencies.active
         })

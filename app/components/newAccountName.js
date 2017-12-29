@@ -8,15 +8,18 @@ export default class NewAccountName extends Component {
         return (
             <TouchableHighlight style={{flex:1}}
                                 underlayColor={Colors.darkergray}
-                                onPress={()=>{this.props.getSelectedCurrencies(this.props.getAccountList.reference)}}>
+                                onPress={()=>{this.props.getSelectedCurrencies(this.props.getAccountList)}}>
                 <View style={styles.row}>
                     <View style={[styles.options, {backgroundColor: Colors.darkergray}]}>
                         <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
-                            {this.props.getAccountList.name}
+                            {this.props.getAccountList.name.substr(0, 2).toUpperCase()}
                         </Text>
                     </View>
                     <View style={{paddingLeft: 20, justifyContent: 'center'}}>
-                        <Text style={{color: Colors.black, fontSize: 16}}>
+                        <Text style={{color: Colors.darkestgray, fontSize: 14}}>
+                            {this.props.getAccountList.name}
+                        </Text>
+                        <Text style={{color: Colors.black, fontSize: 18}}>
                             {this.props.getAccountList.reference}
                         </Text>
                     </View>

@@ -27,7 +27,7 @@ export default class AccountCircle extends Component {
                         {this.props.getAccountList.name.substr(0, 2).toUpperCase()}
                     </Text>
                 </TouchableHighlight>
-                <Text style={{color: Colors.darkestgray, paddingVertical: 10}}>
+                <Text style={{color: Colors.darkestgray, paddingTop: 10,paddingBottom:0}}>
                     {this.props.getAccountList.name}
                 </Text>
             </View>
@@ -38,14 +38,13 @@ export default class AccountCircle extends Component {
 const styles = StyleSheet.create({
     row: {
         width: 80,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
+        backgroundColor:Colors.whitesmoke
     },
     options: {
         height: 50,
         width: 50,
         borderRadius: 25,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
 })

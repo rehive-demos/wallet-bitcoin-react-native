@@ -19,7 +19,7 @@ export default class Account extends Component {
         let i = 0, j = 0;
         let zarAccount = this.state.currencies.filter(account => account.currency.code === this.state.code)
         this.setState({
-            balance: this.setBalance(zarAccount[0].balance, zarAccount[0].currency.divisibility),
+            balance: this.setBalance(zarAccount[0].available_balance, zarAccount[0].currency.divisibility),
             active: zarAccount[0].active
         })
 

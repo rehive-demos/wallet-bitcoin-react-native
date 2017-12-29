@@ -259,10 +259,10 @@ export default class Home extends Component {
                                 {this.state.account}
                             </Text>
                             <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: inputLength < 8 ? 23 : 12, color: 'white'}}>
+                                <Text style={{fontSize: inputLength < 9 ? 23 : 12, color: 'white'}}>
                                     {this.state.symbol}
                                 </Text>
-                                <Text style={{paddingLeft: 5, fontSize: inputLength < 8 ? 40 : 20, color: 'white'}}>
+                                <Text style={{paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white'}}>
                                     {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                                 </Text>
                             </View>

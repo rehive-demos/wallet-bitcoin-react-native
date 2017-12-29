@@ -96,7 +96,8 @@ export default class NewAccounts extends Component {
 
     getSelectedCurrencies = async (getAccountList) => {
         this.setState({
-            loading: true
+            loading: true,
+            isShown: true,
         })
         let accountResponse = await AccountService.getAllAccounts()
         if (accountResponse.status === 'success') {
@@ -151,20 +152,29 @@ export default class NewAccounts extends Component {
                     title="Accounts"
                 />
                 <View style={{
-                    padding: 20,
+                    paddingVertical:10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
+                    alignItems:'center',
                     backgroundColor: Colors.whitesmoke
                 }}>
                     <Text style={styles.addAccountText}
                           onPress={() => this.props.navigation.navigate('AddAccountB')}>
                         Add account
                     </Text>
-                    <Icon
-                        name="ios-arrow-up-outline"
-                        size={30}
-                        color={Colors.darkestgray}
-                    />
+                    <TouchableHighlight
+                        style={{paddingHorizontal:20}}
+                        underlayColor={Colors.darkestgray}
+                        onPress={() => this.setState({
+                            isShown: !this.state.isShown
+                        })}
+                    >
+                        <Icon
+                            name="ios-arrow-up-outline"
+                            size={30}
+                            color={Colors.darkestgray}
+                        />
+                    </TouchableHighlight>
                 </View>
                 {
                     this.state.loading &&
@@ -174,8 +184,7 @@ export default class NewAccounts extends Component {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
-                        <ActivityIndicator style={{padding: 10}}
-                                           size="large"
+                        <ActivityIndicator size="large"
                         />
                     </View>
                 }
@@ -185,21 +194,21 @@ export default class NewAccounts extends Component {
                         automaticallyAdjustContentInsets={false}
                         showsHorizontalScrollIndicator={false}
                         horizontal={true}
-                        style={{backgroundColor: Colors.whitesmoke, height: 70}}>
+                        style={{backgroundColor: Colors.whitesmoke,height:40}}>
                         <View style={styles.currencyListHeader}>
                             {
                                 !this.state.loading &&
                                 <AccountCircle getAccountList={this.state.activeAccount} active/>
                             }
+
                             <ListView
-                                pagingEnabled={true}
                                 horizontal={true}
-                                removeClippedSubviews={false}
                                 showsHorizontalScrollIndicator={false}
                                 style={{flexDirection: 'row'}}
                                 dataSource={this.state.dataSource}
                                 /*canLoadMore={!!this.state.nextUrl}
                                  onLoadMoreAsync={this.loadMoreData.bind(this)}*/
+                                automaticallyAdjustContentInsets={false}
                                 enableEmptySections
                                 renderRow={(rowData) => <AccountCircle getAccountList={rowData}
                                                                        getSelectedCurrencies={this.getSelectedCurrencies}/>}
@@ -288,8 +297,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     currencyListHeader: {
-        paddingVertical: 10,
         flexDirection: 'row',
+        paddingHorizontal:20,
         backgroundColor: Colors.whitesmoke
     },
     account: {
@@ -301,6 +310,7 @@ const styles = StyleSheet.create({
     },
     addAccountText: {
         color: Colors.lightblue,
-        fontSize: 17
+        fontSize: 17,
+        marginLeft:20
     },
 })
