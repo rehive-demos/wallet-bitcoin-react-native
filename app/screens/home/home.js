@@ -249,25 +249,21 @@ export default class Home extends Component {
                 />
                 <View style={styles.balance}>
                     <TouchableHighlight style={{flex: 1}}><View></View></TouchableHighlight>
-                    <TouchableHighlight
-                        underlayColor={Colors.lightblue}
-                        onPress={() => this.tap1()}
-                        onLongPress={() => this.longTap1()}
-                        style={{flex: 4}}>
-                        <View style={{flex: 1, justifyContent: 'flex-start', alignItems: 'center',}}>
-                            <Text style={{fontSize: 18, color: 'white'}}>
-                                {this.state.account}
+                    <View style={{flex: 4, justifyContent: 'flex-start', alignItems: 'center',}}>
+                        <Text style={{fontSize: 18, color: 'white'}}>
+                            {this.state.account}
+                        </Text>
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={{fontSize: inputLength < 9 ? 23 : 12, color: 'white'}}>
+                                {this.state.symbol}
                             </Text>
-                            <View style={{flexDirection: 'row'}}>
-                                <Text style={{fontSize: inputLength < 9 ? 23 : 12, color: 'white'}}>
-                                    {this.state.symbol}
-                                </Text>
-                                <Text style={{paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white'}}>
-                                    {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
-                                </Text>
-                            </View>
+                            <Text onPress={() => this.tap1()}
+                                  onLongPress={() => this.longTap1()}
+                                  style={{paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white'}}>
+                                {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
+                            </Text>
                         </View>
-                    </TouchableHighlight>
+                    </View>
                     <TouchableHighlight
                         underlayColor={Colors.lightblue}
                         style={{flex: 1}}

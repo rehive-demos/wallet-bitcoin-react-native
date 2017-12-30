@@ -42,7 +42,7 @@ export default class Accounts extends Component {
                     back
                     title="Accounts"
                 />
-                <KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
+                {/*<KeyboardAvoidingView style={styles.mainContainer} behavior={'padding'}>
                     <TextInput
                         title="Account Name"
                         placeholder="e.g. savings"
@@ -55,7 +55,13 @@ export default class Accounts extends Component {
                             Next
                         </Text>
                     </TouchableHighlight>
-                </KeyboardAvoidingView>
+                </KeyboardAvoidingView>*/}
+                <View style={styles.comment}>
+                    <Text style={styles.commentText}>
+                        Coming soon...
+                    </Text>
+                </View>
+                <View style={[styles.pinInfo, { flex: 6 }]} />
             </View>
         )
     }
@@ -66,6 +72,24 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         backgroundColor: 'white',
+    },
+    comment: {
+        flex: 2,
+        backgroundColor: Colors.lightgray,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingRight: 30,
+        paddingLeft: 30,
+    },
+    commentText: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: Colors.black,
+    },
+    pinInfo: {
+        flex: 2,
+        flexDirection: 'column',
+        padding: 20,
     },
     mainContainer: {
         flex: 1,

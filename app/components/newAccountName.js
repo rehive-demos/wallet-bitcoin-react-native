@@ -16,10 +16,10 @@ export default class NewAccountName extends Component {
                         </Text>
                     </View>
                     <View style={{paddingLeft: 20, justifyContent: 'center'}}>
-                        <Text style={{color: Colors.darkestgray, fontSize: 14}}>
+                        <Text style={{color: Colors.black, fontSize: 18}}>
                             {this.props.getAccountList.name}
                         </Text>
-                        <Text style={{color: Colors.black, fontSize: 18}}>
+                        <Text style={{color: Colors.darkestgray, fontSize: 14}}>
                             {this.props.getAccountList.reference}
                         </Text>
                     </View>
