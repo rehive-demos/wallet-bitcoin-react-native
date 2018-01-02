@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
     View,
     StyleSheet,
@@ -28,7 +28,7 @@ let inputLength = 0;
 const renderPagination = (index, total, context) => {
     return (
         <View style={styles.paginationStyle}>
-            <Text style={{color: 'grey'}}>
+            <Text style={{ color: 'grey' }}>
 
             </Text>
         </View>
@@ -181,7 +181,7 @@ export default class Home extends Component {
     }
 
     showDialog = (item) => {
-        this.setState({dataToShow: item});
+        this.setState({ dataToShow: item });
         this.popupDialog.show()
     }
 
@@ -204,7 +204,7 @@ export default class Home extends Component {
             "Are you sure?",
             "Set it as active currency?",
             [
-                {text: 'Yes', onPress: () => this.changeAccount()},
+                { text: 'Yes', onPress: () => this.changeAccount() },
                 {
                     text: 'No',
                     style: 'cancel',
@@ -219,7 +219,7 @@ export default class Home extends Component {
             Alert.alert(
                 "Success",
                 "Your active currency has been changed successfully.",
-                [{text: 'OK'}]
+                [{ text: 'OK' }]
             )
         }
     }
@@ -245,29 +245,29 @@ export default class Home extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
-                    /*homeRight*/
+                /*homeRight*/
                 />
                 <View style={styles.balance}>
-                    <TouchableHighlight style={{flex: 1}}><View></View></TouchableHighlight>
-                    <View style={{flex: 4, justifyContent: 'flex-start', alignItems: 'center',}}>
-                        <Text style={{fontSize: 18, color: 'white'}}>
+                    <TouchableHighlight style={{ flex: 1 }}><View></View></TouchableHighlight>
+                    <View style={{ flex: 4, justifyContent: 'flex-start', alignItems: 'center', }}>
+                        <Text style={{ fontSize: 18, color: 'white' }}>
                             {this.state.account}
                         </Text>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={{fontSize: inputLength < 9 ? 23 : 12, color: 'white'}}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontSize: inputLength < 9 ? 23 : 12, color: 'white' }}>
                                 {this.state.symbol}
                             </Text>
-                            <Text onPress={() => this.tap1()}
-                                  onLongPress={() => this.longTap1()}
-                                  style={{paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white'}}>
+                            <Text onPress={() => this.tap2()}
+                                onLongPress={() => this.longTap1()}
+                                style={{ paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white' }}>
                                 {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                             </Text>
                         </View>
                     </View>
                     <TouchableHighlight
                         underlayColor={Colors.lightblue}
-                        style={{flex: 1}}
-                        onPress={() => this.tap2()}>
+                        style={{ flex: 1 }}
+                        onPress={() => console.log("Home Screen")}>
                         <View></View>
                     </TouchableHighlight>
                 </View>
@@ -275,37 +275,37 @@ export default class Home extends Component {
                     {
                         this.state.showTransaction &&
                         <Swiper renderPagination={renderPagination}
-                                loop={false}>
-                            <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20}}>
+                            loop={false}>
+                            <View style={{ flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20 }}>
                                 <ScrollView showsVerticalScrollIndicator={false}>
                                     <HomeCard
                                         key={0}
                                         title="Welcome to Rehive"
                                         image={require('./../../../assets/icons/new_logo.png')}
                                         text="Put your logo and brand here."
-                                        buttonText="Cool"/>
+                                        buttonText="Cool" />
                                     <HomeCard
                                         key={1}
                                         title="Get started"
                                         image={require('./../../../assets/icons/cool3.jpeg')}
                                         text="Tell your customers what your app is about."
-                                        buttonText="Let's go"/>
+                                        buttonText="Let's go" />
                                     <HomeCard
                                         key={2}
                                         title="This is a demo app"
                                         image={require('./../../../assets/icons/cool2.jpg')}
                                         text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
-                                        buttonText="Cool"/>
+                                        buttonText="Cool" />
                                     <HomeCard
                                         key={3}
                                         title="Get verified"
                                         image={require('./../../../assets/icons/cool1.jpg')}
                                         text="Go to get verified page"
                                         buttonText="Verify"
-                                        navigation={this.props.navigation}/>
+                                        navigation={this.props.navigation} />
                                     <View
                                         key={4}
-                                        style={styles.falseView}/>
+                                        style={styles.falseView} />
 
                                 </ScrollView>
 
@@ -314,7 +314,7 @@ export default class Home extends Component {
                                 updateBalance={this.getBalanceInfo}
                                 currency={this.state.code}
                                 showDialog={this.showDialog}
-                                logout={this.logout}/>
+                                logout={this.logout} />
                         </Swiper>
                     }
                     {
@@ -339,11 +339,11 @@ export default class Home extends Component {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                         }}>
-                                            <View style={{flex: 1, justifyContent: 'center'}}>
-                                                <Text style={{color: Colors.darkestgray, fontSize: 14}}>
+                                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                                <Text style={{ color: Colors.darkestgray, fontSize: 14 }}>
                                                     {rowData.currency.code}
                                                 </Text>
-                                                <Text style={{color: Colors.black, fontSize: 18}}>
+                                                <Text style={{ color: Colors.black, fontSize: 18 }}>
                                                     {rowData.currency.symbol}{rowData.balance.toFixed(4).replace(/0{0,2}$/, "")}
                                                 </Text>
                                             </View>
@@ -359,18 +359,18 @@ export default class Home extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.props.navigation.navigate("Receive")}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Text style={{ color: 'white', fontSize: 20 }}>
                             Receive
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={[styles.submit, {marginLeft: 25}]}
+                        style={[styles.submit, { marginLeft: 25 }]}
                         onPress={() => this.props.navigation.navigate("SendTo", {
                             reference: "",
                             balance: this.state.balance
                         })}>
 
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Text style={{ color: 'white', fontSize: 20 }}>
                             Send
                         </Text>
                     </TouchableHighlight>
@@ -380,13 +380,13 @@ export default class Home extends Component {
                         this.popupDialog = popupDialog;
                     }}
                     height={250}>
-                    <View style={{flex: 1}}>
-                        <View style={{flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20}}>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
                             <Image
                                 source={require('./../../../assets/icons/placeholder.png')}
-                                style={{height: 80, width: 80, margin: 10}}
+                                style={{ height: 80, width: 80, margin: 10 }}
                             />
-                            <Text style={{fontSize: 20, color: Colors.black}}>
+                            <Text style={{ fontSize: 20, color: Colors.black }}>
                                 {this.state.dataToShow.label + ": " + this.state.dataToShow.currency.symbol + this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility)}
                             </Text>
                         </View>
@@ -398,13 +398,13 @@ export default class Home extends Component {
                             paddingLeft: 20,
                             paddingRight: 20
                         }}>
-                            <View style={{flex: 2, justifyContent: 'center'}}>
-                                <Text style={{fontSize: 15, alignSelf: "flex-start", color: Colors.black}}>
+                            <View style={{ flex: 2, justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}>
                                     {moment(this.state.dataToShow.created).format('lll')}
                                 </Text>
                             </View>
-                            <View style={{flex: 1, justifyContent: 'center'}}>
-                                <Text style={{fontSize: 15, alignSelf: "flex-end", color: Colors.black}}>
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 15, alignSelf: "flex-end", color: Colors.black }}>
                                     {this.state.dataToShow.status}
                                 </Text>
                             </View>

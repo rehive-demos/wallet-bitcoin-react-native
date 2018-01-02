@@ -46,6 +46,7 @@ export default class NewAccounts extends Component {
             nextUrl: null,
             reference: '',
             data: [],
+            showIcon:false,
         }
     }
 
@@ -105,6 +106,11 @@ export default class NewAccounts extends Component {
             let UniqueAccount = accountData.filter((accounts) => {
                 return accounts.reference != getAccountList.reference
             })
+            if(UniqueAccount.length>0){
+                this.setState({
+                    showIcon:true,
+                })
+            }
             let responseJson = await AccountService.getAllAccountCurrencies(getAccountList.reference)
             if (responseJson.status === 'success') {
                 let data = responseJson.data.results
@@ -162,19 +168,21 @@ export default class NewAccounts extends Component {
                           onPress={() => this.props.navigation.navigate('AddAccountB')}>
                         Add account
                     </Text>
-                    <TouchableHighlight
-                        style={{paddingHorizontal:20}}
-                        underlayColor={Colors.darkestgray}
-                        onPress={() => this.setState({
-                            isShown: !this.state.isShown
-                        })}
-                    >
-                        <Icon
-                            name="ios-arrow-up-outline"
-                            size={30}
-                            color={Colors.darkestgray}
-                        />
-                    </TouchableHighlight>
+                    {
+                        this.state.showIcon &&
+                        <TouchableHighlight
+                            style={{paddingHorizontal: 20}}
+                            underlayColor={Colors.darkestgray}
+                            onPress={() => this.setState({
+                                isShown: !this.state.isShown
+                            })}>
+                            <Icon
+                                name="ios-arrow-up-outline"
+                                size={30}
+                                color={Colors.darkestgray}
+                            />
+                        </TouchableHighlight>
+                    }
                 </View>
                 {
                     this.state.loading &&

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
     ScrollView,
     View,
@@ -21,7 +21,7 @@ import ResetNavigation from './../../util/resetNavigation'
 import Account from './../../components/accountB'
 import Colors from './../../config/colors'
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2)});
+const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2) });
 
 export default class Accounts extends Component {
     static navigationOptions = {
@@ -42,7 +42,8 @@ export default class Accounts extends Component {
             }),
             accountDataSource: new ListView.DataSource({
                 rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
-            })
+            }),
+            showIcon: false,
         }
     }
 
@@ -51,17 +52,17 @@ export default class Accounts extends Component {
         this.getActiveAccount()
     }
 
-    getAllCompanyCurrencies = async () => {
-        let responseJson = await UserInfoService.getAllCompanyCurrencies()
-        if (responseJson.status === 'success') {
-            let data = responseJson.data.results
-            let ids = data.map((obj, index) => index);
-            this.setState({
-                refreshing: false,
-                dataSource: ds.cloneWithRows(data, ids)
-            })
-        }
-    }
+    /* getAllCompanyCurrencies = async () => {
+         let responseJson = await UserInfoService.getAllCompanyCurrencies()
+         if (responseJson.status === 'success') {
+             let data = responseJson.data.results
+             let ids = data.map((obj, index) => index);
+             this.setState({
+                 refreshing: false,
+                 dataSource: ds.cloneWithRows(data, ids)
+             })
+         }
+     }*/
 
     getActiveAccount = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
@@ -94,19 +95,19 @@ export default class Accounts extends Component {
             'Are you sure?',
             'Change your active account.',
             [
-                {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed') },
                 {
                     text: 'OK', onPress: async () => {
-                    let responseJson = await AccountService.setActiveCurrency(reference, code)
-                    if (responseJson.status === 'success') {
-                        ResetNavigation.dispatchUnderHome(this.props.navigation, "AccountsB")
+                        let responseJson = await AccountService.setActiveCurrency(reference, code)
+                        if (responseJson.status === 'success') {
+                            ResetNavigation.dispatchUnderHome(this.props.navigation, "AccountsB")
 
-                    } else {
-                        Alert.alert('Error',
-                            responseJson.message,
-                            [{text: 'OK'}])
+                        } else {
+                            Alert.alert('Error',
+                                responseJson.message,
+                                [{ text: 'OK' }])
+                        }
                     }
-                }
                 },
             ]
         )
@@ -119,6 +120,17 @@ export default class Accounts extends Component {
             let uniqueCompanyCurrencyResponse = data.filter((currency) => {
                 return currency.code != code
             })
+            for (let i = 0; i < uniqueCompanyCurrencyResponse.length; i++) {
+                let responseJson = await AccountService.getSelectedCurrency(uniqueCompanyCurrencyResponse[i].code)
+                if (responseJson.data.count === 0) {
+                    uniqueCompanyCurrencyResponse.splice(i, 1)
+                }
+            }
+            if (uniqueCompanyCurrencyResponse.length > 0) {
+                this.setState({
+                    showIcon: true,
+                })
+            }
             this.setState({
                 dataSource: ds.cloneWithRows(uniqueCompanyCurrencyResponse)
             })
@@ -160,7 +172,7 @@ export default class Accounts extends Component {
         } else {
             Alert.alert('Error',
                 responseJson.message,
-                [{text: 'OK'}])
+                [{ text: 'OK' }])
         }
     }
 
@@ -173,11 +185,11 @@ export default class Accounts extends Component {
                     title="Currencies"
                 />
                 <ScrollView showsHorizontalScrollIndicator={false}
-                            horizontal={true}
-                            style={{backgroundColor: Colors.whitesmoke,height:40}}>
+                    horizontal={true}
+                    style={{ backgroundColor: Colors.whitesmoke, height: 40 }}>
                     <View style={styles.currencyListHeader}>
-                        <CurrencyCircle code={this.state.activeCurrency}/>
-                        <View style={{flex: 1, flexDirection: 'row', paddingHorizontal: 10}}>
+                        <CurrencyCircle code={this.state.activeCurrency} />
+                        <View style={{ flex: 1, flexDirection: 'row', paddingHorizontal: 10 }}>
                             {/* <CurrencyCircleUnselected code={"USD"} />
                              <CurrencyCircleUnselected code={"EUR"} />
                              <CurrencyCircleUnselected code={"TAKA"} /> */}
@@ -186,83 +198,86 @@ export default class Accounts extends Component {
                                 horizontal={true}
                                 removeClippedSubviews={false}
                                 showsHorizontalScrollIndicator={false}
-                                style={{flexDirection: 'row'}}
+                                style={{ flexDirection: 'row' }}
                                 dataSource={this.state.dataSource}
+                                enableEmptySections
                                 renderRow={(rowData) => <CurrencyCircleUnselected currency={rowData}
-                                                                                  setViewAccount={this.setViewAccount}/>}
+                                    setViewAccount={this.setViewAccount} />}
                             />
                         </View>
                     </View>
                 </ScrollView>
-                <View style={{flex: 1, flexDirection: 'row', backgroundColor: Colors.whitesmoke}}>
-                    <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
-                        <Text style={{color: Colors.darkestgray, fontSize: 16}}>
+                <View style={{ flex: 1, flexDirection: 'row', backgroundColor: Colors.whitesmoke }}>
+                    <View style={{ flex: 1, paddingHorizontal: 20, justifyContent: 'center' }}>
+                        <Text style={{ color: Colors.darkestgray, fontSize: 16 }}>
                             {this.state.activeCurrencyDescription}
                         </Text>
-                        <Text style={{color: Colors.darkestgray, fontSize: 16}}>
+                        <Text style={{ color: Colors.darkestgray, fontSize: 16 }}>
                             {this.state.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                     </View>
-                    <TouchableHighlight
-                        style={{paddingHorizontal: 20, justifyContent: 'center'}}
-                        underlayColor={Colors.whitesmoke}
-                        onPress={() => this.setState({
-                            isShown: !this.state.isShown
-                        })}
-                    >
-                        <Icon
-                            name="ios-arrow-up-outline"
-                            size={30}
-                            color={Colors.darkestgray}
-                        />
-                    </TouchableHighlight>
+                    {
+                        this.state.showIcon &&
+                        <TouchableHighlight
+                            style={{ paddingHorizontal: 20, justifyContent: 'center' }}
+                            underlayColor={Colors.whitesmoke}
+                            onPress={() => this.setState({
+                                isShown: !this.state.isShown
+                            })}>
+                            <Icon
+                                name="ios-arrow-up-outline"
+                                size={30}
+                                color={Colors.darkestgray}
+                            />
+                        </TouchableHighlight>
+                    }
                 </View>
-                <View style={{flex: 7, flexDirection: 'column', backgroundColor: 'white'}}>
+                <View style={{ flex: 7, flexDirection: 'column', backgroundColor: 'white' }}>
                     {!this.state.isShown &&
-                    <ScrollView>
-                        <ListView
-                            style={{backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1}}
-                            dataSource={this.state.dataSource}
-                            renderRow={(rowData) => <AccountsBCurrency currency={rowData}
-                                                                       setViewAccount={this.setViewAccount}/>}
-                        />
-                    </ScrollView>
+                        <ScrollView>
+                            <ListView
+                                style={{ backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1 }}
+                                dataSource={this.state.dataSource}
+                                renderRow={(rowData) => <AccountsBCurrency currency={rowData}
+                                    setViewAccount={this.setViewAccount} />}
+                            />
+                        </ScrollView>
                     }
                     {this.state.isShown &&
-                    <ScrollView>
-                        <View style={{
-                            padding: 10,
-                            paddingHorizontal: 20,
-                            justifyContent: 'center',
-                            backgroundColor: Colors.darkergray,
-                        }}>
-                            <Text style={{color: Colors.darkestgray, fontWeight: 'bold', fontSize: 12}}>
-                                DEFAULT ACCOUNTS
+                        <ScrollView>
+                            <View style={{
+                                padding: 10,
+                                paddingHorizontal: 20,
+                                justifyContent: 'center',
+                                backgroundColor: Colors.darkergray,
+                            }}>
+                                <Text style={{ color: Colors.darkestgray, fontWeight: 'bold', fontSize: 12 }}>
+                                    DEFAULT ACCOUNTS
                             </Text>
-                        </View>
-                        {
-                            this.state.loading &&
-                            <ActivityIndicator style={{padding: 10}}
-                                               size="large"
-                            />
-                        }
-                        {
-                            !this.state.loading &&
-                            <ListView
-                                style={{backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1}}
-                                dataSource={this.state.accountDataSource}
-                                renderRow={(rowData) => <Account
-                                    name={rowData.name}
-                                    reference={rowData.reference}
-                                    symbol={this.state.symbol}
-                                    setActiveCurrency={this.setActiveCurrency}
-                                    enableEmptySections
-                                    code={this.state.activeCurrency}
-                                    currencies={rowData.currencies}/>}
+                            </View>
+                            {
+                                this.state.loading &&
+                                <ActivityIndicator style={{ padding: 10 }}
+                                    size="large"
+                                />
+                            }
+                            {
+                                !this.state.loading &&
+                                <ListView
+                                    style={{ backgroundColor: 'white', borderTopColor: Colors.lightgray, borderTopWidth: 1 }}
+                                    dataSource={this.state.accountDataSource}
+                                    renderRow={(rowData) => <Account
+                                        name={rowData.name}
+                                        reference={rowData.reference}
+                                        symbol={this.state.symbol}
+                                        setActiveCurrency={this.setActiveCurrency}
+                                        enableEmptySections
+                                        code={this.state.activeCurrency}
+                                        currencies={rowData.currencies} />}
 
-                            />
-                        }
-                        {/*<Account name={"Cheque account"} symbol={"R"} amount={500.00} active={true}/>
+                                />
+                            }
+                            {/*<Account name={"Cheque account"} symbol={"R"} amount={500.00} active={true}/>
                          <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>
                          <View style={styles.account}>
                          <Text style={{color: Colors.black, fontSize: 20}}>
@@ -271,11 +286,11 @@ export default class Accounts extends Component {
                          </View>
                          <Account name={"Cheque account"} symbol={"R"} amount={500.00} active={false}/>
                          <Account name={"Savings account"} symbol={"R"} amount={500.00} active={false}/>*/}
-                        {/*<Text style={styles.addAccountText}
+                            {/*<Text style={styles.addAccountText}
                          onPress={() => this.props.navigation.navigate('AddAccountB')}>
                          Add account
                          </Text>*/}
-                    </ScrollView>
+                        </ScrollView>
                     }
                 </View>
             </View>
