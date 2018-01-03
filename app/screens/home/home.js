@@ -248,28 +248,28 @@ export default class Home extends Component {
                 /*homeRight*/
                 />
                 <View style={styles.balance}>
-                    <TouchableHighlight style={{ flex: 1 }}><View></View></TouchableHighlight>
+                    {/*<TouchableHighlight style={{ flex: 1 }}><View></View></TouchableHighlight>*/}
                     <View style={{ flex: 4, justifyContent: 'flex-start', alignItems: 'center', }}>
-                        <Text style={{ fontSize: 18, color: 'white' }}>
+                        {/*<Text style={{ fontSize: 18, color: 'white' }}>
                             {this.state.account}
-                        </Text>
+                        </Text>*/}
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontSize: inputLength < 9 ? 23 : 12, color: 'white' }}>
+                            <Text style={{ fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 23 : 12, color: 'white' }}>
                                 {this.state.symbol}
                             </Text>
                             <Text onPress={() => this.tap2()}
                                 onLongPress={() => this.longTap1()}
-                                style={{ paddingLeft: 5, fontSize: inputLength < 9 ? 40 : 20, color: 'white' }}>
+                                style={{ paddingLeft: 5, fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 40 : 24, color: 'white' }}>
                                 {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                             </Text>
                         </View>
                     </View>
-                    <TouchableHighlight
+                    {/*<TouchableHighlight
                         underlayColor={Colors.lightblue}
                         style={{ flex: 1 }}
                         onPress={() => console.log("Home Screen")}>
                         <View></View>
-                    </TouchableHighlight>
+                    </TouchableHighlight>*/}
                 </View>
                 <View style={styles.transaction}>
                     {
