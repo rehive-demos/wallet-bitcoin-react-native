@@ -53,7 +53,7 @@ export default class About extends Component {
       <View style={styles.container}>
         <Header
           navigation={this.props.navigation}
-          drawer
+          back
           title="About"
         />
         <View style={styles.details}>
