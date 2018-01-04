@@ -43,6 +43,7 @@ let _apiCallWithData = async (url, method, data) => {
 }
 
 let _apiCallWithoutData = async (url, method) => {
+  //console.log(url)
   try {
     let headers = await getHeaders()
     let response = await fetch(url, {

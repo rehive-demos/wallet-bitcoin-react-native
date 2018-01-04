@@ -7,15 +7,23 @@ import Settings from './../screens/settings/settings'
 import Withdraw from './../screens/withdraw/withdraw'
 import About from './../screens/about/about'
 import Accounts from './../screens/accounts/accounts'
+import NewAccounts from './../screens/accounts/newAccount'
 import Receive from './../screens/receive/receive'
 import Logout from './../screens/auth/logout'
 import DrawerHeader from './../components/drawerHeader'
 import GetVerified from './../screens/settings/getVerified/getVerified2'
 import Colors from './../config/colors'
+import Currencies from './../screens/accounts/accountsB'
 
 const RouteConfigs = {
     Home: {
         screen: Home,
+    },
+    Accounts: {
+        screen: NewAccounts,
+    },
+    Currencies:{
+        screen:Currencies
     },
     Deposit: {
         screen: Deposit,
@@ -25,9 +33,6 @@ const RouteConfigs = {
     },
     Receive: {
         screen: Receive,
-    },
-    Accounts: {
-        screen: Accounts,
     },
     GetVerified:{
         screen: GetVerified,

@@ -12,6 +12,9 @@ import WithdrawalAmountEntry from './../screens/withdraw/amountEntry'
 import SendMoney from './../screens/transfer/amountEntry'
 import SendTo from './../screens/transfer/sendTo'
 import QRcodeScanner from './../screens/transfer/qrcodeScanner'
+import AccountsB from './../screens/accounts/accountsB'
+import NewAccount from './../screens/accounts/newAccount'
+import AddAccountB from './../screens/accounts/addAccountB'
 import AccountCurrencies from './../screens/accounts/accountCurrencies'
 import UploadImage from './../screens/settings/profileImage/uploadImage'
 import SettingsPersonalDetails from './../screens/settings/personalDetails'
@@ -41,13 +44,17 @@ import Pin from './../screens/settings/security/pin'
 import SettingsNotifications from './../screens/settings/notifications/notifications'
 import EmailNotifications from './../screens/settings/notifications/emailNotifications'
 import MobileNotifications from './../screens/settings/notifications/mobileNotifications'
+import NoNetConnection from './../screens/home/noNetConnection'
 
 const Stack = {
     Home: {
         screen: Home,
     },
-    InitialScreen:{
-        screen:InitialScreen
+    NoNetConnection: {
+        screen: NoNetConnection,
+    },
+    InitialScreen: {
+        screen: InitialScreen
     },
     Login: {
         screen: Login,
@@ -78,6 +85,15 @@ const Stack = {
     },
     QRcodeScanner: {
         screen: QRcodeScanner,
+    },
+    AccountsB: {
+        screen: AccountsB,
+    },
+    NewAccount:{
+        screen:NewAccount
+    },
+    AddAccountB: {
+        screen: AddAccountB
     },
     AccountCurrencies: {
         screen: AccountCurrencies,
@@ -145,17 +161,17 @@ const Stack = {
     TwoFactor: {
         screen: TwoFactor,
     },
-    TwoFactorSmsAuth:{
-        screen:TwoFactorSmsAuth,
+    TwoFactorSmsAuth: {
+        screen: TwoFactorSmsAuth,
     },
-    TwoFactorToken:{
-        screen:TwoFactorToken,
+    TwoFactorToken: {
+        screen: TwoFactorToken,
     },
-    AuthVerifySms:{
-        screen:AuthVerifySms
+    AuthVerifySms: {
+        screen: AuthVerifySms
     },
     Pin: {
-        screen:Pin,
+        screen: Pin,
     },
     SettingsNotifications: {
         screen: SettingsNotifications,

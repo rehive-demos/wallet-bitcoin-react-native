@@ -1,6 +1,11 @@
 import BaseService from './baseService'
 
 var transactionService = {
+
+  getAllTransactionsByCurrecny: (code) => {
+    return BaseService.get('transactions/?currency=' + code)
+  },
+
   getAllTransactions: () => {
     return BaseService.get('transactions/')
   },
