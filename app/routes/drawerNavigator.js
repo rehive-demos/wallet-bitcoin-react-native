@@ -12,6 +12,7 @@ import Receive from './../screens/receive/receive'
 import Logout from './../screens/auth/logout'
 import DrawerHeader from './../components/drawerHeader'
 import GetVerified from './../screens/settings/getVerified/getVerified2'
+import Wallet from './../screens/wallet/wallet'
 import Colors from './../config/colors'
 import Currencies from './../screens/accounts/accountsB'
 
@@ -37,12 +38,15 @@ const RouteConfigs = {
     GetVerified:{
         screen: GetVerified,
     },
+    Wallet:{
+        screen:Wallet,
+    },
     Settings: {
         screen: Settings,
     },
-    About: {
+   /* About: {
         screen: About,
-    },
+    },*/
     Logout: {
         screen: Logout,
     },

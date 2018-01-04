@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
 import Option from './../../components/settingsOption'
 import Header from './../../components/header'
+import Options from "../../components/settingsOption";
 
 export default class Settings extends Component {
   static navigationOptions = {
@@ -31,6 +32,7 @@ export default class Settings extends Component {
           {/*<Option name="Cards" gotoAddress="null" goTo={this.goTo} />*/}
           <Option name="Security" gotoAddress="SettingsSecurity" goTo={this.goTo} />
           {/*<Option name="Notifications" gotoAddress="SettingsNotifications" goTo={this.goTo} />*/}
+          <Options name="About" gotoAddress="About" goTo={this.goTo}/>
         </ScrollView>
       </View>
     )

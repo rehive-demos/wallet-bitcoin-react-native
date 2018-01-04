@@ -45,6 +45,7 @@ import SettingsNotifications from './../screens/settings/notifications/notificat
 import EmailNotifications from './../screens/settings/notifications/emailNotifications'
 import MobileNotifications from './../screens/settings/notifications/mobileNotifications'
 import NoNetConnection from './../screens/home/noNetConnection'
+import About from './../screens/about/about'
 
 const Stack = {
     Home: {
@@ -181,6 +182,9 @@ const Stack = {
     },
     MobileNotifications: {
         screen: MobileNotifications,
+    },
+    About: {
+        screen: About,
     },
 }
 

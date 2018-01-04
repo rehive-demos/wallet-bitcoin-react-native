@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import Expo from 'expo'
 import {
@@ -18,46 +17,53 @@ import DrawerButton from './drawerButton'
 export default class HomeCard extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            showCard: true
-        }
     }
 
-    goto = (navigation) => {
-        if (navigation) {
-            this.props.navigation.navigate('GetVerified')
-        } else {
-            this.setState({
-                showCard: false
-            })
+    setBalance = (balance, divisibility) => {
+        for (let i = 0; i < divisibility; i++) {
+            balance = balance / 10
         }
+        let balanceString = balance.toString()
+        inputLength = balanceString.length
+        return balance
     }
-
     render() {
         return (
-            this.state.showCard ?
-                <View style={styles.container}>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            source={this.props.image}
-                            resizeMode="contain"
-                            style={styles.image}/>
-                    </View>
-                    <Text style={[styles.titleText, {fontWeight: 'bold'}]}>
-                        {this.props.title}
-                    </Text>
-                    <Text style={[styles.titleText, {fontSize: 18}]}>
-                        {this.props.text}
-                    </Text>
-                    <View style={styles.falseView}/>
-                    <View style={{flexDirection:'row',flex:1,justifyContent:'flex-end',alignItems:'center'}}>
-                        <Text style={styles.buttonText}
-                              onPress={() => this.goto(this.props.navigation ? this.props.navigation : null)}>
-                            {this.props.buttonText}
+            <View style={styles.container}>
+                <View style={{flexDirection: 'row', paddingTop: 10}}>
+                    <View style={{flex: 1}}>
+                        <Text style={[styles.titleText, {fontWeight: 'bold'}]}>
+                            {this.props.currency.currency.code} {this.props.accountName}
+                        </Text>
+
+                        <Text style={[styles.titleText]}>
+                            Balance
+                        </Text>
+                        <Text style={styles.balanceText}>
+                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.balance,this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
+                        </Text>
+                        <Text style={styles.titleText}>
+                            Available
+                        </Text>
+                        <Text style={styles.balanceText}>
+                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.available_balance,this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                     </View>
-                </View> :
-                null
+                    <Image
+                        source={require('./../../assets/icons/new_logo.png')}
+                        resizeMode="contain"
+                        style={styles.image}/>
+                </View>
+                <View style={styles.falseView}/>
+                <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
+                    <Text style={styles.buttonText}>
+                        Withdraw
+                    </Text>
+                    <Text style={[styles.buttonText, {paddingLeft: 20}]}>
+                        Deposit
+                    </Text>
+                </View>
+            </View>
 
         )
     }
@@ -74,22 +80,22 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     imageContainer: {
-        alignItems: 'center',
         justifyContent: 'center',
     },
     image: {
-        marginVertical: 20,
-        maxWidth: 250,
-        height: 120,
-    },
-    logoimage: {
-        maxWidth: 250,
-        height: 120,
+        width: 100,
+        height: 100,
+        borderRadius: 50,
     },
     titleText: {
         color: Colors.black,
-        fontSize: 20,
-        paddingVertical: 5
+        fontSize: 18,
+        paddingTop: 10
+    },
+    balanceText:{
+        color:Colors.black,
+        fontWeight:'bold',
+        fontSize:20,
     },
     buttonBar: {
         flexDirection: 'row',
@@ -115,5 +121,5 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.lightgray,
         marginVertical: 15,
         marginHorizontal: -20
-    }
+    },
 })
