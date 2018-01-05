@@ -33,7 +33,7 @@ export default class Settings extends Component {
         super(props)
 
         this.state = {
-            routeName: this.props.navigation.state.params ? this.props.navigation.state.params.name:null,
+            routeName: this.props.navigation.state.params ? this.props.navigation.state.params.name : null,
             nationality: '',
             first_name: '',
             last_name: '',
