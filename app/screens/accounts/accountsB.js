@@ -99,7 +99,7 @@ export default class Accounts extends Component {
                     text: 'OK', onPress: async () => {
                     let responseJson = await AccountService.setActiveCurrency(reference, code)
                     if (responseJson.status === 'success') {
-                        ResetNavigation.dispatchUnderHome(this.props.navigation, "AccountsB")
+                        ResetNavigation.dispatchToSingleRoute(this.props.navigation, "AccountsB")
 
                     } else {
                         Alert.alert('Error',

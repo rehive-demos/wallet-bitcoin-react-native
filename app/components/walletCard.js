@@ -23,16 +23,15 @@ export default class HomeCard extends Component {
         for (let i = 0; i < divisibility; i++) {
             balance = balance / 10
         }
-        let balanceString = balance.toString()
-        inputLength = balanceString.length
         return balance
     }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={{flexDirection: 'row', paddingTop: 10}}>
                     <View style={{flex: 1}}>
-                        <Text style={[styles.titleText, {fontWeight: 'bold'}]}>
+                        <Text style={[styles.titleText, {fontSize: 20}]}>
                             {this.props.currency.currency.code} {this.props.accountName}
                         </Text>
 
@@ -40,27 +39,32 @@ export default class HomeCard extends Component {
                             Balance
                         </Text>
                         <Text style={styles.balanceText}>
-                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.balance,this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
+                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.balance, this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                         <Text style={styles.titleText}>
                             Available
                         </Text>
                         <Text style={styles.balanceText}>
-                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.available_balance,this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
+                            {this.props.currency.currency.code} {this.setBalance(this.props.currency.available_balance, this.props.currency.currency.divisibility).toFixed(4).replace(/0{0,2}$/, "")}
                         </Text>
                     </View>
-                    <Image
-                        source={require('./../../assets/icons/new_logo.png')}
-                        resizeMode="contain"
-                        style={styles.image}/>
+                    <View
+                        style={[styles.image, {backgroundColor: this.props.active ? Colors.gold : Colors.darkergray}]}>
+                        <Text style={{
+                            color: 'white',
+                            fontSize: 16,
+                            fontWeight: 'bold'
+                        }}>
+                            {this.props.accountName.substr(0, 2).toUpperCase()}
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.falseView}/>
                 <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
-                    <Text style={styles.buttonText}>
-                        Withdraw
-                    </Text>
-                    <Text style={[styles.buttonText, {paddingLeft: 20}]}>
-                        Deposit
+                    <Text style={styles.buttonText} onPress={() => {
+                        this.props.setActiveCurrency(this.props.reference, this.props.currency.currency.code)
+                    }}>
+                        Make default
                     </Text>
                 </View>
             </View>
@@ -83,19 +87,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
+        backgroundColor: Colors.darkergray,
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     titleText: {
         color: Colors.black,
-        fontSize: 18,
+        fontSize: 16,
         paddingTop: 10
     },
-    balanceText:{
-        color:Colors.black,
-        fontWeight:'bold',
-        fontSize:20,
+    balanceText: {
+        color: Colors.black,
+        fontSize: 20,
     },
     buttonBar: {
         flexDirection: 'row',

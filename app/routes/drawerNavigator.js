@@ -26,6 +26,9 @@ const RouteConfigs = {
     Currencies:{
         screen:Currencies
     },
+    Wallet:{
+        screen:Wallet,
+    },
     Deposit: {
         screen: Deposit,
     },
@@ -37,9 +40,6 @@ const RouteConfigs = {
     },
     GetVerified:{
         screen: GetVerified,
-    },
-    Wallet:{
-        screen:Wallet,
     },
     Settings: {
         screen: Settings,

@@ -46,6 +46,7 @@ import EmailNotifications from './../screens/settings/notifications/emailNotific
 import MobileNotifications from './../screens/settings/notifications/mobileNotifications'
 import NoNetConnection from './../screens/home/noNetConnection'
 import About from './../screens/about/about'
+import Wallet from "../screens/wallet/wallet";
 
 const Stack = {
     Home: {
@@ -98,6 +99,9 @@ const Stack = {
     },
     AccountCurrencies: {
         screen: AccountCurrencies,
+    },
+    Wallet:{
+        screen:Wallet
     },
     UploadImage: {
         screen: UploadImage,
