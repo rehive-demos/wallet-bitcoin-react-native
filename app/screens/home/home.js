@@ -94,24 +94,22 @@ export default class Home extends Component {
         if (responseJson.status === "success") {
             AsyncStorage.removeItem('user')
             AsyncStorage.setItem('user', JSON.stringify(responseJson.data))
-            let switches = responseJson.data.switches
-            let creditSwitches = switches.filter(word => word.tx_type === 'credit')
-            if (creditSwitches.length > 0) {
-                let creditSwitch = creditSwitches[0]
-                if (!creditSwitch.enabled) {
-                    this.setState({
-                        creditSwitch: false,
-                    })
-                }
+            let settings = responseJson.data.settings
+            if (settings.allow_transactions === false) {
+                this.setState({
+                    creditSwitch: false,
+                    debitSwitch: false
+                })
             }
-            let debitSwitches = switches.filter(word => word.tx_type === 'debit')
-            if (debitSwitches.length > 0) {
-                let debitSwitch = debitSwitches[0]
-                if (!debitSwitch.enabled) {
-                    this.setState({
-                        debitSwitch: false,
-                    })
-                }
+            if (settings.allow_debit_transactions === false) {
+                this.setState({
+                    debitSwitch: false
+                })
+            }
+            if (settings.allow_credit_transactions === false) {
+                this.setState({
+                    creditSwitch: false
+                })
             }
             const token = await AsyncStorage.getItem('token')
             if (token === null) {
@@ -133,24 +131,22 @@ export default class Home extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0]
-            let switches = account.switches
-            let creditSwitches = switches.filter(word => word.tx_type === 'credit')
-            if (creditSwitches.length > 0) {
-                let creditSwitch = creditSwitches[0]
-                if (!creditSwitch.enabled) {
-                    this.setState({
-                        creditSwitch: false,
-                    })
-                }
+            let settings = account.settings
+            if (settings.allow_transactions === false) {
+                this.setState({
+                    creditSwitch: false,
+                    debitSwitch: false
+                })
             }
-            let debitSwitches = switches.filter(word => word.tx_type === 'debit')
-            if (debitSwitches.length > 0) {
-                let debitSwitch = debitSwitches[0]
-                if (!debitSwitch.enabled) {
-                    this.setState({
-                        debitSwitch: false,
-                    })
-                }
+            if (settings.allow_debit_transactions === false) {
+                this.setState({
+                    debitSwitch: false
+                })
+            }
+            if (settings.allow_credit_transactions === false) {
+                this.setState({
+                    creditSwitch: false
+                })
             }
             AsyncStorage.setItem('currency', JSON.stringify(account.currency))
             this.setState({
