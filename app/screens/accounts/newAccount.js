@@ -135,7 +135,7 @@ export default class NewAccounts extends Component {
                     text: 'OK', onPress: async () => {
                     let responseJson = await AccountService.setActiveCurrency(reference, code)
                     if (responseJson.status === 'success') {
-                        ResetNavigation.dispatchUnderHome(this.props.navigation, "NewAccount")
+                        this.getActiveAccount()
 
                     } else {
                         Alert.alert('Error',

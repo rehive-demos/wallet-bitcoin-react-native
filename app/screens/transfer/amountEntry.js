@@ -11,6 +11,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 import TransactionService from './../../services/transactionService'
+import Spinner from 'react-native-loading-spinner-overlay'
 import ResetNavigation from './../../util/resetNavigation'
 import TextInput from './../../components/textInput'
 import TextInputMultiLine from './../../components/textInputMultiline'
@@ -31,7 +32,9 @@ export default class AmountEntry extends Component {
             balance: params.balance,
             amount: 0,
             note: '',
-            disabled: false
+            disabled: false,
+            loading: false,
+            loadingMessage: "",
         }
     }
 
@@ -66,16 +69,29 @@ export default class AmountEntry extends Component {
     }
 
     transferConfirmed = async (amount) => {
+        this.setState({
+            loading: true,
+            loadingMessage: 'Sending...',
+        })
         let responseJson = await TransactionService.sendMoney(amount, this.state.reference, this.state.note)
         if (responseJson.status === "success") {
             Alert.alert('Success',
                 "Transaction successful",
-                [{text: 'OK', onPress: () => ResetNavigation.dispatchToSingleRoute(this.props.navigation, "Home")}])
+                [{text: 'OK', onPress: () => {
+                    this.setState({
+                        loading: false,
+                    })
+                    ResetNavigation.dispatchToSingleRoute(this.props.navigation, "Home")
+                }}])
         }
         else {
             Alert.alert('Error',
                 responseJson.message,
-                [{text: 'OK'}])
+                [{text: 'OK',onPress:()=>{
+                    this.setState({
+                        loading: false,
+                    })
+                }}])
         }
     }
 
@@ -105,6 +121,11 @@ export default class AmountEntry extends Component {
                     navigation={this.props.navigation}
                     back
                     title="Send money"
+                />
+                <Spinner
+                    visible={this.state.loading}
+                    textContent={this.state.loadingMessage}
+                    textStyle={{color: '#FFF'}}
                 />
                 <KeyboardAvoidingView style={styles.container} behavior={'padding'}>
                     <ScrollView keyboardDismissMode={'interactive'}>
