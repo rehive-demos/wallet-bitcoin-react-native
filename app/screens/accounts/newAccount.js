@@ -51,37 +51,8 @@ export default class NewAccounts extends Component {
     }
 
     async componentWillMount() {
-        //this.getData()
         this.getActiveAccount()
     }
-
-
-    /*getCurrencies = async (reference) => {
-     let responseJson = await AccountService.getAllAccountCurrencies(reference)
-     this.setDataInAccountListView(responseJson)
-     }
-
-     loadMoreData = async () => {
-     if (this.state.refreshing !== true) {
-     this.setState({
-     refreshing: true,
-     })
-     let responseJson = await AccountService.getMoreAccounts(this.state.nextUrl)
-     this.setDataInListView(responseJson)
-     }
-     }*/
-
-    /*getData = async () => {
-     let responseJson = await AccountService.getAllAccounts()
-     if (responseJson.status === 'success') {
-     let data = responseJson.data.results
-     let ids = data.map((obj, index) => index);
-     this.setState({
-     data,
-     dataSource: ds.cloneWithRows(data, ids)
-     })
-     }
-     }*/
 
     getActiveAccount = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
@@ -121,6 +92,10 @@ export default class NewAccounts extends Component {
                     activeAccount: getAccountList,
                     loading: false,
                 })
+            }else {
+                Alert.alert('Error',
+                    responseJson.message,
+                    [{text: 'OK'}])
             }
         }
     }
@@ -214,8 +189,6 @@ export default class NewAccounts extends Component {
                                 showsHorizontalScrollIndicator={false}
                                 style={{flexDirection: 'row'}}
                                 dataSource={this.state.dataSource}
-                                /*canLoadMore={!!this.state.nextUrl}
-                                 onLoadMoreAsync={this.loadMoreData.bind(this)}*/
                                 automaticallyAdjustContentInsets={false}
                                 enableEmptySections
                                 renderRow={(rowData) => <AccountCircle getAccountList={rowData}
@@ -225,29 +198,6 @@ export default class NewAccounts extends Component {
 
                     </ScrollView>
                 }
-                {/*<View style={{flex: 1, flexDirection: 'row', backgroundColor: Colors.whitesmoke}}>
-                 <View style={{flex: 1, paddingHorizontal: 20, justifyContent: 'center'}}>
-                 <Text style={{color: Colors.darkestgray, fontSize: 16}}>
-                 {this.state.activeCurrencyDescription}
-                 </Text>
-                 <Text style={{color: Colors.darkestgray, fontSize: 16}}>
-                 {this.state.symbol}{this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
-                 </Text>
-                 </View>
-                 <TouchableHighlight
-                 style={{paddingHorizontal: 20, justifyContent: 'center'}}
-                 underlayColor={Colors.whitesmoke}
-                 onPress={() => this.setState({
-                 isShown: !this.state.isShown
-                 })}
-                 >
-                 <Icon
-                 name="ios-arrow-up-outline"
-                 size={30}
-                 color={Colors.darkestgray}
-                 />
-                 </TouchableHighlight>
-                 </View>*/}
                 <View style={{flex: 7, flexDirection: 'column', backgroundColor: 'white'}}>
                     {!this.state.isShown &&
                     <ScrollView>
