@@ -6,6 +6,7 @@ import {
     FlatList,
     ScrollView,
     RefreshControl,
+    AsyncStorage,
     ActivityIndicator
 } from 'react-native'
 import {ListItem} from "react-native-elements"
@@ -28,13 +29,20 @@ export default class Transactions extends Component {
             error: null,
             refreshing: false,
             company: {},
-            currency: this.props.currency,
+            profile: null,
+            user: this.props.currency,
             updateBalance: this.props.updateBalance,
             showDialog: this.props.showDialog
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        let user=await AsyncStorage.getItem('user')
+        user=JSON.parse(user)
+        console.log(user)
+        this.setState({
+            profile:user
+        })
         this.getData(this.state.currency)
     }
 
@@ -174,6 +182,7 @@ export default class Transactions extends Component {
                             <ActivityIndicator size="large"/>
                         </View>
 
+
                     }
                     {
                         !this.state.initialLoading &&
@@ -181,7 +190,7 @@ export default class Transactions extends Component {
                             data={this.state.data}
                             renderItem={({item}) => (
                                 <ListItem
-                                    avatar={item.user.profile || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgmT5tM-IGcFDpqZ87p9zKGaWQuzpvAcDKfOTPYfx5A9zOmbTh8RMMFg'}
+                                    avatar={this.state.profile.profile != null ? this.state.profile.profile : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgmT5tM-IGcFDpqZ87p9zKGaWQuzpvAcDKfOTPYfx5A9zOmbTh8RMMFg'}
                                     title={item.tx_type === 'credit' ? "Received" : "Sent"}
                                     subtitle={moment(item.created).fromNow()}
                                     rightTitle={`${item.currency.symbol}${this.getAmount(item.amount, item.currency.divisibility)}`}
@@ -194,6 +203,7 @@ export default class Transactions extends Component {
                                     }}
                                     //containerStyle={{'backgroundColor':'#FAFBFC'}}
                                 />
+
                             )}
                             keyExtractor={tx => tx.id}
                             onRefresh={this.handleRefresh.bind(this)}
