@@ -1,4 +1,6 @@
-import BaseService from './baseService'
+import BaseServiceClass from './baseService'
+
+const BaseService = new BaseServiceClass();
 
 var AccountService = {
     getAllAccounts: () => {

@@ -1,7 +1,7 @@
 import { AsyncStorage, Alert } from 'react-native'
 import Auth from './../util/auth'
 
-const baseUrl = 'https://rehive.com/api/3/'
+const baseUrl = 'https://staging.rehive.com/api/3/'
 
 let getHeaders = async () => {
   const token = await AsyncStorage.getItem('token')
@@ -90,39 +90,43 @@ let _apiCallFileUpload = async (url, method, data) => {
   }
 }
 
-const baseService = {
+class baseService {
 
-  get: (endPoint) => {
-    return _apiCallWithoutData(baseUrl + endPoint, "GET")
-  },
+  constructor(base_url=null) {
+    this.baseUrl = baseUrl ? baseUrl : base_url
+  }
 
-  getWithFullUrl: (url) => {
+  get(endPoint) {
+    return _apiCallWithoutData(this.baseUrl + endPoint, "GET")
+  }
+
+  getWithFullUrl(url){
     return _apiCallWithoutData(url, "GET")
-  },
+  }
 
-  post: (endPoint, data) => {
-    return _apiCallWithData(baseUrl + endPoint, "POST", data)
-  },
+  post(endPoint, data){
+    return _apiCallWithData(this.baseUrl + endPoint, "POST", data)
+  }
 
-  patch: (endPoint, data) => {
-    return _apiCallWithData(baseUrl + endPoint, "PATCH", data)
-  },
+  patch(endPoint, data) {
+    return _apiCallWithData(this.baseUrl + endPoint, "PATCH", data)
+  }
 
-  put: (endPoint, data) => {
-    return _apiCallWithData(baseUrl + endPoint, "PUT", data)
-  },
+  put(endPoint, data) {
+    return _apiCallWithData(this.baseUrl + endPoint, "PUT", data)
+  }
 
-  delete: (endPoint) => {
-    return _apiCallWithoutData(baseUrl + endPoint, "DELETE", {})
-  },
+  delete(endPoint) {
+    return _apiCallWithoutData(this.baseUrl + endPoint, "DELETE", {})
+  }
 
-  fileUpload: (endPoint, data) => {
-    return _apiCallFileUpload(baseUrl + endPoint, "PATCH", data)
-  },
+  fileUpload(endPoint, data) {
+    return _apiCallFileUpload(this.baseUrl + endPoint, "PATCH", data)
+  }
 
-  documentUpload: (endPoint, data) => {
-    return _apiCallFileUpload(baseUrl + endPoint, "POST", data)
-  },
+  documentUpload(endPoint, data) {
+    return _apiCallFileUpload(this.baseUrl + endPoint, "POST", data)
+  }
 }
 
 export default baseService
