@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image, AsyncStorage } from 'react-native'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+import BitcoinService from './../../services/bitcoinService'
 
 export default class Receive extends Component {
   static navigationOptions = {
@@ -13,15 +14,30 @@ export default class Receive extends Component {
 
     this.state = {
       imageURI: 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=undefined&choe=UTF-8',
+      address: ''
     }
+    this.service = new BitcoinService()
   }
 
-  async componentWillMount() {
-    const value = await AsyncStorage.getItem('user');
-    const user = JSON.parse(value)
-    const imageURI = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + user.email + '&choe=UTF-8'
-    this.setState({ imageURI })
+  async getData() {
+    let responseJson = await this.service.getUserAccount()
   }
+
+  async componentDidMount() {
+    let responseJson = await this.service.getUserAccount()
+    const imageURI = responseJson.details.qr_code
+    const address = responseJson.account_id
+    this.setState({ imageURI, address })
+  }
+
+  // getData = async () => {
+  //   this.setState({
+  //     refreshing: true,
+  //     data: [],
+  //   })
+  //   let responseJson = await BitcoinService.getUserAccount()
+  //   // this.setDataInListView(responseJson)
+  // }
 
   render() {
     return (
@@ -38,6 +54,9 @@ export default class Receive extends Component {
           style={{ width: 300, height: 300 }}
           source={{ uri: this.state.imageURI }}
         />
+        <Text style={styles.text}>
+          Address: {this.state.address}
+        </Text>
       </View>
     )
   }
