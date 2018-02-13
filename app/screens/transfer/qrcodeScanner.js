@@ -84,7 +84,13 @@ export default class QRcodeScanner extends Component {
   }
 
   _handleBarCodeRead = (data) => {
-    this.setState({ camera: false, reference: data.data })
+    data_array = data.data.split(":")
+    if (data_array[0] == "bitcoin") {
+      this.setState({ camera: false, reference: data_array[1] })
+    }
+    else {
+      console.log('throw error')
+    }
   }
 }
 
