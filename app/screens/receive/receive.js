@@ -19,25 +19,12 @@ export default class Receive extends Component {
     this.service = new BitcoinService()
   }
 
-  async getData() {
-    let responseJson = await this.service.getUserAccount()
-  }
-
   async componentDidMount() {
     let responseJson = await this.service.getUserAccount()
     const imageURI = responseJson.details.qr_code
     const address = responseJson.account_id
     this.setState({ imageURI, address })
   }
-
-  // getData = async () => {
-  //   this.setState({
-  //     refreshing: true,
-  //     data: [],
-  //   })
-  //   let responseJson = await BitcoinService.getUserAccount()
-  //   // this.setDataInListView(responseJson)
-  // }
 
   render() {
     return (

@@ -10,7 +10,7 @@ import {
     Alert,
     TouchableWithoutFeedback
 } from 'react-native'
-import TransactionService from './../../services/transactionService'
+import BitcoinService from './../../services/bitcoinService'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ResetNavigation from './../../util/resetNavigation'
 import TextInput from './../../components/textInput'
@@ -36,6 +36,7 @@ export default class AmountEntry extends Component {
             loading: false,
             loadingMessage: "",
         }
+        this.service = new BitcoinService()
     }
 
     send = async () => {
@@ -73,7 +74,7 @@ export default class AmountEntry extends Component {
             loading: true,
             loadingMessage: 'Sending...',
         })
-        let responseJson = await TransactionService.sendMoney(amount, this.state.reference, this.state.note)
+        let responseJson = await this.service.sendTransaction(amount, this.state.reference)
         if (responseJson.status === "success") {
             Alert.alert('Success',
                 "Transaction successful",
@@ -136,15 +137,6 @@ export default class AmountEntry extends Component {
                             keyboardType="numeric"
                             underlineColorAndroid="white"
                             onChangeText={this.amountChanged}
-                        />
-                        <TextInput
-                            title="Note"
-                            placeholder="Enter note here"
-                            autoCapitalize="none"
-                            placeholderTextColor="lightgray"
-                            multiline={true}
-                            underlineColorAndroid="white"
-                            onChangeText={(note) => this.setState({note})}
                         />
                     </ScrollView>
                     {   this.state.disabled ?

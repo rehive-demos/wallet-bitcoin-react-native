@@ -1,7 +1,7 @@
 import { AsyncStorage, Alert } from 'react-native'
 import Auth from './../util/auth'
 
-const baseUrl = 'https://rehive.com/api/3/'
+const baseUrl = 'https://staging.rehive.com/api/3/'
 
 let getHeaders = async () => {
   const token = await AsyncStorage.getItem('token')
@@ -20,6 +20,7 @@ let getHeaders = async () => {
 
 let _apiCallWithData = async (url, method, data) => {
   try {
+    console.log(JSON.stringify(data))
     let headers = await getHeaders()
     let response = await fetch(url, {
       method,
