@@ -58,7 +58,7 @@ export default class Home extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (r1, r2) => JSON.stringify(r1) !== JSON.stringify(r2),
             }),
-            transactionView: false
+            transactionView: true
         }
     }
 
@@ -272,40 +272,6 @@ export default class Home extends Component {
                         this.state.showTransaction &&
                         <Swiper renderPagination={renderPagination}
                             loop={false}>
-                            <View style={{ flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20 }}>
-                                <ScrollView showsVerticalScrollIndicator={false}>
-                                    <HomeCard
-                                        key={0}
-                                        title="Welcome to Rehive"
-                                        image={require('./../../../assets/icons/new_logo.png')}
-                                        text="Put your logo and brand here."
-                                        buttonText="Cool" />
-                                    <HomeCard
-                                        key={1}
-                                        title="Get started"
-                                        image={require('./../../../assets/icons/cool3.jpeg')}
-                                        text="Tell your customers what your app is about."
-                                        buttonText="Let's go" />
-                                    <HomeCard
-                                        key={2}
-                                        title="This is a demo app"
-                                        image={require('./../../../assets/icons/cool2.jpg')}
-                                        text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
-                                        buttonText="Cool" />
-                                    <HomeCard
-                                        key={3}
-                                        title="Get verified"
-                                        image={require('./../../../assets/icons/cool1.jpg')}
-                                        text="Go to get verified page"
-                                        buttonText="Verify"
-                                        navigation={this.props.navigation} />
-                                    <View
-                                        key={4}
-                                        style={styles.falseView} />
-
-                                </ScrollView>
-
-                            </View>
                             <Transactions
                                 updateBalance={this.getBalanceInfo}
                                 currency={this.state.code}
