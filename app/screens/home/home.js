@@ -9,7 +9,8 @@ import {
     ScrollView,
     ListView,
     Image,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Linking
 } from 'react-native'
 import moment from 'moment'
 import Swiper from 'react-native-swiper'
@@ -342,6 +343,7 @@ export default class Home extends Component {
                         this.popupDialog = popupDialog;
                     }}
                     height={250}>
+                    {console.log(this.state.dataToShow)}
                     <View style={{ flex: 1 }}>
                         <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
                             <Image
@@ -371,6 +373,23 @@ export default class Home extends Component {
                                 </Text>
                             </View>
                         </View>
+                        {this.state.dataToShow.metadata && this.state.dataToShow.metadata.hash &&
+                            <View style={{
+                                flex: 1,
+                                flexDirection: 'row',
+                                borderTopColor: Colors.lightgray,
+                                borderTopWidth: 1,
+                                paddingLeft: 20,
+                                paddingRight: 20
+                            }}>
+                                <View style={{ justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}
+                                        onPress={() => Linking.openURL("https://bitcoin-node-testnet.rehive.io/tx/" + this.state.dataToShow.metadata.hash)}>>
+                                        View on block explorer
+                                    </Text>
+                                </View>
+                            </View>
+                        }
                     </View>
                 </PopupDialog>
             </View>
