@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, Image, AsyncStorage, Clipboard, Alert, TouchableHighlight } from 'react-native'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 import BitcoinService from './../../services/bitcoinService'
@@ -41,9 +41,19 @@ export default class Receive extends Component {
           style={{ width: 300, height: 300 }}
           source={{ uri: this.state.imageURI }}
         />
-        <Text style={styles.text}>
-          Address: {this.state.address}
-        </Text>
+        <TouchableHighlight
+            underlayColor={'white'}
+            onPress={() => {
+                Clipboard.setString(this.state.address)
+                Alert.alert(
+                    null,
+                    'Copied',
+                )
+            }}>
+            <Text style={styles.text}>
+              Address: {this.state.address}
+            </Text>
+        </TouchableHighlight>
       </View>
     )
   }
