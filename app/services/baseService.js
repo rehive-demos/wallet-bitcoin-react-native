@@ -1,7 +1,7 @@
 import { AsyncStorage, Alert } from 'react-native'
 import Auth from './../util/auth'
 
-const baseUrl = 'https://api.rehive.com/3'
+const baseUrl = 'https://api.rehive.com/3/'
 
 let getHeaders = async () => {
   const token = await AsyncStorage.getItem('token')
@@ -34,11 +34,11 @@ let _apiCallWithData = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
-    Alert.alert(
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
   }
 }
 
@@ -58,11 +58,11 @@ let _apiCallWithoutData = async (url, method) => {
     }
     return responseJson
   } catch (error) {
-    Alert.alert(
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
     return {}
   }
 }
@@ -82,11 +82,11 @@ let _apiCallFileUpload = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
-    Alert.alert(
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
   }
 }
 
