@@ -130,7 +130,8 @@ export default class Home extends Component {
     getBalanceInfo = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
-            const account = responseJson.data.results[0].currencies[0]
+            const account = responseJson.data.results[0].currencies[0];
+            AsyncStorage.setItem("account_reference",JSON.stringify(responseJson.data.results[0].reference));
             let settings = account.settings
             if (settings.allow_transactions === false) {
                 this.setState({
@@ -168,17 +169,17 @@ export default class Home extends Component {
             }
         }
         else {
-            this.logout()
+            this.logout();
         }
     }
 
     logout = () => {
-        Auth.logout(this.props.navigation)
+        Auth.logout(this.props.navigation);
     }
 
     showDialog = (item) => {
         this.setState({ dataToShow: item });
-        this.popupDialog.show()
+        this.popupDialog.show();
     }
 
     getAmount = (amount = 0, divisibility) => {

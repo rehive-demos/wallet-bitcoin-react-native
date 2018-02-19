@@ -34,6 +34,7 @@ let _apiCallWithData = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
+      console.log(JSON.stringify(error))
     /*Alert.alert(
       "Error",
       JSON.stringify(error),
@@ -58,6 +59,7 @@ let _apiCallWithoutData = async (url, method) => {
     }
     return responseJson
   } catch (error) {
+      console.log(JSON.stringify(error))
     /*Alert.alert(
       "Error",
       JSON.stringify(error),
@@ -82,6 +84,7 @@ let _apiCallFileUpload = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
+      console.log(JSON.stringify(error))
     /*Alert.alert(
       "Error",
       JSON.stringify(error),

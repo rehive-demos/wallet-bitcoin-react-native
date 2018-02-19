@@ -28,7 +28,7 @@ export default class AmountEntry extends Component {
         super(props)
         const params = this.props.navigation.state.params
         this.state = {
-            reference: params.reference,
+            recipient: params.recipient,
             balance: params.balance,
             amount: 0,
             note: '',
@@ -51,13 +51,13 @@ export default class AmountEntry extends Component {
             const currency = JSON.parse(data)
             let amount = new Big(this.state.amount)
             for (let i = 0; i < currency.divisibility; i++) {
-              amount = amount.times(10)
+                amount = amount.times(10)
             }
             Alert.alert(
                 'Are you sure?',
-                'Send ' + currency.symbol + this.state.amount + ' to ' + this.state.reference,
+                'Send ' + currency.symbol + this.state.amount + ' to ' + this.state.recipient,
                 [
-                    {text: 'Yes', onPress: () => this.transferConfirmed(amount)},
+                    {text: 'Yes', onPress: () => this.transferConfirmed(amount, currency.code)},
                     {
                         text: 'No',
                         onPress: () => ResetNavigation.dispatchToSingleRoute(this.props.navigation, "Home"),
@@ -68,30 +68,35 @@ export default class AmountEntry extends Component {
         }
     }
 
-    transferConfirmed = async (amount) => {
+    transferConfirmed = async (amount, currencey) => {
         this.setState({
             loading: true,
             loadingMessage: 'Sending...',
         })
-        let responseJson = await TransactionService.sendMoney(amount, this.state.reference, this.state.note)
+        const reference = await AsyncStorage.getItem('account_reference');
+        let responseJson = await TransactionService.sendMoney(amount, this.state.recipient, this.state.note, currencey, JSON.parse(reference))
         if (responseJson.status === "success") {
             Alert.alert('Success',
                 "Transaction successful",
-                [{text: 'OK', onPress: () => {
-                    this.setState({
-                        loading: false,
-                    })
-                    ResetNavigation.dispatchToSingleRoute(this.props.navigation, "Home")
-                }}])
+                [{
+                    text: 'OK', onPress: () => {
+                        this.setState({
+                            loading: false,
+                        })
+                        ResetNavigation.dispatchToSingleRoute(this.props.navigation, "Home")
+                    }
+                }])
         }
         else {
             Alert.alert('Error',
                 responseJson.message,
-                [{text: 'OK',onPress:()=>{
-                    this.setState({
-                        loading: false,
-                    })
-                }}])
+                [{
+                    text: 'OK', onPress: () => {
+                        this.setState({
+                            loading: false,
+                        })
+                    }
+                }])
         }
     }
 

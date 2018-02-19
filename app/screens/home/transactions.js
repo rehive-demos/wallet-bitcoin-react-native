@@ -39,7 +39,6 @@ export default class Transactions extends Component {
     async componentDidMount() {
         let user=await AsyncStorage.getItem('user')
         user=JSON.parse(user)
-        console.log(user)
         this.setState({
             profile:user
         })
