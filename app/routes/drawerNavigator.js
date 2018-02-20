@@ -22,9 +22,9 @@ const RouteConfigs = {
     Accounts: {
         screen: NewAccounts,
     },
-    Currencies:{
+    /*Currencies:{
         screen:Currencies
-    },
+    },*/
     Deposit: {
         screen: Deposit,
     },
