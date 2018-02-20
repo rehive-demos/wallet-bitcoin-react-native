@@ -25,11 +25,11 @@ export default class AccountCircle extends Component {
                         fontSize: 16,
                         fontWeight: 'bold'
                     }}>
-                        {this.props.getAccountList.name.substr(0, 2).toUpperCase()}
+                        {this.props.getAccountList ? this.props.getAccountList.name.substr(0, 2).toUpperCase() : ''}
                     </Text>
                 </TouchableHighlight>
                 <Text style={{ color: Colors.darkestgray, paddingTop: 10, paddingBottom: 0, textAlign: 'center' }}>
-                    {this.props.getAccountList.name}
+                    {this.props.getAccountList ? this.props.getAccountList.name : ''}
                 </Text>
             </View>
         )
