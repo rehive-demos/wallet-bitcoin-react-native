@@ -125,7 +125,7 @@ export default class Signup extends Component {
                             style={styles.submit}
                             onPress={() => this.signup()}>
                             <Text style={{color: 'white', fontSize:20}}>
-                                Sign up
+                                Register
                             </Text>
                         </TouchableHighlight>
                     </KeyboardAvoidingView>
