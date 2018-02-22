@@ -15,6 +15,7 @@ import UserInfoService from './../../services/userInfoService'
 import SettingsService from './../../services/settingsService'
 import Colors from './../../config/colors'
 import Big from 'big.js'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class Transactions extends Component {
     constructor(props) {
@@ -165,6 +166,17 @@ export default class Transactions extends Component {
                                 <Text style={{paddingTop: 15, fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
                                     {this.state.verified ? "No transactions yet." : "Please verify your email address to redeem any unclaimed transactions. Pull to refresh your balance."}
                                 </Text>
+                            </View>
+                            <View style={{marginTop:20,alignItems:'center',justifyContent:'center', flex:1}}>
+                                <Text>
+                                    Swipe down to refresh
+                                </Text>
+                                <Icon
+                                    name="ios-arrow-down-outline"
+                                    size={30}
+                                    color={Colors.black}
+                                    style={{paddingRight: 10}}
+                                />
                             </View>
                         </ScrollView>
                     }
