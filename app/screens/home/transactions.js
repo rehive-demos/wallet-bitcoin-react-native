@@ -167,15 +167,15 @@ export default class Transactions extends Component {
                                     {this.state.verified ? "No transactions yet." : "Please verify your email address to redeem any unclaimed transactions. Pull to refresh your balance."}
                                 </Text>
                             </View>
-                            <View style={{marginTop:20,alignItems:'center',justifyContent:'center', flex:1}}>
-                                <Text>
+                            <View style={{marginTop:30,alignItems:'center',justifyContent:'center', flex:1}}>
+                                <Text style={{fontSize: 18, fontWeight: 'normal', color: Colors.black}}>
                                     Swipe down to refresh
                                 </Text>
                                 <Icon
                                     name="ios-arrow-down-outline"
-                                    size={30}
+                                    size={40}
                                     color={Colors.black}
-                                    style={{paddingRight: 10}}
+                                    style={{paddingTop: 20}}
                                 />
                             </View>
                         </ScrollView>
