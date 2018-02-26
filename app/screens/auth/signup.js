@@ -30,38 +30,153 @@ export default class Signup extends Component {
             first_name: '',
             last_name: '',
             email: '',
+            email_status: true,
             mobile_number: '+1',
+            mobile_number_status: true,
             company: '',
             password1: '',
+            password1_status: true,
             password2: '',
-            terms_and_conditions:false,
+            password2_status: true,
+            password_matching: true,
+            terms_and_conditions: false,
+            password_error:null,
+            mobile_error:null,
+            email_error:null,
+            company_error:null,
         }
     }
 
     changeCountryCode = (code) => {
         this.setState({mobile_number: '+' + code})
     }
+    validateEmail = (email) => {
+        console.log(email);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        if(reg.test(email) === false)
+        {
+            this.setState({
+                email:email,
+                email_status:false,
+                email_error:"Enter a valid email address.",
+            })
+        }
+        else {
+            this.setState({
+                email:email,
+                email_status:true,
+                email_error:null,
+            })
+        }
+    }
+
+    mobileNumberChecking = () => {
+        if (this.state.mobile_number) {
+            this.setState({
+                mobile_number_status: true,
+                mobile_error:"Enter a valid mobile number.",
+            })
+        } else {
+            this.setState({
+                mobile_number_status: false,
+                mobile_error:null,
+            })
+        }
+    }
+    companyChecking = () => {
+        if (this.state.company) {
+            this.setState({
+                company_error:null,
+            })
+        } else {
+            this.setState({
+                company_error:"Enter a valid company id."
+            })
+        }
+
+    }
+
+    password1Checking = () => {
+        if (this.state.password1>=8) {
+            this.setState({
+                password1_status: true
+            })
+        } else {
+            this.setState({
+                password1_status: false
+            })
+        }
+
+    }
+
+    password2Checking = () => {
+        if (this.state.password2) {
+            this.setState({
+                password2_status: true,
+                password_error:null,
+            })
+        } else {
+            this.setState({
+                password2_status: false,
+                password_error:"Confirm your password.",
+            })
+        }
+
+    }
+
+    passwordMatching = () => {
+        if(this.state.password2_status){
+            if (this.state.password1 !== this.state.password2) {
+                this.setState({
+                    password_error: "Passwords do not match."
+                })
+            } else {
+                this.setState({
+                    password_error: null,
+                })
+            }
+        }
+    }
 
     signup = async () => {
-        let data = this.state;
-        if(data.mobile_number){
+        let data = {
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            email: this.state.email,
+            mobile_number: this.state.mobile_number,
+            company: this.state.company,
+            password1: this.state.password1,
+            password2: this.state.password2,
+            terms_and_conditions: this.state.terms_and_conditions,
+        }
+        if (data.mobile_number) {
             if (data.mobile_number.length < 8) {
                 delete data.mobile_number
             }
         }
-        let responseJson = await AuthService.signup(data)
-        if (responseJson.status === "success") {
-            const loginInfo = responseJson.data
-            if (data.mobile_number) {
-                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo: this.state})
-            } else {
-                Auth.login(this.props.navigation, loginInfo)
+        await this.validateEmail(this.state.email);
+        await this.mobileNumberChecking();
+        await this.companyChecking();
+        await this.password1Checking();
+        await this.password2Checking();
+        await this.passwordMatching();
+        if(!this.state.password_error && this.state.email_status){
+            let responseJson = await AuthService.signup(data)
+            if (responseJson.status === "success") {
+                const loginInfo = responseJson.data
+                if (data.mobile_number) {
+                    this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo: this.state})
+                } else {
+                    Auth.login(this.props.navigation, loginInfo)
+                }
             }
-        }
-        else {
-            Alert.alert('Error',
-                responseJson.message,
-                [{text: 'OK'}])
+            else {
+                this.setState({
+                    mobile_error:"A user is already registered with this mobile number.",
+                    email_error:"A user is already registered with this email address.",
+                    company_error:"Enter a valid company id.",
+                })
+            }
         }
     }
 
@@ -98,6 +213,7 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 keyboardType="email-address"
                                 onChangeText={(email) => this.setState({email})}
+                                error={this.state.email_error}
                             />
                             <MobileInput
                                 title="Mobile"
@@ -107,6 +223,7 @@ export default class Signup extends Component {
                                 underlineColorAndroid="white"
                                 onChangeText={(mobile_number) => this.setState({mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
+                                error={this.state.mobile_error}
                             />
                             <TextInput
                                 title="Company"
@@ -115,6 +232,7 @@ export default class Signup extends Component {
                                 placeholder="e.g rehive"
                                 autoCapitalize="none"
                                 onChangeText={(company) => this.setState({company})}
+                                error={this.state.company_error}
                             />
                             <TextInput
                                 title="Password"
@@ -124,6 +242,7 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 secureTextEntry
                                 onChangeText={(password1) => this.setState({password1})}
+                                error={!this.state.password1_status ? "Password must be at least 8 characters." :  null}
                             />
                             <TextInput
                                 title="Confirm password"
@@ -133,11 +252,12 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 secureTextEntry
                                 onChangeText={(password2) => this.setState({password2})}
+                                error={this.state.password_error}
                             />
                             <View style={styles.termsAndCondition}>
                                 <Icon
-                                    onPress={()=>this.setState({
-                                        terms_and_conditions:!this.state.terms_and_conditions
+                                    onPress={() => this.setState({
+                                        terms_and_conditions: !this.state.terms_and_conditions
                                     })}
                                     name="md-checkbox"
                                     size={30}
@@ -177,6 +297,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         paddingTop: 10,
+        justifyContent: 'center'
     },
     submit: {
         marginTop: 10,
@@ -192,17 +313,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        alignItems:'center'
+        alignItems: 'center'
     },
     termsText: {
         color: Colors.lightblue,
-        fontSize:16,
+        fontSize: 16,
     },
     agreeText: {
         color: Colors.black,
-        paddingLeft:8,
-        paddingRight:4,
-        fontSize:16,
+        paddingLeft: 8,
+        paddingRight: 4,
+        fontSize: 16,
     }
 
 })
