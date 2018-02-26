@@ -1,6 +1,18 @@
 import React, {Component} from 'react'
-import {View, Alert, StyleSheet, ScrollView, TouchableHighlight, Text, KeyboardAvoidingView} from 'react-native'
+import {
+    View,
+    Alert,
+    StyleSheet,
+    WebView,
+    Linking,
+    ScrollView,
+    TouchableHighlight,
+    Text,
+    TouchableOpacity,
+    KeyboardAvoidingView
+} from 'react-native'
 import AuthService from './../../services/authService'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Auth from './../../util/auth'
 import TextInput from './../../components/textInput'
 import MobileInput from './../../components/mobileNumberInput'
@@ -22,6 +34,7 @@ export default class Signup extends Component {
             company: '',
             password1: '',
             password2: '',
+            terms_and_conditions:false,
         }
     }
 
@@ -31,15 +44,16 @@ export default class Signup extends Component {
 
     signup = async () => {
         let data = this.state;
-        if (data.mobile_number.length < 8) {
-            delete data.mobile_number
+        if(data.mobile_number){
+            if (data.mobile_number.length < 8) {
+                delete data.mobile_number
+            }
         }
-        console.log(data)
         let responseJson = await AuthService.signup(data)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
             if (data.mobile_number) {
-                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo:this.state})
+                this.props.navigation.navigate("AuthVerifyMobile", {loginInfo, signupInfo: this.state})
             } else {
                 Auth.login(this.props.navigation, loginInfo)
             }
@@ -120,11 +134,29 @@ export default class Signup extends Component {
                                 secureTextEntry
                                 onChangeText={(password2) => this.setState({password2})}
                             />
+                            <View style={styles.termsAndCondition}>
+                                <Icon
+                                    onPress={()=>this.setState({
+                                        terms_and_conditions:!this.state.terms_and_conditions
+                                    })}
+                                    name="md-checkbox"
+                                    size={30}
+                                    color={this.state.terms_and_conditions ? Colors.green : Colors.lightgray}
+                                />
+                                <Text style={styles.agreeText}>
+                                    I agree to the
+                                </Text>
+                                <TouchableOpacity onPress={() => Linking.openURL('https://rehive.com/terms-of-use')}>
+                                    <Text style={styles.termsText}>
+                                        terms of use
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </ScrollView>
                         <TouchableHighlight
                             style={styles.submit}
                             onPress={() => this.signup()}>
-                            <Text style={{color: 'white', fontSize:20}}>
+                            <Text style={{color: 'white', fontSize: 20}}>
                                 Register
                             </Text>
                         </TouchableHighlight>
@@ -156,4 +188,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    termsAndCondition: {
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        alignItems:'center'
+    },
+    termsText: {
+        color: Colors.lightblue,
+        fontSize:16,
+    },
+    agreeText: {
+        color: Colors.black,
+        paddingLeft:8,
+        paddingRight:4,
+        fontSize:16,
+    }
+
 })

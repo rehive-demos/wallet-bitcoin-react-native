@@ -130,42 +130,45 @@ export default class Home extends Component {
     getBalanceInfo = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
-            const account = responseJson.data.results[0].currencies[0];
-            AsyncStorage.setItem("account_reference", JSON.stringify(responseJson.data.results[0].reference));
-            let settings = account.settings
-            if (settings.allow_transactions === false) {
+            console.log(responseJson)
+            if (responseJson.data.results[0]) {
+                const account = responseJson.data.results[0].currencies[0];
+                AsyncStorage.setItem("account_reference", JSON.stringify(responseJson.data.results[0].reference));
+                let settings = account.settings
+                if (settings.allow_transactions === false) {
+                    this.setState({
+                        creditSwitch: false,
+                        debitSwitch: false
+                    })
+                }
+                if (settings.allow_debit_transactions === false) {
+                    this.setState({
+                        debitSwitch: false
+                    })
+                }
+                if (settings.allow_credit_transactions === false) {
+                    this.setState({
+                        creditSwitch: false
+                    })
+                }
+                AsyncStorage.setItem('currency', JSON.stringify(account.currency))
                 this.setState({
-                    creditSwitch: false,
-                    debitSwitch: false
+                    account: responseJson.data.results[0].name,
+                    default: account,
+                    code: account.currency.code,
+                    symbol: account.currency.symbol,
+                    reference: responseJson.data.results[0].reference,
+                    balance: this.setBalance(account.available_balance, account.currency.divisibility),
                 })
-            }
-            if (settings.allow_debit_transactions === false) {
-                this.setState({
-                    debitSwitch: false
-                })
-            }
-            if (settings.allow_credit_transactions === false) {
-                this.setState({
-                    creditSwitch: false
-                })
-            }
-            AsyncStorage.setItem('currency', JSON.stringify(account.currency))
-            this.setState({
-                account: responseJson.data.results[0].name,
-                default: account,
-                code: account.currency.code,
-                symbol: account.currency.symbol,
-                reference: responseJson.data.results[0].reference,
-                balance: this.setBalance(account.available_balance, account.currency.divisibility),
-            })
-            let responseJson2 = await AccountService.getAllAccountCurrencies(this.state.reference)
-            if (responseJson2.status === "success") {
-                const currencies = responseJson2.data.results
-                this.setState({
-                    currencies,
-                    dataSource: this.state.dataSource.cloneWithRows(currencies),
-                    selectedCurrency: -1,
-                })
+                let responseJson2 = await AccountService.getAllAccountCurrencies(this.state.reference)
+                if (responseJson2.status === "success") {
+                    const currencies = responseJson2.data.results
+                    this.setState({
+                        currencies,
+                        dataSource: this.state.dataSource.cloneWithRows(currencies),
+                        selectedCurrency: -1,
+                    })
+                }
             }
         }
         else {
