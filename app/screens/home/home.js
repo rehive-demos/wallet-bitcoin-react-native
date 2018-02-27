@@ -130,7 +130,6 @@ export default class Home extends Component {
     getBalanceInfo = async () => {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
-            console.log(responseJson)
             if (responseJson.data.results[0]) {
                 const account = responseJson.data.results[0].currencies[0];
                 AsyncStorage.setItem("account_reference", JSON.stringify(responseJson.data.results[0].reference));

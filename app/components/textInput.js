@@ -4,11 +4,11 @@ import Colors from './../config/colors'
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default class Account extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             textColor: Colors.black,
-            borderColor: Colors.lightgray
+            borderColor:this.props.error ? Colors.red : Colors.lightgray
         }
     }
 
@@ -52,7 +52,7 @@ export default class Account extends Component {
                     })}
                     onBlur={() => this.setState({
                         textColor: Colors.black,
-                        borderColor: Colors.lightgray
+                        borderColor: this.props.error ? Colors.red : Colors.lightgray
                     })}
                     {...this.props}
                     underlineColorAndroid="white"

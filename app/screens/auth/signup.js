@@ -19,6 +19,8 @@ import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+
 export default class Signup extends Component {
     static navigationOptions = {
         title: 'Create new account',
@@ -44,11 +46,17 @@ export default class Signup extends Component {
             mobile_error:null,
             email_error:null,
             company_error:null,
+            inputNumber:'',
+            countryCode:null,
+            countryName:'',
         }
     }
 
-    changeCountryCode = (code) => {
-        this.setState({mobile_number: '+' + code})
+    changeCountryCode = (code,cca2) => {
+        this.setState({
+            countryCode:code,
+            countryName:cca2
+        })
     }
     validateEmail = (email) => {
         console.log(email);
@@ -71,16 +79,19 @@ export default class Signup extends Component {
     }
 
     mobileNumberChecking = () => {
-        if (this.state.mobile_number) {
-            this.setState({
-                mobile_number_status: true,
-                mobile_error:"Enter a valid mobile number.",
-            })
-        } else {
-            this.setState({
-                mobile_number_status: false,
-                mobile_error:null,
-            })
+        if(this.state.countryCode){
+            const number = phoneUtil.parseAndKeepRawInput(this.state.countryCode+this.state.inputNumber, this.state.countryName)
+            if (phoneUtil.isValidNumber(number)) {
+                this.setState({
+                    mobile_number_status: true,
+                    mobile_error:null,
+                })
+            } else {
+                this.setState({
+                    mobile_number_status: false,
+                    mobile_error:"Enter a valid mobile number.",
+                })
+            }
         }
     }
     companyChecking = () => {
@@ -143,23 +154,24 @@ export default class Signup extends Component {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             email: this.state.email,
-            mobile_number: this.state.mobile_number,
+            mobile_number: '+'+this.state.countryCode+this.state.inputNumber,
             company: this.state.company,
             password1: this.state.password1,
             password2: this.state.password2,
             terms_and_conditions: this.state.terms_and_conditions,
         }
-        if (data.mobile_number) {
+        /*if (data.mobile_number) {
             if (data.mobile_number.length < 8) {
                 delete data.mobile_number
             }
-        }
+        }*/
         await this.validateEmail(this.state.email);
         await this.mobileNumberChecking();
         await this.companyChecking();
         await this.password1Checking();
         await this.password2Checking();
         await this.passwordMatching();
+        console.log(data)
         if(!this.state.password_error && this.state.email_status){
             let responseJson = await AuthService.signup(data)
             if (responseJson.status === "success") {
@@ -171,6 +183,7 @@ export default class Signup extends Component {
                 }
             }
             else {
+                console.log(responseJson.message)
                 this.setState({
                     mobile_error:"A user is already registered with this mobile number.",
                     email_error:"A user is already registered with this email address.",
@@ -219,9 +232,9 @@ export default class Signup extends Component {
                                 title="Mobile"
                                 autoCapitalize="none"
                                 keyboardType="numeric"
-                                value={this.state.mobile_number}
+                                value={this.state.inputNumber}
                                 underlineColorAndroid="white"
-                                onChangeText={(mobile_number) => this.setState({mobile_number})}
+                                onChangeText={(mobile_number) => this.setState({inputNumber:mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
                                 error={this.state.mobile_error}
                             />

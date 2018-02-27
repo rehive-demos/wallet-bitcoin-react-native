@@ -7,7 +7,7 @@ export default class AccountCircle extends Component {
         super(props);
         this.state = {
             balance: 0,
-            color: Colors.darkergray
+            color:Colors.darkergray
         }
     }
 
@@ -15,14 +15,14 @@ export default class AccountCircle extends Component {
         return (
             <View style={styles.row}>
                 <TouchableHighlight
-                    underlayColor={this.state.color}
+                    underlayColor={this.props.getAccountList.activeCurrency}
                     onPress={() => {
-                        this.setState({
-                            color: Colors.gold
-                        },console.log(this.state.color))
+                        /*this.setState({
+                            color: this.props.getAccountList.activeCurrency ? Colors.gold : Colors.darkergray
+                        })*/
                         this.props.getSelectedCurrencies(this.props.getAccountList)
                     }}
-                    style={[styles.options, {backgroundColor: this.state.color}]}>
+                    style={[styles.options, {backgroundColor: this.props.getAccountList.activeCurrency}]}>
                     <Text style={{
                         color: 'white',
                         fontSize: 16,

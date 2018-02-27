@@ -58,6 +58,7 @@ export default class NewAccounts extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === 'success') {
             let data = responseJson.data.results[0]
+            data.activeCurrency=Colors.gold
             this.setState({
                 activeAccount: data,
                 loading: false,
@@ -75,6 +76,16 @@ export default class NewAccounts extends Component {
         if (accountResponse.status === 'success') {
             let accountData = accountResponse.data.results
             let UniqueAccount = accountData
+            for(let i=0;i<UniqueAccount.length;i++){
+                if(UniqueAccount[i].reference===getAccountList.reference){
+                    UniqueAccount[i].activeCurrency=Colors.gold
+                }else{
+                    UniqueAccount[i].activeCurrency=Colors.lightgray
+                }
+                if(UniqueAccount[i].reference===this.state.activeAccount.reference){
+                    UniqueAccount.splice(i, 1)
+                }
+            }
             if (UniqueAccount.length > 0) {
                 this.setState({
                     showIcon: true,
