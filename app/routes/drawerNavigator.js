@@ -26,9 +26,9 @@ const RouteConfigs = {
     /*Currencies:{
         screen:Currencies
     },*/
-    Transactions:{
+    /*Transactions:{
         screen:Transactions
-    },
+    },*/
     Deposit: {
         screen: Deposit,
     },

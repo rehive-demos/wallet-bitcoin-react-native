@@ -22,6 +22,7 @@ import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 import HomeCard from './../../components/homeCard'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 let inputLength = 0;
 
@@ -280,45 +281,48 @@ export default class Home extends Component {
                 <View style={styles.transaction}>
                     {
                         this.state.showTransaction &&
-                        <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20}}>
-                            <ScrollView showsVerticalScrollIndicator={false}>
-                                <HomeCard
-                                    key={0}
-                                    title="Welcome to Rehive"
-                                    image={require('./../../../assets/icons/new_logo.png')}
-                                    text="Put your logo and brand here."
-                                    buttonText="Cool"/>
-                                <HomeCard
-                                    key={1}
-                                    title="Get started"
-                                    image={require('./../../../assets/icons/cool3.jpeg')}
-                                    text="Tell your customers what your app is about."
-                                    buttonText="Let's go"/>
-                                <HomeCard
-                                    key={2}
-                                    title="This is a demo app"
-                                    image={require('./../../../assets/icons/cool2.jpg')}
-                                    text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
-                                    buttonText="Cool"/>
-                                <HomeCard
-                                    key={3}
-                                    title="Get verified"
-                                    image={require('./../../../assets/icons/cool1.jpg')}
-                                    text="Go to get verified page"
-                                    buttonText="Verify"
-                                    navigation={this.props.navigation}/>
-                                <View
-                                    key={4}
-                                    style={styles.falseView}/>
+                        <Swiper renderPagination={renderPagination}
+                                loop={false}>
+                            <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20}}>
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                    <HomeCard
+                                        key={0}
+                                        title="Welcome to Rehive"
+                                        image={require('./../../../assets/icons/new_logo.png')}
+                                        text="Put your logo and brand here."
+                                        buttonText="Cool"/>
+                                    <HomeCard
+                                        key={1}
+                                        title="Get started"
+                                        image={require('./../../../assets/icons/cool3.jpeg')}
+                                        text="Tell your customers what your app is about."
+                                        buttonText="Let's go"/>
+                                    <HomeCard
+                                        key={2}
+                                        title="This is a demo app"
+                                        image={require('./../../../assets/icons/cool2.jpg')}
+                                        text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
+                                        buttonText="Cool"/>
+                                    <HomeCard
+                                        key={3}
+                                        title="Get verified"
+                                        image={require('./../../../assets/icons/cool1.jpg')}
+                                        text="Go to get verified page"
+                                        buttonText="Verify"
+                                        navigation={this.props.navigation}/>
+                                    <View
+                                        key={4}
+                                        style={styles.falseView}/>
 
-                            </ScrollView>
+                                </ScrollView>
 
-                        </View>
-                        /*<Transactions
-                         updateBalance={this.getBalanceInfo}
-                         currency={this.state.code}
-                         showDialog={this.showDialog}
-                         logout={this.logout} />*/
+                            </View>
+                            <Transactions
+                                updateBalance={this.getBalanceInfo}
+                                currency={this.state.code}
+                                showDialog={this.showDialog}
+                                logout={this.logout}/>
+                        </Swiper>
                     }
                     {
                         !this.state.showTransaction &&
@@ -414,6 +418,117 @@ export default class Home extends Component {
                  </View>
                  </View>
                  </PopupDialog>*/}
+                <PopupDialog
+                    ref={(popupDialog) => {
+                        this.popupDialog = popupDialog;
+                    }}
+                    width={0.9}
+                    height={400}>
+                    <View style={{flex: 1}}>
+                        <View style={{flex: 3, padding: 20}}>
+                            {/*<Image
+                             source={require('./../../../assets/icons/placeholder.png')}
+                             style={{height: 80, width: 80, margin: 10}}
+                             />*/}
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={{flex:1,textAlign: 'center',fontSize: 20, color: Colors.black}}> Transaction details</Text>
+
+                                <Icon
+                                    onPress={()=>{
+                                        this.popupDialog.dismiss()
+                                    }}
+                                    name="clear"
+                                    size={30}
+                                    color={Colors.lightgray}
+                                    style={{marginRight:-10,marginTop:-10}}
+                                />
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 20,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Type:"}
+                                </Text>
+                                <Text style={{flex: 4, fontSize: 20, color: Colors.black, paddingLeft: 8}}>
+                                    {this.state.dataToShow.label}
+                                </Text>
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Total amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.total_amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.total_amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Fees:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.fee < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.fee, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Balance:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.balance < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.balance, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            borderTopColor: Colors.lightgray,
+                            borderTopWidth: 1,
+                            paddingLeft: 20,
+                            paddingRight: 20
+                        }}>
+                            <View style={{flex: 2, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-start", color: Colors.black}}>
+                                    {moment(this.state.dataToShow.created).format('lll')}
+                                </Text>
+                            </View>
+                            <View style={{flex: 1, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-end", color: Colors.black}}>
+                                    {this.state.dataToShow.status}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                </PopupDialog>
             </View>
         )
     }
