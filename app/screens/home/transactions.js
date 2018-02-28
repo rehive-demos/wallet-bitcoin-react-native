@@ -114,6 +114,7 @@ export default class Transactions extends Component {
         })
         let responseJson = await TransactionService.getAllTransactionsByCurrecny(currency)
         this.setData(responseJson)
+        console.log("Testing in transaction")
     }
 
     async handleRefresh() {
