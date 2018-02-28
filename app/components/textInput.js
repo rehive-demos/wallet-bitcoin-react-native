@@ -11,7 +11,6 @@ export default class Account extends Component {
             borderColor:this.props.error ? Colors.red : Colors.lightgray
         }
     }
-
     render() {
         return (
             <View style={[styles.inputContainer, {borderBottomColor: this.state.borderColor}]}>
@@ -55,6 +54,7 @@ export default class Account extends Component {
                         borderColor: this.props.error ? Colors.red : Colors.lightgray
                     })}
                     {...this.props}
+                    ref={this.props.reference}
                     underlineColorAndroid="white"
                     style={[styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}]}
                 />

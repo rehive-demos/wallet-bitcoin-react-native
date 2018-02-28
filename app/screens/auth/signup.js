@@ -210,6 +210,8 @@ export default class Signup extends Component {
                                 placeholder="e.g. John"
                                 autoCapitalize="none"
                                 onChangeText={(first_name) => this.setState({first_name})}
+                                returnKeyType="next"
+                                onSubmitEditing={() => this.lastname.refs.last_name.focus()}
                             />
                             <TextInput
                                 title="Last name"
@@ -217,6 +219,10 @@ export default class Signup extends Component {
                                 placeholder="e.g. Snow"
                                 autoCapitalize="none"
                                 onChangeText={(last_name) => this.setState({last_name})}
+                                returnKeyType="next"
+                                ref={ref => this.lastname = ref}
+                                reference="last_name"
+                                onSubmitEditing={() => this.email.refs.electronic_mail.focus()}
                             />
                             <TextInput
                                 title="Email"
@@ -227,6 +233,9 @@ export default class Signup extends Component {
                                 keyboardType="email-address"
                                 onChangeText={(email) => this.setState({email})}
                                 error={this.state.email_error}
+                                returnKeyType="done"
+                                ref={ref => this.email = ref}
+                                reference="electronic_mail"
                             />
                             <MobileInput
                                 title="Mobile"
@@ -246,6 +255,8 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 onChangeText={(company) => this.setState({company})}
                                 error={this.state.company_error}
+                                returnKeyType="next"
+                                onSubmitEditing={() => this.pass.refs.password.focus()}
                             />
                             <TextInput
                                 title="Password"
@@ -256,6 +267,10 @@ export default class Signup extends Component {
                                 secureTextEntry
                                 onChangeText={(password1) => this.setState({password1})}
                                 error={!this.state.password1_status ? "Password must be at least 8 characters." :  null}
+                                returnKeyType="next"
+                                ref={ref => this.pass = ref}
+                                reference="password"
+                                onSubmitEditing={() => this.confirm.refs.confirm_password.focus()}
                             />
                             <TextInput
                                 title="Confirm password"
@@ -266,6 +281,9 @@ export default class Signup extends Component {
                                 secureTextEntry
                                 onChangeText={(password2) => this.setState({password2})}
                                 error={this.state.password_error}
+                                returnKeyType="done"
+                                ref={ref => this.confirm = ref}
+                                reference="confirm_password"
                             />
                             <View style={styles.termsAndCondition}>
                                 <Icon
