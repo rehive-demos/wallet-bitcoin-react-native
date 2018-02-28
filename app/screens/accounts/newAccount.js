@@ -58,7 +58,7 @@ export default class NewAccounts extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === 'success') {
             let data = responseJson.data.results[0]
-            data.activeCurrency=Colors.gold
+            data.activeCurrency=true
             this.setState({
                 activeAccount: data,
                 loading: false,
@@ -72,15 +72,20 @@ export default class NewAccounts extends Component {
             loading: true,
             isShown: true,
         })
+        if(getAccountList.reference!=this.state.activeAccount.reference){
+            this.state.activeAccount.activeCurrency=false
+        }else{
+            this.state.activeAccount.activeCurrency=true
+        }
         let accountResponse = await AccountService.getAllAccounts()
         if (accountResponse.status === 'success') {
             let accountData = accountResponse.data.results
             let UniqueAccount = accountData
             for(let i=0;i<UniqueAccount.length;i++){
                 if(UniqueAccount[i].reference===getAccountList.reference){
-                    UniqueAccount[i].activeCurrency=Colors.gold
+                    UniqueAccount[i].activeCurrency=true
                 }else{
-                    UniqueAccount[i].activeCurrency=Colors.lightgray
+                    UniqueAccount[i].activeCurrency=false
                 }
                 if(UniqueAccount[i].reference===this.state.activeAccount.reference){
                     UniqueAccount.splice(i, 1)
@@ -186,7 +191,8 @@ export default class NewAccounts extends Component {
                     style={{backgroundColor: Colors.whitesmoke, height: 40}}>
                     <View style={styles.currencyListHeader}>
 
-                        <AccountCircle getAccountList={this.state.activeAccount} active/>
+                        <AccountCircle getAccountList={this.state.activeAccount}
+                                       getSelectedCurrencies={this.getSelectedCurrencies}/>
 
                         <ListView
                             horizontal={true}

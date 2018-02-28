@@ -15,14 +15,14 @@ export default class AccountCircle extends Component {
         return (
             <View style={styles.row}>
                 <TouchableHighlight
-                    underlayColor={this.props.getAccountList.activeCurrency}
+                    underlayColor={this.props.getAccountList.activeCurrency? Colors.gold : Colors.darkergray}
                     onPress={() => {
                         /*this.setState({
                             color: this.props.getAccountList.activeCurrency ? Colors.gold : Colors.darkergray
                         })*/
                         this.props.getSelectedCurrencies(this.props.getAccountList)
                     }}
-                    style={[styles.options, {backgroundColor: this.props.getAccountList.activeCurrency}]}>
+                    style={[styles.options, {backgroundColor: this.props.getAccountList.activeCurrency? Colors.gold : Colors.darkergray}]}>
                     <Text style={{
                         color: 'white',
                         fontSize: 16,
