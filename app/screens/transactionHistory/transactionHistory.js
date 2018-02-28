@@ -238,7 +238,6 @@ export default class Home extends Component {
 
 
     render() {
-        console.log(this.state.dataToShow)
         return (
             <View style={styles.container}>
                 <Header
@@ -349,9 +348,8 @@ export default class Home extends Component {
                         this.popupDialog = popupDialog;
                     }}
                     width={0.9}
-                    height={330}>
+                    height={400}>
                     <View style={{flex: 1}}>
-
                         <View style={{flex: 3, padding: 20}}>
                             {/*<Image
                              source={require('./../../../assets/icons/placeholder.png')}

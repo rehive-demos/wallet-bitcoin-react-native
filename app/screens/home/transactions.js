@@ -46,7 +46,7 @@ export default class Transactions extends Component {
         this.getData(this.state.currency)
     }
 
-    componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) {
         if (this.props.currency !== nextProps.currency) {
             this.setState({
                 initialLoading: true,
@@ -100,6 +100,11 @@ export default class Transactions extends Component {
                 this.props.logout()
             }
         }
+        if(this.state.data.length> 0){
+            this.setState({
+                noTransaction:false
+            })
+        }
     }
 
     getData = async (currency) => {
@@ -111,7 +116,7 @@ export default class Transactions extends Component {
         this.setData(responseJson)
     }
 
-    handleRefresh() {
+    async handleRefresh() {
         this.state.updateBalance()
         if (this.state.loading !== true) {
             this.setState({refreshing: true});
