@@ -1,7 +1,7 @@
 import BaseServiceClass from './baseService'
 
 const BaseService = new BaseServiceClass(
-    "https://bitcoin.s.services.rehive.io/api/1/"
+    "https://bitcoin-testnet.services.rehive.io/api/1/"
 );
 
 class bitcoinService {
