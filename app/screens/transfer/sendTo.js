@@ -156,7 +156,7 @@ export default class SendTo extends Component {
                         <View style={{flex: 1}}>
                             <TextInput
                                 title="Recipient"
-                                placeholder="Enter email, stellar address or mobile"
+                                placeholder="Enter email, bitcoin address or mobile"
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
                                 value={this.state.searchText}
@@ -190,7 +190,7 @@ export default class SendTo extends Component {
                         <View style={{flex: 1}}>
                             <TextInput
                                 title="Recipient"
-                                placeholder="Enter email, stellar address or mobile"
+                                placeholder="Enter email, bitcoin address or mobile"
                                 fontSize={this.state.searchText.length == 0 ? 18 : 22}
                                 autoCapitalize="none"
                                 underlineColorAndroid="white"
