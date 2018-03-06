@@ -35,11 +35,12 @@ let _apiCallWithData = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
-    Alert.alert(
+      console.log(JSON.stringify(error))
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
   }
 }
 
@@ -59,11 +60,12 @@ let _apiCallWithoutData = async (url, method) => {
     }
     return responseJson
   } catch (error) {
-    Alert.alert(
+      console.log(JSON.stringify(error))
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
     return {}
   }
 }
@@ -83,11 +85,12 @@ let _apiCallFileUpload = async (url, method, data) => {
     let responseJson = await response.json()
     return responseJson
   } catch (error) {
-    Alert.alert(
+      console.log(JSON.stringify(error))
+    /*Alert.alert(
       "Error",
       JSON.stringify(error),
       [{ text: 'OK' }]
-    )
+    )*/
   }
 }
 
