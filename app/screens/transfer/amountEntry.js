@@ -74,7 +74,7 @@ export default class AmountEntry extends Component {
             loading: true,
             loadingMessage: 'Sending...',
         })
-        let responseJson = await this.service.sendTransaction(amount, this.state.reference)
+        let responseJson = await this.service.sendTransaction(amount, this.state.recipient)
         if (responseJson.status === "success") {
             Alert.alert('Success',
                 "Transaction successful",
