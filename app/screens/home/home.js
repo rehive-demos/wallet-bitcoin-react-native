@@ -294,19 +294,19 @@ export default class Home extends Component {
                                     <HomeCard
                                         key={1}
                                         title="Get started"
-                                        image={require('./../../../assets/icons/cool3.jpeg')}
+                                        image={require('./../../../assets/icons/demo1.png')}
                                         text="Tell your customers what your app is about."
                                         buttonText="Let's go"/>
                                     <HomeCard
                                         key={2}
                                         title="This is a demo app"
-                                        image={require('./../../../assets/icons/cool2.jpg')}
+                                        image={require('./../../../assets/icons/demo2.png')}
                                         text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
                                         buttonText="Cool"/>
                                     <HomeCard
                                         key={3}
                                         title="Get verified"
-                                        image={require('./../../../assets/icons/cool1.jpg')}
+                                        image={require('./../../../assets/icons/demo3.png')}
                                         text="Go to get verified page"
                                         buttonText="Verify"
                                         navigation={this.props.navigation}/>
