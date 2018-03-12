@@ -81,7 +81,7 @@ export default class Login extends Component {
                 <Header
                     navigation={this.props.navigation}
                     back
-                    title="Login"
+                    title="Log in"
                 />
                 <View style={styles.mainContainer}>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
@@ -117,7 +117,7 @@ export default class Login extends Component {
                             style={styles.login}
                             onPress={this.login}>
                             <Text style={{color: 'white',fontSize:20}}>
-                                Login
+                                Log in
                             </Text>
                         </TouchableHighlight>
                     </KeyboardAvoidingView>

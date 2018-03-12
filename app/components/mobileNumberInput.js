@@ -9,20 +9,29 @@ export default class Account extends Component {
         super(props)
         this.state = {
             cca2: 'US',
+            borderColor: this.props.error ? Colors.red : Colors.lightgray
         }
     }
 
     render() {
         return (
-            <View style={styles.inputContainer}>
-                <Text style={styles.text}>
-                    {this.props.title}
-                </Text>
+            <View style={[styles.inputContainer, {borderBottomColor: this.state.borderColor}]}>
+                <View style={{flexDirection:'row'}}>
+                    <Text style={styles.text}>
+                        {this.props.title}
+                    </Text>
+                    {
+                        this.props.error &&
+                        <Text style={styles.errorText}>
+                            {this.props.error}
+                        </Text>
+                    }
+                </View>
                 <View style={styles.countryPicker}>
                     <CountryPicker
                         onChange={(value) => {
                             this.setState({cca2: value.cca2})
-                            this.props.changeCountryCode(value.callingCode)
+                            this.props.changeCountryCode(value.callingCode,value.cca2)
                         }}
                         closeable
                         filterable
@@ -72,5 +81,10 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    errorText: {
+        fontSize: 12,
+        color:Colors.red,
+        paddingLeft:8,
     },
 })
