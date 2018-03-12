@@ -46,7 +46,7 @@ export default class NewAccounts extends Component {
             nextUrl: null,
             reference: '',
             data: [],
-            showIcon: false,
+            showIcon:false,
         }
     }
 
@@ -58,7 +58,6 @@ export default class NewAccounts extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === 'success') {
             let data = responseJson.data.results[0]
-            data.activeCurrency=true
             this.setState({
                 activeAccount: data,
                 loading: false,
@@ -72,28 +71,15 @@ export default class NewAccounts extends Component {
             loading: true,
             isShown: true,
         })
-        if(getAccountList.reference!=this.state.activeAccount.reference){
-            this.state.activeAccount.activeCurrency=false
-        }else{
-            this.state.activeAccount.activeCurrency=true
-        }
         let accountResponse = await AccountService.getAllAccounts()
         if (accountResponse.status === 'success') {
             let accountData = accountResponse.data.results
-            let UniqueAccount = accountData
-            for(let i=0;i<UniqueAccount.length;i++){
-                if(UniqueAccount[i].reference===getAccountList.reference){
-                    UniqueAccount[i].activeCurrency=true
-                }else{
-                    UniqueAccount[i].activeCurrency=false
-                }
-                if(UniqueAccount[i].reference===this.state.activeAccount.reference){
-                    UniqueAccount.splice(i, 1)
-                }
-            }
-            if (UniqueAccount.length > 0) {
+            let UniqueAccount = accountData.filter((accounts) => {
+                return accounts.reference != getAccountList.reference
+            })
+            if(UniqueAccount.length>0){
                 this.setState({
-                    showIcon: true,
+                    showIcon:true,
                 })
             }
             let responseJson = await AccountService.getAllAccountCurrencies(getAccountList.reference)
@@ -103,9 +89,10 @@ export default class NewAccounts extends Component {
                     dataSource: ds.cloneWithRows(UniqueAccount),
                     accountDataSource: ds.cloneWithRows(data),
                     reference: getAccountList.reference,
+                    activeAccount: getAccountList,
                     loading: false,
                 })
-            } else {
+            }else {
                 Alert.alert('Error',
                     responseJson.message,
                     [{text: 'OK'}])
@@ -146,10 +133,10 @@ export default class NewAccounts extends Component {
                     title="Accounts"
                 />
                 <View style={{
-                    paddingVertical: 10,
+                    paddingVertical:10,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    alignItems:'center',
                     backgroundColor: Colors.whitesmoke
                 }}>
                     <Text style={styles.addAccountText}
@@ -172,42 +159,45 @@ export default class NewAccounts extends Component {
                         </TouchableHighlight>
                     }
                 </View>
-                {/*{
-                 this.state.loading &&
-                 <View style={{
-                 backgroundColor: Colors.whitesmoke,
-                 height: 70,
-                 alignItems: 'center',
-                 justifyContent: 'center'
-                 }}>
-                 <ActivityIndicator size="large"
-                 />
-                 </View>
-                 }*/}
-                <ScrollView
-                    automaticallyAdjustContentInsets={false}
-                    showsHorizontalScrollIndicator={false}
-                    horizontal={true}
-                    style={{backgroundColor: Colors.whitesmoke, height: 40}}>
-                    <View style={styles.currencyListHeader}>
-
-                        <AccountCircle getAccountList={this.state.activeAccount}
-                                       getSelectedCurrencies={this.getSelectedCurrencies}/>
-
-                        <ListView
-                            horizontal={true}
-                            showsHorizontalScrollIndicator={false}
-                            style={{flexDirection: 'row'}}
-                            dataSource={this.state.dataSource}
-                            automaticallyAdjustContentInsets={false}
-                            enableEmptySections
-                            renderRow={(rowData) => <AccountCircle getAccountList={rowData}
-                                                                   getSelectedCurrencies={this.getSelectedCurrencies}/>}
+                {
+                    this.state.loading &&
+                    <View style={{
+                        backgroundColor: Colors.whitesmoke,
+                        height: 70,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        <ActivityIndicator size="large"
                         />
                     </View>
+                }
+                {
+                    !this.state.loading &&
+                    <ScrollView
+                        automaticallyAdjustContentInsets={false}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal={true}
+                        style={{backgroundColor: Colors.whitesmoke,height:40}}>
+                        <View style={styles.currencyListHeader}>
+                            {
+                                !this.state.loading &&
+                                <AccountCircle getAccountList={this.state.activeAccount} active/>
+                            }
 
-                </ScrollView>
+                            <ListView
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                style={{flexDirection: 'row'}}
+                                dataSource={this.state.dataSource}
+                                automaticallyAdjustContentInsets={false}
+                                enableEmptySections
+                                renderRow={(rowData) => <AccountCircle getAccountList={rowData}
+                                                                       getSelectedCurrencies={this.getSelectedCurrencies}/>}
+                            />
+                        </View>
 
+                    </ScrollView>
+                }
                 <View style={{flex: 7, flexDirection: 'column', backgroundColor: 'white'}}>
                     {!this.state.isShown &&
                     <ScrollView>
@@ -266,7 +256,7 @@ const styles = StyleSheet.create({
     },
     currencyListHeader: {
         flexDirection: 'row',
-        paddingHorizontal: 20,
+        paddingHorizontal:20,
         backgroundColor: Colors.whitesmoke
     },
     account: {
@@ -279,6 +269,6 @@ const styles = StyleSheet.create({
     addAccountText: {
         color: Colors.lightblue,
         fontSize: 17,
-        marginLeft: 20
+        marginLeft:20
     },
 })
