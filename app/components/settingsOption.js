@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import React, {Component} from 'react'
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Colors from './../config/colors'
 
@@ -18,7 +18,7 @@ export default class Options extends Component {
                     <View style={styles.optionsIcon}>
                         <Icon
                             name="angle-right"
-                            size={32}
+                            size={45}
                             color={Colors.black}
                         />
                     </View>

@@ -4,13 +4,14 @@ import Colors from './../config/colors'
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default class Account extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             textColor: Colors.black,
-            borderColor:this.props.error ? Colors.red : Colors.lightgray
+            borderColor: Colors.lightgray
         }
     }
+
     render() {
         return (
             <View style={[styles.inputContainer, {borderBottomColor: this.state.borderColor}]}>
@@ -35,13 +36,6 @@ export default class Account extends Component {
                                 *
                             </Text>:null
                         }
-
-                        {
-                            this.props.error &&
-                                <Text style={styles.errorText}>
-                                    {this.props.error}
-                                </Text>
-                        }
                     </View>
                 }
                 <TextInput
@@ -51,10 +45,9 @@ export default class Account extends Component {
                     })}
                     onBlur={() => this.setState({
                         textColor: Colors.black,
-                        borderColor: this.props.error ? Colors.red : Colors.lightgray
+                        borderColor: Colors.lightgray
                     })}
                     {...this.props}
-                    ref={this.props.reference}
                     underlineColorAndroid="white"
                     style={[styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}]}
                 />
@@ -83,11 +76,5 @@ const styles = StyleSheet.create({
         marginRight: 20,
         paddingVertical: 10,
         borderBottomWidth: 1,
-    },
-    errorText: {
-        fontSize: 12,
-        paddingBottom: 15,
-        color:Colors.red,
-        paddingLeft:8,
     },
 })
