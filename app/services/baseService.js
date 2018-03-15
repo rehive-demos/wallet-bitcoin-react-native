@@ -1,7 +1,7 @@
 import { AsyncStorage, Alert } from 'react-native'
 import Auth from './../util/auth'
 
-const baseUrl = 'https://api.rehive.com/api/3/'
+const baseUrl = 'https://api.rehive.com/3/'
 
 let getHeaders = async () => {
   const token = await AsyncStorage.getItem('token')
