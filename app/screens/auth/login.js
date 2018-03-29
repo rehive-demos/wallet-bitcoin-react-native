@@ -85,7 +85,7 @@ export default class Login extends Component {
                 />
                 <View style={styles.mainContainer}>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
-                        <ScrollView keyboardDismissMode={'interactive'}>
+                        <ScrollView keyboardDismissMode={'interactive'} keyboardShouldPersistTaps='always'>
                             <TextInput
                                 title="Email"
                                 autoCapitalize="none"

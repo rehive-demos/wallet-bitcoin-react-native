@@ -38,7 +38,8 @@ export default class Account extends Component {
 
                         {
                             this.props.error &&
-                                <Text style={styles.errorText}>
+                                <Text style={[styles.errorText, {fontSize: this.props.error.length>50 ? 10 : 11,}]}
+                                        numberOfLines={3}>
                                     {this.props.error}
                                 </Text>
                         }
@@ -85,9 +86,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     errorText: {
-        fontSize: 12,
-        paddingBottom: 15,
+        paddingTop:5,
+        paddingBottom: 10,
         color:Colors.red,
-        paddingLeft:8,
+        paddingLeft:5,
     },
 })

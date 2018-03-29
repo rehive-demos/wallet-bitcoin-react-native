@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {
+import ReactNative, {
     View,
     Alert,
     StyleSheet,
@@ -60,9 +60,11 @@ export default class Signup extends Component {
     }
     validateEmail = (email) => {
         console.log(email);
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
+        let reg = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/ ;
         if(reg.test(email) === false)
         {
+            this.email.refs.electronic_mail.focus();
+            this._scrollToInput(ReactNative.findNodeHandle(this.email.refs.electronic_mail));
             this.setState({
                 email:email,
                 email_status:false,
@@ -100,6 +102,8 @@ export default class Signup extends Component {
                 company_error:null,
             })
         } else {
+            this.company.refs.company.focus();
+            this._scrollToInput(ReactNative.findNodeHandle(this.company.refs.company));
             this.setState({
                 company_error:"Enter a valid company id."
             })
@@ -108,11 +112,13 @@ export default class Signup extends Component {
     }
 
     password1Checking = () => {
-        if (this.state.password1>=8) {
+        if (this.state.password1.length>=8) {
             this.setState({
                 password1_status: true
             })
         } else {
+            this.pass.refs.password.focus()
+            this._scrollToInput(ReactNative.findNodeHandle(this.pass.refs.password));
             this.setState({
                 password1_status: false
             })
@@ -127,6 +133,8 @@ export default class Signup extends Component {
                 password_error:null,
             })
         } else {
+            this.confirm.refs.confirm_password.focus()
+            this._scrollToInput(ReactNative.findNodeHandle(this.confirm.refs.confirm_password));
             this.setState({
                 password2_status: false,
                 password_error:"Confirm your password.",
@@ -138,6 +146,8 @@ export default class Signup extends Component {
     passwordMatching = () => {
         if(this.state.password2_status){
             if (this.state.password1 !== this.state.password2) {
+                this.confirm.refs.confirm_password.focus()
+                this._scrollToInput(ReactNative.findNodeHandle(this.confirm.refs.confirm_password));
                 this.setState({
                     password_error: "Passwords do not match."
                 })
@@ -149,12 +159,20 @@ export default class Signup extends Component {
         }
     }
 
+    _scrollToInput (inputHandle) {
+        const scrollResponder = this.refs.myScrollView.getScrollResponder();
+        scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+          inputHandle, // The TextInput node handle
+          0, // The scroll view's bottom "contentInset" (default 0)
+          true // Prevent negative scrolling
+        );
+      }
+
     signup = async () => {
         let data = {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             email: this.state.email,
-            mobile_number: '+'+this.state.countryCode+this.state.inputNumber,
             company: this.state.company,
             password1: this.state.password1,
             password2: this.state.password2,
@@ -165,6 +183,10 @@ export default class Signup extends Component {
                 delete data.mobile_number
             }
         }*/
+
+        if(this.state.inputNumber){
+            data.mobile_number= '+'+this.state.countryCode+this.state.inputNumber;
+        }
         await this.validateEmail(this.state.email);
         await this.mobileNumberChecking();
         await this.companyChecking();
@@ -172,7 +194,7 @@ export default class Signup extends Component {
         await this.password2Checking();
         await this.passwordMatching();
         console.log(data)
-        if(!this.state.password_error && this.state.email_status){
+        if(!this.state.password_error && this.state.email_status && this.state.mobile_number_status && this.state.company && this.state.password1_status){
             let responseJson = await AuthService.signup(data)
             if (responseJson.status === "success") {
                 const loginInfo = responseJson.data
@@ -183,12 +205,28 @@ export default class Signup extends Component {
                 }
             }
             else {
-                console.log(responseJson.message)
-                this.setState({
-                    mobile_error:"A user is already registered with this mobile number.",
-                    email_error:"A user is already registered with this email address.",
-                    company_error:"Enter a valid company id.",
-                })
+                //console.log(responseJson.message)
+                if(responseJson.data.company){
+                    this.company.refs.company.focus()
+                    this._scrollToInput(ReactNative.findNodeHandle(this.company.refs.company));
+                    this.setState({
+                        company_error: responseJson.data.company,
+                    })
+                }
+                if(responseJson.data.email){
+                    this.email.refs.electronic_mail.focus();
+                    this._scrollToInput(ReactNative.findNodeHandle(this.email.refs.electronic_mail));
+                    this.setState({
+                        email_error: responseJson.data.email,
+                    })
+                }
+                if(responseJson.data.mobile_number){
+                    this.mobile_number.refs.mobile_number.focus();
+                    this._scrollToInput(ReactNative.findNodeHandle(this.mobile_number.refs.mobile_number));
+                    this.setState({
+                        mobile_error: responseJson.data.mobile_number,
+                    })
+                }
             }
         }
     }
@@ -203,7 +241,7 @@ export default class Signup extends Component {
                 />
                 <View style={styles.mainContainer}>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
-                        <ScrollView keyboardDismissMode={'interactive'}>
+                        <ScrollView keyboardDismissMode={'interactive'} ref="myScrollView" keyboardShouldPersistTaps='always'>
                             <TextInput
                                 title="First name"
                                 underlineColorAndroid="white"
@@ -236,6 +274,7 @@ export default class Signup extends Component {
                                 returnKeyType="done"
                                 ref={ref => this.email = ref}
                                 reference="electronic_mail"
+                                onSubmitEditing={() => this.mobile_number.refs.mobile_number.focus()}
                             />
                             <MobileInput
                                 title="Mobile"
@@ -246,6 +285,9 @@ export default class Signup extends Component {
                                 onChangeText={(mobile_number) => this.setState({inputNumber:mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
                                 error={this.state.mobile_error}
+                                ref={ref => this.mobile_number = ref}
+                                reference="mobile_number"
+                                onSubmitEditing={() => this.company.refs.company.focus()}
                             />
                             <TextInput
                                 title="Company"
@@ -256,6 +298,8 @@ export default class Signup extends Component {
                                 onChangeText={(company) => this.setState({company})}
                                 error={this.state.company_error}
                                 returnKeyType="next"
+                                ref={ref => this.company = ref}
+                                reference="company"
                                 onSubmitEditing={() => this.pass.refs.password.focus()}
                             />
                             <TextInput
