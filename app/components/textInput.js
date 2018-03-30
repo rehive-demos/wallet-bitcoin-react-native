@@ -36,6 +36,14 @@ export default class Account extends Component {
                                 *
                             </Text>:null
                         }
+
+                        {
+                            this.props.error &&
+                                <Text style={[styles.errorText, {fontSize: this.props.error.length>50 ? 10 : 11,}]}
+                                        numberOfLines={3}>
+                                    {this.props.error}
+                                </Text>
+                        }
                     </View>
                 }
                 <TextInput
@@ -77,5 +85,11 @@ const styles = StyleSheet.create({
         marginRight: 20,
         paddingTop:10,
         borderBottomWidth: 1,
+    },
+    errorText: {
+        paddingTop:5,
+        paddingBottom: 10,
+        color:Colors.red,
+        paddingLeft:5,
     },
 })

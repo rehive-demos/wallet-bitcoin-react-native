@@ -22,6 +22,8 @@ import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 import HomeCard from './../../components/homeCard'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import colors from './../../config/colors';
 
 let inputLength = 0;
 
@@ -376,19 +378,94 @@ export default class Home extends Component {
                     ref={(popupDialog) => {
                         this.popupDialog = popupDialog;
                     }}
-                    height={250}>
-                    <View style={{ flex: 1 }}>
-                        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-                            <Image
-                                source={require('./../../../assets/icons/placeholder.png')}
-                                style={{ height: 80, width: 80, margin: 10 }}
-                            />
-                            <Text style={{ fontSize: 20, color: Colors.black }}>
-                                {this.state.dataToShow.label + ": " + this.state.dataToShow.currency.symbol + this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility)}
-                            </Text>
+                    width={0.9}
+                    height={320}>
+                    <View style={{flex: 1}}>
+                        <View style={{flex: 4, padding: 20}}>
+                            {/*<Image
+                             source={require('./../../../assets/icons/placeholder.png')}
+                             style={{height: 80, width: 80, margin: 10}}
+                             />*/}
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={{flex:1,textAlign: 'center',fontSize: 18, color: Colors.black}}> Transaction details</Text>
+
+                                <Icon
+                                    onPress={()=>{
+                                        this.popupDialog.dismiss()
+                                    }}
+                                    name="clear"
+                                    size={30}
+                                    color={Colors.lightgray}
+                                    style={{marginRight:-10,marginTop:-10}}
+                                />
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 19,}}>
+                                <Text style={{textAlign: 'right', flex: 4, fontSize: 19, color: Colors.black}}>
+                                    {"Type:"}
+                                </Text>
+                                <Text style={{flex: 4, fontSize: 19, color: Colors.black, paddingLeft: 12}}>
+                                    {this.state.dataToShow.label}
+                                </Text>
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 4, fontSize: 19, color: Colors.black}}>
+                                    {"Total amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 12, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.total_amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 19, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.total_amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 8,}}>
+                                <Text style={{textAlign: 'right', flex: 4, fontSize: 17, color: Colors.black}}>
+                                    {"Amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 12, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 17, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 4, fontSize: 17, color: Colors.black}}>
+                                    {"Fees:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 12, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.fee < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 17, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.fee, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 8,}}>
+                                <Text style={{textAlign: 'right', flex: 4, fontSize: 19, color: Colors.black}}>
+                                    {"Balance:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 12, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.balance < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 19, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.balance, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
                         </View>
                         <View style={{
-                            flex: 1,
+                            height: 50,
                             flexDirection: 'row',
                             borderTopColor: Colors.lightgray,
                             borderTopWidth: 1,
@@ -464,6 +541,11 @@ const styles = StyleSheet.create({
     paginationText: {
         color: 'white',
         fontSize: 20
+    },
+    borderLine: {
+        height:8,
+        borderBottomWidth:1,
+        borderBottomColor: colors.lightgray
     }
 })
 
