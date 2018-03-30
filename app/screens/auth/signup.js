@@ -12,11 +12,14 @@ import ReactNative, {
     KeyboardAvoidingView
 } from 'react-native'
 import AuthService from './../../services/authService'
+import Icon from 'react-native-vector-icons/Ionicons'
 import Auth from './../../util/auth'
 import TextInput from './../../components/textInput'
 import MobileInput from './../../components/mobileNumberInput'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
+
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
 export default class Signup extends Component {
     static navigationOptions = {
@@ -29,9 +32,12 @@ export default class Signup extends Component {
             first_name: '',
             last_name: '',
             email: '',
+            email_status: true,
             mobile_number: '+1',
+            mobile_number_status: true,
             company: '',
             password1: '',
+            password1_status: true,
             password2: '',
             password2_status: true,
             password_matching: true,
@@ -117,6 +123,7 @@ export default class Signup extends Component {
                 password1_status: false
             })
         }
+
     }
 
     password2Checking = () => {
@@ -222,11 +229,6 @@ export default class Signup extends Component {
                 }
             }
         }
-        else {
-            Alert.alert('Error',
-                responseJson.message,
-                [{text: 'OK'}])
-        }
     }
 
     render() {
@@ -246,6 +248,8 @@ export default class Signup extends Component {
                                 placeholder="e.g. John"
                                 autoCapitalize="none"
                                 onChangeText={(first_name) => this.setState({first_name})}
+                                returnKeyType="next"
+                                onSubmitEditing={() => this.lastname.refs.last_name.focus()}
                             />
                             <TextInput
                                 title="Last name"
@@ -253,6 +257,10 @@ export default class Signup extends Component {
                                 placeholder="e.g. Snow"
                                 autoCapitalize="none"
                                 onChangeText={(last_name) => this.setState({last_name})}
+                                returnKeyType="next"
+                                ref={ref => this.lastname = ref}
+                                reference="last_name"
+                                onSubmitEditing={() => this.email.refs.electronic_mail.focus()}
                             />
                             <TextInput
                                 title="Email"
@@ -272,9 +280,9 @@ export default class Signup extends Component {
                                 title="Mobile"
                                 autoCapitalize="none"
                                 keyboardType="numeric"
-                                value={this.state.mobile_number}
+                                value={this.state.inputNumber}
                                 underlineColorAndroid="white"
-                                onChangeText={(mobile_number) => this.setState({mobile_number})}
+                                onChangeText={(mobile_number) => this.setState({inputNumber:mobile_number})}
                                 changeCountryCode={this.changeCountryCode}
                                 error={this.state.mobile_error}
                                 ref={ref => this.mobile_number = ref}
@@ -302,6 +310,11 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 secureTextEntry
                                 onChangeText={(password1) => this.setState({password1})}
+                                error={!this.state.password1_status ? "Password must be at least 8 characters." :  null}
+                                returnKeyType="next"
+                                ref={ref => this.pass = ref}
+                                reference="password"
+                                onSubmitEditing={() => this.confirm.refs.confirm_password.focus()}
                             />
                             <TextInput
                                 title="Confirm password"
@@ -311,13 +324,35 @@ export default class Signup extends Component {
                                 autoCapitalize="none"
                                 secureTextEntry
                                 onChangeText={(password2) => this.setState({password2})}
+                                error={this.state.password_error}
+                                returnKeyType="done"
+                                ref={ref => this.confirm = ref}
+                                reference="confirm_password"
                             />
+                            <View style={styles.termsAndCondition}>
+                                <Icon
+                                    onPress={() => this.setState({
+                                        terms_and_conditions: !this.state.terms_and_conditions
+                                    })}
+                                    name="md-checkbox"
+                                    size={30}
+                                    color={this.state.terms_and_conditions ? Colors.green : Colors.lightgray}
+                                />
+                                <Text style={styles.agreeText}>
+                                    I agree to the
+                                </Text>
+                                <TouchableOpacity onPress={() => Linking.openURL('https://rehive.com/terms-of-use')}>
+                                    <Text style={styles.termsText}>
+                                        terms of use
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </ScrollView>
                         <TouchableHighlight
                             style={styles.submit}
                             onPress={() => this.signup()}>
-                            <Text style={{color: 'white', fontSize:20}}>
-                                Sign up
+                            <Text style={{color: 'white', fontSize: 20}}>
+                                Register
                             </Text>
                         </TouchableHighlight>
                     </KeyboardAvoidingView>
@@ -337,6 +372,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         paddingTop: 10,
+        justifyContent: 'center'
     },
     submit: {
         marginTop: 10,
@@ -348,4 +384,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    termsAndCondition: {
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        alignItems: 'center'
+    },
+    termsText: {
+        color: Colors.lightblue,
+        fontSize: 16,
+    },
+    agreeText: {
+        color: Colors.black,
+        paddingLeft: 8,
+        paddingRight: 4,
+        fontSize: 16,
+    }
+
 })

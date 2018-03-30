@@ -56,6 +56,7 @@ export default class Account extends Component {
                         borderColor: Colors.lightgray
                     })}
                     {...this.props}
+                    ref={this.props.reference}
                     underlineColorAndroid="white"
                     style={[styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}]}
                 />
