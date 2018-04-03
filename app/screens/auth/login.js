@@ -49,6 +49,7 @@ export default class Login extends Component {
             "password": this.state.password,
         }
         let responseJson = await AuthService.login(body)
+        console.log(responseJson)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
             await AsyncStorage.setItem("token", loginInfo.token)

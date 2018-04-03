@@ -184,7 +184,7 @@ export default class Signup extends Component {
             }
         }*/
 
-        if(this.state.inputNumber){
+        if(this.state.inputNumber && this.state.countryCode){
             data.mobile_number= '+'+this.state.countryCode+this.state.inputNumber;
         }
         await this.validateEmail(this.state.email);
@@ -371,7 +371,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop: 10,
         justifyContent: 'center'
     },
     submit: {
