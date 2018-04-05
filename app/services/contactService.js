@@ -31,26 +31,38 @@ var contactService = {
       pageOffset: 0,
     })
 
-    //console.log(contacts)
+    console.log(contacts)
 
     var data = []
+    var alreadyAdded = []
     contacts.data.forEach((node) => {
+      var thumbnail = node.thumbnail?node.thumbnail.uri:null;
       if (typeof (node.phoneNumbers) !== "undefined") {
         node.phoneNumbers.forEach((number) => {
-          var newData = {
-            name: node.name,
-            contact: number.number,
+          var mobile = number.number
+          if(alreadyAdded.indexOf(mobile)==-1){
+            var newData = {
+              name: node.name,
+              contact: mobile,
+              image: thumbnail,
+            }
+            data.push(newData)
+            alreadyAdded.push(mobile)
           }
-          data.push(newData)
         })
       }
       if (typeof (node.emails) !== "undefined") {
         node.emails.forEach((email) => {
-          var newData = {
-            name: node.name,
-            contact: email.email,
+          var address =  email.email
+          if(alreadyAdded.indexOf(address)==-1){
+            var newData = {
+              name: node.name,
+              contact: address,
+              image: thumbnail,
+            }
+            data.push(newData)
+            alreadyAdded.push(address)
           }
-          data.push(newData)
         })
       }
     })

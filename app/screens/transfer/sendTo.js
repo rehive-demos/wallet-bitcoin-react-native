@@ -51,6 +51,7 @@ export default class SendTo extends Component {
     }
 
     showContactsAsync = async () => {
+        //await AsyncStorage.removeItem('contacts')
         if (this.state.ready === false) {
             let contacts = await AsyncStorage.getItem('contacts')
             if (contacts) {

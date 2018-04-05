@@ -12,10 +12,17 @@ export default class Contact extends Component {
         onPress={() => this.props.selected(this.props.rowData.contact)} >
         <View style={styles.container}>
           <View style={styles.profile}>
+          {this.props.rowData.image ?
+            <Image
+              style={{height:40, width:40,borderRadius: 20}}
+              source={{ uri: this.props.rowData.image, cache: 'only-if-cached' }}
+            /> :
             <Image
               source={require('./../../assets/icons/profile.png')}
               style={{height:40, width:40}}
             />
+          }
+            
           </View>
           <View style={styles.contactInfo}>
             <Text style={{fontSize: 20, color: Colors.black}}>
@@ -37,11 +44,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   profile: {
-    flex: 1,
+    width: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
     justifyContent: 'center',
   },
   contactInfo: {
-    flex: 4,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
   },
