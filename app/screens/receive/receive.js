@@ -19,7 +19,7 @@ export default class Receive extends Component {
   async componentWillMount() {
     const value = await AsyncStorage.getItem('user');
     const user = JSON.parse(value)
-    const imageURI = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + user.email + '&choe=UTF-8'
+    const imageURI = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent(user.email) + '&choe=UTF-8'
     this.setState({ imageURI })
   }
 
