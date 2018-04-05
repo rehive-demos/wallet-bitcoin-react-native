@@ -31,7 +31,7 @@ var contactService = {
       pageOffset: 0,
     })
 
-    console.log(contacts)
+    //console.log(contacts)
 
     var data = []
     var alreadyAdded = []
@@ -40,6 +40,7 @@ var contactService = {
       if (typeof (node.phoneNumbers) !== "undefined") {
         node.phoneNumbers.forEach((number) => {
           var mobile = number.number
+          mobile = mobile.replace(/\s/g, '')
           if(alreadyAdded.indexOf(mobile)==-1){
             var newData = {
               name: node.name,
