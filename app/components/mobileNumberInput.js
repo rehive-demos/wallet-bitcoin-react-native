@@ -31,7 +31,8 @@ export default class Account extends Component {
                         styles={{flex: 1, justifyContent: 'center'}}
                     />
                     <TextInput
-                        {...this.props}
+                        {...this.props}   
+                        ref={this.props.reference}
                         style={styles.input}
                     />
                 </View>

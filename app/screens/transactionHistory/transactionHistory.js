@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import {
     View,
     StyleSheet,
@@ -9,27 +9,27 @@ import {
     ScrollView,
     ListView,
     Image,
-    TouchableWithoutFeedback,
-    Linking
+    TouchableWithoutFeedback
 } from 'react-native'
 import moment from 'moment'
 import Swiper from 'react-native-swiper'
 import PopupDialog from 'react-native-popup-dialog'
 import UserInfoService from './../../services/userInfoService'
 import AccountService from './../../services/accountService'
-import Transactions from './transactions'
+import Transactions from './../home/transactions'
 import Auth from './../../util/auth'
 import NetInfo from './../../util/checkNetConnection'
 import Colors from './../../config/colors'
 import Header from './../../components/header'
 import HomeCard from './../../components/homeCard'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 let inputLength = 0;
 
 const renderPagination = (index, total, context) => {
     return (
         <View style={styles.paginationStyle}>
-            <Text style={{ color: 'grey' }}>
+            <Text style={{color: 'grey'}}>
 
             </Text>
         </View>
@@ -38,7 +38,7 @@ const renderPagination = (index, total, context) => {
 
 export default class Home extends Component {
     static navigationOptions = {
-        label: 'Home',
+        label: 'Transactions',
     }
 
     constructor(props) {
@@ -132,7 +132,7 @@ export default class Home extends Component {
         let responseJson = await UserInfoService.getActiveAccount()
         if (responseJson.status === "success") {
             const account = responseJson.data.results[0].currencies[0];
-            AsyncStorage.setItem("account_reference",JSON.stringify(responseJson.data.results[0].reference));
+            AsyncStorage.setItem("account_reference", JSON.stringify(responseJson.data.results[0].reference));
             let settings = account.settings
             if (settings.allow_transactions === false) {
                 this.setState({
@@ -179,7 +179,7 @@ export default class Home extends Component {
     }
 
     showDialog = (item) => {
-        this.setState({ dataToShow: item });
+        this.setState({dataToShow: item});
         this.popupDialog.show();
     }
 
@@ -202,7 +202,7 @@ export default class Home extends Component {
             "Are you sure?",
             "Set it as active currency?",
             [
-                { text: 'Yes', onPress: () => this.changeAccount() },
+                {text: 'Yes', onPress: () => this.changeAccount()},
                 {
                     text: 'No',
                     style: 'cancel',
@@ -217,7 +217,7 @@ export default class Home extends Component {
             Alert.alert(
                 "Success",
                 "Your active currency has been changed successfully.",
-                [{ text: 'OK' }]
+                [{text: 'OK'}]
             )
         }
     }
@@ -243,76 +243,47 @@ export default class Home extends Component {
                 <Header
                     navigation={this.props.navigation}
                     drawer
-                /*homeRight*/
+                    /*homeRight*/
                 />
                 <View style={styles.balance}>
                     {/*<TouchableHighlight style={{ flex: 1 }}><View></View></TouchableHighlight>*/}
-                    <View style={{ flex: 4, justifyContent: 'flex-start', alignItems: 'center', }}>
+                    <View style={{flex: 4, justifyContent: 'flex-start', alignItems: 'center',}}>
                         {/*<Text style={{ fontSize: 18, color: 'white' }}>
-                            {this.state.account}
-                        </Text>*/}
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 23 : 12, color: 'white' }}>
+                         {this.state.account}
+                         </Text>*/}
+                        <View style={{flexDirection: 'row'}}>
+                            <Text style={{
+                                fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 23 : 12,
+                                color: 'white'
+                            }}>
                                 {this.state.symbol}
                             </Text>
                             <Text onPress={() => this.tap2()}
-                                onLongPress={() => this.longTap1()}
-                                style={{ paddingLeft: 5, fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 40 : 24, color: 'white' }}>
+                                  onLongPress={() => this.longTap1()}
+                                  style={{
+                                      paddingLeft: 5,
+                                      fontSize: this.state.balance.toFixed(4).replace(/0{0,2}$/, "").toString().length < 11 ? 40 : 24,
+                                      color: 'white'
+                                  }}>
                                 {this.state.balance.toFixed(4).replace(/0{0,2}$/, "")}
                             </Text>
                         </View>
                     </View>
                     {/*<TouchableHighlight
-                        underlayColor={Colors.lightblue}
-                        style={{ flex: 1 }}
-                        onPress={() => console.log("Home Screen")}>
-                        <View></View>
-                    </TouchableHighlight>*/}
+                     underlayColor={Colors.lightblue}
+                     style={{ flex: 1 }}
+                     onPress={() => console.log("Home Screen")}>
+                     <View></View>
+                     </TouchableHighlight>*/}
                 </View>
                 <View style={styles.transaction}>
                     {
-                        <Swiper renderPagination={renderPagination}
-                        loop={false}>
-                            <View style={{flex: 1, backgroundColor: Colors.lightgray, paddingHorizontal: 20}}>
-                                <ScrollView showsVerticalScrollIndicator={false}>
-                                    <HomeCard
-                                        key={0}
-                                        title="Welcome to Rehive"
-                                        image={require('./../../../assets/icons/new_logo.png')}
-                                        text="Put your logo and brand here."
-                                        buttonText="Cool"/>
-                                    <HomeCard
-                                        key={1}
-                                        title="Get started"
-                                        image={require('./../../../assets/icons/cool3.jpeg')}
-                                        text="Tell your customers what your app is about."
-                                        buttonText="Let's go"/>
-                                    <HomeCard
-                                        key={2}
-                                        title="This is a demo app"
-                                        image={require('./../../../assets/icons/cool2.jpg')}
-                                        text="Note that you have to verify your email or mobile number to claim funds that has been sent to you."
-                                        buttonText="Cool"/>
-                                    <HomeCard
-                                        key={3}
-                                        title="Get verified"
-                                        image={require('./../../../assets/icons/cool1.jpg')}
-                                        text="Go to get verified page"
-                                        buttonText="Verify"
-                                        navigation={this.props.navigation}/>
-                                    <View
-                                        key={4}
-                                        style={styles.falseView}/>
-
-                                </ScrollView>
-
-                            </View>
-                            <Transactions
-                                updateBalance={this.getBalanceInfo}
-                                currency={this.state.code}
-                                showDialog={this.showDialog}
-                                logout={this.logout}/>
-                        </Swiper>
+                        this.state.showTransaction &&
+                        <Transactions
+                            updateBalance={this.getBalanceInfo}
+                            currency={this.state.code}
+                            showDialog={this.showDialog}
+                            logout={this.logout}/>
                     }
                     {
                         !this.state.showTransaction &&
@@ -336,11 +307,11 @@ export default class Home extends Component {
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                         }}>
-                                            <View style={{ flex: 1, justifyContent: 'center' }}>
-                                                <Text style={{ color: Colors.darkestgray, fontSize: 14 }}>
+                                            <View style={{flex: 1, justifyContent: 'center'}}>
+                                                <Text style={{color: Colors.darkestgray, fontSize: 14}}>
                                                     {rowData.currency.code}
                                                 </Text>
-                                                <Text style={{ color: Colors.black, fontSize: 18 }}>
+                                                <Text style={{color: Colors.black, fontSize: 18}}>
                                                     {rowData.currency.symbol}{rowData.balance.toFixed(4).replace(/0{0,2}$/, "")}
                                                 </Text>
                                             </View>
@@ -356,18 +327,18 @@ export default class Home extends Component {
                     <TouchableHighlight
                         style={styles.submit}
                         onPress={() => this.props.navigation.navigate("Receive")}>
-                        <Text style={{ color: 'white', fontSize: 20 }}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Receive
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={[styles.submit, { marginLeft: 25 }]}
+                        style={[styles.submit, {marginLeft: 25}]}
                         onPress={() => this.props.navigation.navigate("SendTo", {
                             reference: "",
                             balance: this.state.balance
                         })}>
 
-                        <Text style={{ color: 'white', fontSize: 20 }}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Send
                         </Text>
                     </TouchableHighlight>
@@ -376,17 +347,91 @@ export default class Home extends Component {
                     ref={(popupDialog) => {
                         this.popupDialog = popupDialog;
                     }}
-                    height={250}>
-                    {console.log(this.state.dataToShow)}
-                    <View style={{ flex: 1 }}>
-                        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-                            <Image
-                                source={require('./../../../assets/icons/placeholder.png')}
-                                style={{ height: 80, width: 80, margin: 10 }}
-                            />
-                            <Text style={{ fontSize: 20, color: Colors.black }}>
-                                {this.state.dataToShow.label + ": " + this.state.dataToShow.currency.symbol + this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility)}
-                            </Text>
+                    width={0.9}
+                    height={400}>
+                    <View style={{flex: 1}}>
+                        <View style={{flex: 3, padding: 20}}>
+                            {/*<Image
+                             source={require('./../../../assets/icons/placeholder.png')}
+                             style={{height: 80, width: 80, margin: 10}}
+                             />*/}
+                            <View style={{flexDirection:'row'}}>
+                                <Text style={{flex:1,textAlign: 'center',fontSize: 20, color: Colors.black}}> Transaction details</Text>
+
+                                <Icon
+                                    onPress={()=>{
+                                        this.popupDialog.dismiss()
+                                    }}
+                                    name="clear"
+                                    size={30}
+                                    color={Colors.lightgray}
+                                    style={{marginRight:-10,marginTop:-10}}
+                                />
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 20,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Type:"}
+                                </Text>
+                                <Text style={{flex: 4, fontSize: 20, color: Colors.black, paddingLeft: 8}}>
+                                    {this.state.dataToShow.label}
+                                </Text>
+                            </View>
+
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Total amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.total_amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.total_amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Amount:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.amount < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.amount, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Fees:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.fee < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.fee, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.borderLine}/>
+                            <View style={{flexDirection: 'row', paddingTop: 10,}}>
+                                <Text style={{textAlign: 'right', flex: 3, fontSize: 20, color: Colors.black}}>
+                                    {"Balance:"}
+                                </Text>
+                                <View style={{flex: 4, flexDirection: 'row', paddingLeft: 8, alignItems: 'center'}}>
+                                    <Text>
+                                        {this.state.dataToShow.balance < 0 ? '-' : ''}
+                                    </Text>
+                                    <Text style={{fontSize: 20, color: Colors.black}}>
+                                        {this.state.dataToShow.currency.symbol + Math.abs(this.getAmount(this.state.dataToShow.balance, this.state.dataToShow.currency.divisibility))}
+                                    </Text>
+                                </View>
+                            </View>
                         </View>
                         <View style={{
                             flex: 1,
@@ -396,34 +441,17 @@ export default class Home extends Component {
                             paddingLeft: 20,
                             paddingRight: 20
                         }}>
-                            <View style={{ flex: 2, justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}>
+                            <View style={{flex: 2, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-start", color: Colors.black}}>
                                     {moment(this.state.dataToShow.created).format('lll')}
                                 </Text>
                             </View>
-                            <View style={{ flex: 1, justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 15, alignSelf: "flex-end", color: Colors.black }}>
+                            <View style={{flex: 1, justifyContent: 'center'}}>
+                                <Text style={{fontSize: 15, alignSelf: "flex-end", color: Colors.black}}>
                                     {this.state.dataToShow.status}
                                 </Text>
                             </View>
                         </View>
-                        {this.state.dataToShow.metadata && this.state.dataToShow.metadata.hash &&
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                borderTopColor: Colors.lightgray,
-                                borderTopWidth: 1,
-                                paddingLeft: 20,
-                                paddingRight: 20
-                            }}>
-                                <View style={{ justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, alignSelf: "flex-start", color: Colors.black }}
-                                        onPress={() => Linking.openURL("https://bitcoin-node-testnet.rehive.io/tx/" + this.state.dataToShow.metadata.hash)}>>
-                                        View on block explorer
-                                    </Text>
-                                </View>
-                            </View>
-                        }
                     </View>
                 </PopupDialog>
             </View>
@@ -482,5 +510,12 @@ const styles = StyleSheet.create({
     paginationText: {
         color: 'white',
         fontSize: 20
+    },
+    borderLine:{
+        borderBottomColor: Colors.lightgray,
+        borderBottomWidth: 1,
+        width:250,
+        paddingTop:10
     }
 })
+

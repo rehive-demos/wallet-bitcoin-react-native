@@ -49,6 +49,7 @@ export default class Login extends Component {
             "password": this.state.password,
         }
         let responseJson = await AuthService.login(body)
+        console.log(responseJson)
         if (responseJson.status === "success") {
             const loginInfo = responseJson.data
             await AsyncStorage.setItem("token", loginInfo.token)
@@ -85,7 +86,7 @@ export default class Login extends Component {
                 />
                 <View style={styles.mainContainer}>
                     <KeyboardAvoidingView style={styles.container} behavior={'padding'} keyboardVerticalOffset={85}>
-                        <ScrollView keyboardDismissMode={'interactive'}>
+                        <ScrollView keyboardDismissMode={'interactive'} keyboardShouldPersistTaps='always'>
                             <TextInput
                                 title="Email"
                                 autoCapitalize="none"

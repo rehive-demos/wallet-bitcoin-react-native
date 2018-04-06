@@ -36,6 +36,14 @@ export default class Account extends Component {
                                 *
                             </Text>:null
                         }
+
+                        {
+                            this.props.error &&
+                                <Text style={[styles.errorText, {fontSize: this.props.error.length>50 ? 10 : 11,}]}
+                                        numberOfLines={3}>
+                                    {this.props.error}
+                                </Text>
+                        }
                     </View>
                 }
                 <TextInput
@@ -48,6 +56,7 @@ export default class Account extends Component {
                         borderColor: Colors.lightgray
                     })}
                     {...this.props}
+                    ref={this.props.reference}
                     underlineColorAndroid="white"
                     style={[styles.input, {fontSize: this.props.fontSize ? this.props.fontSize : 22}]}
                 />
@@ -58,8 +67,10 @@ export default class Account extends Component {
 
 const styles = StyleSheet.create({
     input: {
-        height: 26,
+        height: 50,
         paddingLeft: 0,
+        paddingBottom: 10,
+        paddingTop:15,
         color: Colors.black,
         fontWeight: 'normal',
         borderColor: 'white',
@@ -68,13 +79,18 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        paddingBottom: 15,
     },
     inputContainer: {
         flexDirection: 'column',
         marginLeft: 20,
         marginRight: 20,
-        paddingVertical: 10,
+        paddingTop:10,
         borderBottomWidth: 1,
+    },
+    errorText: {
+        paddingTop:5,
+        paddingBottom: 10,
+        color:Colors.red,
+        paddingLeft:5,
     },
 })

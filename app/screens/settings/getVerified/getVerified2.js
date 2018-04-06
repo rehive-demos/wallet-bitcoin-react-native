@@ -67,8 +67,8 @@ export default class GetVerified extends Component {
             email: user.email,
             mobile_number: user.mobile_number,
             basic_info: user.first_name + ' ' + user.last_name,
-            basic_info_status: user.status,
-            address_status:user.kyc.addresses.status?user.kyc.addresses.status:'incomplete'
+            basic_info_status: user.status ? user.status : 'incomplete',
+            address_status:'incomplete'
         })
     }
 
@@ -162,7 +162,8 @@ export default class GetVerified extends Component {
             }
 
             this.setState({
-                address: address
+                address: address,
+                address_status: 'pending'
             })
         } else {
             Alert.alert('Error',

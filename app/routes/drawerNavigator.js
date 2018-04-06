@@ -14,6 +14,7 @@ import DrawerHeader from './../components/drawerHeader'
 import GetVerified from './../screens/settings/getVerified/getVerified2'
 import Colors from './../config/colors'
 import Currencies from './../screens/accounts/accountsB'
+import Transactions from './../screens/transactionHistory/transactionHistory'
 
 const RouteConfigs = {
     Home: {
@@ -22,12 +23,15 @@ const RouteConfigs = {
     Accounts: {
         screen: NewAccounts,
     },
-    Currencies:{
+    /*Currencies:{
         screen:Currencies
+    },*/
+    Transactions:{
+        screen:Transactions
     },
-    Deposit: {
-        screen: Deposit,
-    },
+    // Deposit: {
+    //     screen: Deposit,
+    // },
     Withdraw: {
         screen: Withdraw,
     },
